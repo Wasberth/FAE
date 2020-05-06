@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
  */
 public class Operaciones {
     public static Connection getConnection(){
+        //cambiar nombre de la bd
         String url="jdbc:mysql:3306/localhost/nombre_bd";
         String userName="root";
         String password="nomelo";
@@ -30,6 +31,7 @@ public class Operaciones {
         int nivel = 0;
         try{
             Connection con = Operaciones.getConnection();
+            //verificar nombre de las columnas
             String q = "select nivel from Usuarios where nombre = ? and password = ?)";
 
             PreparedStatement ps = con.prepareStatement(q);
