@@ -25,12 +25,6 @@
                     <form action="index.jsp" method="post">
 				<img src="img/avatar.svg">
 				<h2 class="title">Bienvenido</h2>
-                                User admin=roberto
-                                password admin=1234
-                                User ejemplo = ismael
-                                password ejemplo = 1234
-                                
-                                <h2><a href="info.html">Lea esto porfi</a></h2>
            		<div class="input-div one">
            		   <div class="i">
            		   		<i class="fas fa-user"></i>
