@@ -43,7 +43,7 @@
            		    	<input type="password" class="input" required name="password"> 
             	   </div>
             	</div>
-            	<a href="registrar.jsp">Eres puto? Registrate c:</a>
+            	<a href="registrar.jsp">Eres nuevo? Registrate c:</a>
             	<input type="submit" class="btn" value="Login" name="btninicar">
             </form> 
         </div>

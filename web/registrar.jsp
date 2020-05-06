@@ -12,7 +12,7 @@
         <title>Registro de usuario</title>
     </head>
     <body>
-        <form method="post" action="">
+        <form method="post" action="registro">
             <table>
                 <tr>
                     <td>Nombre</td> 

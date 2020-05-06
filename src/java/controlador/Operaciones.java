@@ -42,6 +42,7 @@ public class Operaciones {
             ps.setString(2, password);
             
             rs = ps.executeQuery();
+            
             while(rs.next()){
                 nivel = rs.getInt(1);
             }
