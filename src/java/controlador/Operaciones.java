@@ -3,6 +3,7 @@ package controlador;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  *
@@ -27,10 +28,12 @@ public class Operaciones {
         return con;
     }
     
-        public static int Nivel(String usuario, String password){
+        public int nivel_consulta(String usuario, String password){
         int nivel = 0;
         try{
             Connection con = Operaciones.getConnection();
+            ResultSet rs;
+
             //verificar nombre de las columnas
             String q = "select nivel from Usuarios where nombre = ? and password = ?)";
 
@@ -38,7 +41,10 @@ public class Operaciones {
             ps.setString(1, usuario);
             ps.setString(2, password);
             
-            nivel = ps.executeUpdate();
+            rs = ps.executeQuery();
+            while(rs.next()){
+                nivel = rs.getInt(1);
+            }
             con.close();
         }catch(Exception ed){
             System.out.println(ed.getMessage());
