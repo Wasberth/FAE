@@ -27,7 +27,7 @@
         <h2>CONTENIDO PRINCIPAL</h2>
         <p>Este es el contenido principal de mi web</p>
         <div>
-          <p>Aquí una imagsen.</p>
+          <p>Aquí una dfasdfasdfasdfsdf.</p>
           <img src="http://dominio.com/imagen.jpg" alt="paisaje">          
         </div>
       </article>      
