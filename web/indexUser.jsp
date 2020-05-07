@@ -48,5 +48,3 @@
     </footer>
   </body>  
 </html>
-
-</html>
