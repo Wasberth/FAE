@@ -31,4 +31,17 @@ CREATE TABLE `MPublicaciones` (
   `id_nivp` INT(1) NOT NULL,
   PRIMARY KEY (`id_pub`)
 );
+
+CREATE TABLE `` (
+  `id_pub` int(11) NOT NULL AUTO_INCREMENT,
+  `titulo_pub` VARCHAR(50) NOT NULL,
+  `cuerpo_pub` TEXT(125) NOT NULL,
+  `anonim_pub` BOOL NOT NULL,
+  `fecha_pub` TEXT(125) NOT NULL,
+  `id_eti` VARCHAR(50) NOT NULL,
+  `id_nivp` INT(1) NOT NULL,
+  PRIMARY KEY (`id_pub`)
+);
+
+
 --%>
