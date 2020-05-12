@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 
 public class Operaciones {
+    
     public static Connection getConnection(){
         //cambiar nombre de la bd
         String url="jdbc:mysql://localhost:3306/fae1";
@@ -26,7 +27,7 @@ public class Operaciones {
         return con;
     }
     
-        public int loguear(String usuario, String password){
+    public int loguear(String usuario, String password){
         int nivel = 0;
         try{
             Connection con = Operaciones.getConnection();
