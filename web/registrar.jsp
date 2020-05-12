@@ -36,7 +36,7 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="fas fa-user"></i></div>
                         </div>
-                        <input id="user" type="text" class="form-control" required name="user" placeholder="Nombre de Usuario">
+                        <input id="user" type="text" class="form-control" required name="user_name" placeholder="Nombre de Usuario">
                     </div>
                     <div class="input-group">
                         <label class="sr-only" for="user_password">Usuario</label>
@@ -59,14 +59,14 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="fas fa-arrow-alt-circle-right"></i></div>
                         </div>
-                        <input id="apmat" type="password" class="form-control" required name="apmat" placeholder="Apellido Paterno">
+                        <input id="apmat" type="password" class="form-control" required name="appat" placeholder="Apellido Paterno">
                     </div>
                     <div class="input-group">
                         <label class="sr-only" for="user">Usuario</label>
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="fas fa-arrow-alt-circle-right"></i></div>
                         </div>
-                        <input id="appat" type="password" class="form-control" required name="appat" placeholder="Apellido Materno">
+                        <input id="appat" type="password" class="form-control" required name="apmat" placeholder="Apellido Materno">
                     </div>
                 </div>
                 <input class="btn btn-primary" type="submit" value="Registrarse">
@@ -85,12 +85,15 @@
             String user_nombre = request.getParameter("nombre");
             String user_appat = request.getParameter("appat");
             String user_apmat = request.getParameter("apmat");
+
             if (op.registro(user_tag, user_password, user_nombre, user_appat, user_apmat) == true) {
         %>      <script>alert("Registro exitoso");</script><%
                 response.sendRedirect("index.jsp");
             } else {
                 System.out.println("error");
+
             }
+
         %>
         <script src="https://kit.fontawesome.com/a81368914c.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

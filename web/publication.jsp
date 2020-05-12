@@ -1,7 +1,7 @@
 <%-- 
-    Document   : publicacion
-    Created on : 12/05/2020, 10:10:11 AM
-    Author     : PORTO
+    Document   : publication
+    Created on : 8/05/2020, 01:23:24 AM
+    Author     : david
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

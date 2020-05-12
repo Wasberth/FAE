@@ -18,30 +18,19 @@ CREATE TABLE `EHistorial` (
   PRIMARY KEY (`id_hist`),
   FOREIGN KEY (`id_user`) REFERENCES musuario(`id_user`),
   FOREIGN KEY (`id_pub`) REFERENCES MPublicaciones(`id_pub`)
-  
 );
 
 CREATE TABLE `MPublicaciones` (
   `id_pub` int(11) NOT NULL AUTO_INCREMENT,
   `titulo_pub` VARCHAR(50) NOT NULL,
-  `cuerpo_pub` TEXT(125) NOT NULL,
+  `cuerpo_pub` TEXT(301) NOT NULL,
   `anonim_pub` BOOL NOT NULL,
-  `fecha_pub` TEXT(125) NOT NULL,
+  `fecha_pub` DATETIME NOT NULL,
   `id_eti` VARCHAR(50) NOT NULL,
   `id_nivp` INT(1) NOT NULL,
   PRIMARY KEY (`id_pub`)
 );
 
-CREATE TABLE `` (
-  `id_pub` int(11) NOT NULL AUTO_INCREMENT,
-  `titulo_pub` VARCHAR(50) NOT NULL,
-  `cuerpo_pub` TEXT(125) NOT NULL,
-  `anonim_pub` BOOL NOT NULL,
-  `fecha_pub` TEXT(125) NOT NULL,
-  `id_eti` VARCHAR(50) NOT NULL,
-  `id_nivp` INT(1) NOT NULL,
-  PRIMARY KEY (`id_pub`)
-);
-
+Se tiene que agregar una columna para Usuarios y Publicaciones de las fotos (binario) UwU
 
 --%>
