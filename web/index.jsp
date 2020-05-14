@@ -12,6 +12,8 @@
 <html>
     <head>
         <title>Login</title>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <meta name="google-signin-client_id" content="942131814486-cps2annngh5d9copn0t2ustj4k8fa4i5.apps.googleusercontent.com">
         <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -27,7 +29,6 @@
     console.log(response);                   // The current login status of the person.
     if (response.status === 'connected') {
       testAPI();        
-      
     } else {                                 // Not logged into your webpage or we are unable to tell.
       document.getElementById('status').innerHTML = 'Please log ' +
         'into this webpage.';
@@ -134,10 +135,21 @@
                                 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v7.0&appId=694562511355243&autoLogAppEvents=1"></script>
 
                                 <div class="fb-login-button" data-size="large" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true" data-width=""></div>
-
+                                  
                                 <div id="status">
                                     
                                 </div>
+                                <br>
+                                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                                <script>
+                                    function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+}
+                                </script>
                     </form> 
 
                     <%
