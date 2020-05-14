@@ -145,71 +145,72 @@
                         </div>
                         <br>
                         <div class="g-signin2" data-onsuccess="onSignIn"></div>
-                        <script> <!--OBTENER PARAMETROS DE GOOGLE LOGIN-->
-    function onSignIn(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-        var nombre = profile.getName();
-        var img_user = profile.getImageUrl();
-        var email_user = profile.getEmail();
-        //FALTA HACER OBJETO SESION DONDE LE PASEN LOS PARAMETROS DE NOMBRE, IMG, EMAIL
-        window.location.replace("http://localhost:8083/FAEv1.0/MainPage.jsp"); //CAMBIAR EL PUERTO 
-    }
+                        <script><!--OBTENER PARAMETROS DE GOOGLE LOGIN-->
+                                function onSignIn(googleUser) {
+                                    var profile = googleUser.getBasicProfile();
+                                    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+                                    console.log('Name: ' + profile.getName());
+                                    console.log('Image URL: ' + profile.getImageUrl());
+                                    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+                                    var nombre = profile.getName();
+                                    var img_user = profile.getImageUrl();
+                                    var email_user = profile.getEmail();
+                                    //FALTA HACER OBJETO SESION DONDE LE PASEN LOS PARAMETROS DE NOMBRE, IMG, EMAIL
+                                    window.location.replace("http://localhost:8083/FAEv1.0/MainPage.jsp"); //CAMBIAR EL PUERTO 
+                                }
+                            </script>
+                            
+                        </form> 
+
+                        <%
+                            Operaciones op = new Operaciones();
+                            if (request.getParameter("btninicar") != null) {
+                                String nomUser = request.getParameter("user");
+                                String password = request.getParameter("password");
+
+                                switch (op.loguear(nomUser, password)) {
+                                    case 1:
+                                        sesion.setAttribute("user", nomUser);
+                                        sesion.setAttribute("nivel", "1");
+                                        response.sendRedirect("indexAdmin.jsp");
+                                        break;
+
+                                    case 2:
+                                        sesion.setAttribute("user", nomUser);
+                                        sesion.setAttribute("nivel", "2");
+                                        response.sendRedirect("MainPage.jsp");
+                                        break;
+
+                                    case 3:
+                                        sesion.setAttribute("user", nomUser);
+                                        sesion.setAttribute("nivel", "3");
+                                        response.sendRedirect("MainPage.jsp");
+                                        break;
+
+                                    default:
+                        %>
+                        <script>
+                            alert("Tu usuarios no existe");
                         </script>
-                    </form> 
-
-                    <%
-                        Operaciones op = new Operaciones();
-                        if (request.getParameter("btninicar") != null) {
-                            String nomUser = request.getParameter("user");
-                            String password = request.getParameter("password");
-
-                            switch (op.loguear(nomUser, password)) {
-                                case 1:
-                                    sesion.setAttribute("user", nomUser);
-                                    sesion.setAttribute("nivel", "1");
-                                    response.sendRedirect("indexAdmin.jsp");
-                                    break;
-
-                                case 2:
-                                    sesion.setAttribute("user", nomUser);
-                                    sesion.setAttribute("nivel", "2");
-                                    response.sendRedirect("MainPage.jsp");
-                                    break;
-
-                                case 3:
-                                    sesion.setAttribute("user", nomUser);
-                                    sesion.setAttribute("nivel", "3");
-                                    response.sendRedirect("MainPage.jsp");
-                                    break;
-
-                                default:
-                    %>
-                    <script>
-                        alert("Tu usuarios no existe");
-                    </script>
-                    <%
-                                    break;
-                            } //cierra switch
-                        }//cierra if
-                        if (request.getParameter("cerrar") != null) {
-                            session.invalidate();
-                        }
-                    %>
-                </aside>
+                        <%
+                                        break;
+                                } //cierra switch
+                            }//cierra if
+                            if (request.getParameter("cerrar") != null) {
+                                session.invalidate();
+                            }
+                        %>
+                    </aside>
+                </div>
             </div>
-        </div>
-        <footer class="container-fluid footer color1">
-            <p>
-                Donec eu tincidunt tortor. Integer consectetur sollicitudin arcu eu dignissim. Morbi ex turpis, fermentum id felis sit amet, euismod dictum.
-            </p>
-        </footer>
-        <script src="https://kit.fontawesome.com/a81368914c.js"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    </body>
-</html>
+            <footer class="container-fluid footer color1">
+                <p>
+                    Donec eu tincidunt tortor. Integer consectetur sollicitudin arcu eu dignissim. Morbi ex turpis, fermentum id felis sit amet, euismod dictum.
+                </p>
+            </footer>
+            <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        </body>
+    </html>
