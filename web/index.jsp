@@ -21,7 +21,8 @@
         <link rel="stylesheet" href="css/colors.css">
     </head>
     <body class="color5">
-        
+        <%                            HttpSession sesion = request.getSession();
+%>
         <script>
 
   function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
@@ -148,6 +149,11 @@
   console.log('Name: ' + profile.getName());
   console.log('Image URL: ' + profile.getImageUrl());
   console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  var nombre = profile.getName();
+  var img_user = profile.getImageUrl();
+  var email_user = profile.getEmail();
+  <%sesion.setAttribute("user",%>nombre<%);%>
+  window.location.replace("http://localhost:8083/FAEv1.0/MainPage.jsp"); //CAMBIAR EL PUERTO 
 }
                                 </script>
                     </form> 
@@ -157,7 +163,6 @@
                         if (request.getParameter("btninicar") != null) {
                             String nomUser = request.getParameter("user");
                             String password = request.getParameter("password");
-                            HttpSession sesion = request.getSession();
 
                             switch (op.loguear(nomUser, password)) {
                                 case 1:
