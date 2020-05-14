@@ -1,0 +1,58 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 8/05/2020, 02:17:35 AM
+    Author     : david
+*/
+
+.content{
+    padding-bottom: 1rem;
+    padding-top: 3rem;
+}
+
+.header{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.img-container-1{
+    padding-left: 2%;
+}
+
+.logo{
+    display: inline-block;
+    margin: auto;
+    height: 50px;
+}
+
+
+.logo-simple{
+    display: inline-block;
+    margin: auto;
+    height: 25px;
+}
+
+textarea{
+    height: 8rem;
+    resize: none;
+}
+
+.title:before{
+    background-image: url(https://picsum.photos/20/20);
+    background-size: 20px 20px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    content: " ";
+}
+
+.footer{
+    clear: both;
+    margin-top: 2rem;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+}
