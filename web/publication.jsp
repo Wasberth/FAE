@@ -4,6 +4,8 @@
     Author     : david
 --%>
 
+
+<%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -32,15 +34,20 @@
                 <div class="col-12 col-md-8">
                     <h2> Crear una publicación</h2>
                     <br>
-                    <form id="publicacion" action="index.jsp" method="post">
+                    <form id="publicacion" action="publication.jsp" method="post">
                         <div class="form-group">
                             <select class="form-control" id="exampleFormControlSelect1" form="publicacion" name="categoria" placeholder="Elije una categoría">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                                <option>Profesores</option>
+                                <option>Directivos</option>
+                                <option>Personal</option>
+                                <option>Policias</option>
+                                <option>Mobiliario</option>
+                                <option>Canchas</option>
+                                <option>Cafetería</option>
+                                <option>Papeleria</option>
+                                <option>Baños</option>
                             </select>
+
                         </div>
                         <div class="form-group">
                             <div class="input-group">
@@ -48,7 +55,7 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fas fa-quote-left"></i></div>
                                 </div>
-                                <input type="text" class="form-control" required name="user" placeholder="Título">
+                                <input type="text" class="form-control" required name="titulo" placeholder="Título">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fas fa-quote-right"></i></div>
                                 </div>
@@ -60,7 +67,7 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fas fa-paragraph"></i></div>
                                 </div>
-                                <textarea form="publicacion" class="form-control" placeholder="Tu publicación" name="texto"></textarea>
+                                <textarea form="publicacion" class="form-control" placeholder="Tu publicación" name="cuerpo"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -69,6 +76,35 @@
                     </form>
                 </div>
                 <div class="clearfix"></div>
+                <%
+                        String DRIVER = "com.mysql.jdbc.Driver";
+                        Class.forName(DRIVER).newInstance();
+                        Connection con = null;
+                        Statement st = null;
+                        ResultSet rs = null;
+                        Statement st2 = null;
+                        ResultSet rs2 = null;
+                        int id=4;
+                        try {
+                            String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=n0m3l0";
+                            con = DriverManager.getConnection(url);
+                            String category = request.getParameter("categoria");
+                            String titulo = request.getParameter("titulo");
+                            String cuerpo = request.getParameter("cuerpo");
+                            st = con.createStatement();
+                            st2 = con.createStatement();
+                            String q = "INSERT INTO MPublicacion values(titulo,cuerpo)";//agregar a la tabla la categoria
+                            String q2 = "INSERT INTO DPublicacion values()";
+                            rs = st.executeQuery(q);
+                            rs2 = st2.executeQuery(q2);
+                            while (rs.next() && rs2.next()) {
+                                String tit = rs.getString("pub_tit");
+                                String txt = rs.getString("pub_txt");
+                            }
+                        } catch(Exception e){
+                                    
+                        }
+                    %>
                 <aside class="login-content col-12 col-md-4 color3">
                     <h2>Reglas</h2>
                     <p>Nullam euismod justo nibh, nec rhoncus mi semper porta. Vivamus lacinia erat sit amet justo porta vulputate. Aenean eget erat faucibus, blandit orci non, porttitor eros. Integer semper leo ut felis cursus, in sodales lectus bibendum. Aliquam erat volutpat. Curabitur nec urna quis lorem laoreet elementum eu in sem. Pellentesque suscipit tincidunt ultricies.</p>
