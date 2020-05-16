@@ -1,0 +1,116 @@
+CREAR LA BASE DE DATOS
+
+	-->CREATE DATABASE db_faev1;
+
+/*USAR LA BASE CREADA*/
+
+	-->USE db_faev1;
+
+/*CREACIÓN DE TABLAS*/
+
+	-->CREATE TABLE DUsuario( 
+		usr_did VARCHAR(12) NOT NULL PRIMARY KEY, 
+		usr_id VARCHAR(12) NOT NULL, 	
+		usr_nom VARCHAR(45) NOT NULL, 
+		usr_app VARCHAR(45) NOT NULL, 	
+		usr_apm VARCHAR(45) NOT NULL, 
+		UNIQUE(usr_id)
+	);
+
+	-->CREATE TABLE MUsuario( 
+		usr_id VARCHAR(12) NOT NULL PRIMARY KEY, 
+		usr_tag VARCHAR(30), 
+		usr_pas VARCHAR(20) NOT NULL, 
+		usr_ema VARCHAR(60) NOT NULL, 
+		UNIQUE(usr_tag)
+	);
+
+	-->CREATE TABLE ENivelUsuario(
+		usr_niv VARCHAR(12) NOT NULL PRIMARY KEY, 
+		niv_id TINYINT(1) UNSIGNED NOT NULL, 
+		usr_id VARCHAR(12) NOT NULL
+	);
+
+	-->CREATE TABLE CNivel( 
+		niv_id TINYINT(1) UNSIGNED NOT NULL PRIMARY KEY, 
+		niv_des VARCHAR(20) NOT NULL
+	);
+
+	-->CREATE TABLE DHistorial( 
+		his_id VARCHAR(12) NOT NULL PRIMARY KEY, 
+		pub_id VARCHAR(12) NOT NULL, 
+		usr_id VARCHAR(12) NOT NULL, 
+		pub_dat DATETIME NOT NULL,
+		UNIQUE(pub_id)
+	);
+
+	-->CREATE TABLE MPublicacion( 
+		pub_id VARCHAR(12) NOT NULL PRIMARY KEY, 
+		pub_tit VARCHAR(50) NOT NULL, 
+		pub_txt TINYTEXT NOT NULL,
+		UNIQUE(pub_tit)
+	); 
+
+	--> CREATE TABLE DPublicacion( 
+		dpub_id VARCHAR(12) NOT NULL PRIMARY KEY, 
+		pub_id VARCHAR(12) NOT NULL,
+		pub_vot INT(6) UNSIGNED NOT NULL,  
+		tip_pub TINYINT(1) UNSIGNED NOT NULL
+	);
+
+	-->CREATE TABLE CTipoPublicacion( 
+		tip_pub TINYINT(1) UNSIGNED NOT NULL PRIMARY KEY, 
+		tip_des VARCHAR(20) NOT NULL
+	);
+
+	-->CREATE TABLE CEtiquetas( 
+		eti_id VARCHAR(12) NOT NULL PRIMARY KEY, 
+		eti_nom VARCHAR(40) NOT NULL, 
+		UNIQUE(eti_nom)
+	);
+
+	-->CREATE TABLE EPublicacionEtiqueta( 
+		pub_eti VARCHAR(12) NOT NULL PRIMARY KEY, 
+		eti_id VARCHAR(12) NOT NULL, 
+		dpub_id VARCHAR(12) NOT NULL
+	);
+
+/*FOREIGN KEYS*/
+
+	-->ALTER TABLE DUsuario 
+		ADD FOREIGN KEY(usr_id) REFERENCES MUsuario(usr_id) 
+		ON DELETE CASCADE 
+		ON UPDATE CASCADE;
+
+	-->ALTER TABLE ENivelUsuario 
+		ADD FOREIGN KEY(niv_id) REFERENCES CNivel(niv_id)
+		ON DELETE CASCADE 
+		ON UPDATE CASCADE, 
+		ADD FOREIGN KEY(usr_id) REFERENCES MUsuario(usr_id)
+		ON DELETE CASCADE 
+		ON UPDATE CASCADE;
+
+	-->ALTER TABLE DHistorial
+		ADD FOREIGN KEY(pub_id) REFERENCES MPublicacion(pub_id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+		ADD FOREIGN KEY(usr_id) REFERENCES MUsuario(usr_id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE;
+
+	-->ALTER TABLE DPublicacion
+		ADD FOREIGN KEY(pub_id) REFERENCES MPublicacion(pub_id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+		ADD FOREIGN KEY(tip_pub) REFERENCES CTipoPublicacion(tip_pub)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE;
+
+	-->ALTER TABLE EPublicacionEtiqueta
+		ADD FOREIGN KEY(eti_id) REFERENCES CEtiquetas(eti_id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+		ADD FOREIGN KEY(dpub_id) REFERENCES DPublicacion(dpub_id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE; 
+		
