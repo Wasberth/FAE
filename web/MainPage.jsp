@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page language="java" import="java.sql.*"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -78,58 +79,77 @@
                     <!--Este artículo es obligatorio-->
 
                     <!--Primeros 2-5 artículos deben de ser generados por ESTE jsp-->
+
+                    <%
+                        String DRIVER = "com.mysql.jdbc.Driver";
+                        Class.forName(DRIVER).newInstance();
+                        Connection con = null;
+                        Statement st = null;
+                        ResultSet rs = null;
+                        Statement st2 = null;
+                        ResultSet rs2 = null;
+                        int id=4;
+                        try {
+                            String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=n0m3l0";
+                            con = DriverManager.getConnection(url);
+                            st = con.createStatement();
+                            st2 = con.createStatement();
+                            String q = "SELECT * FROM MPublicacion LIMIT 4";
+                            String q2 = "SELECT * FROM DPublicacion LIMIT 4";
+                            rs = st.executeQuery(q);
+                            rs2 = st2.executeQuery(q2);
+                            while (rs.next() && rs2.next()) {
+                                String tit = rs.getString("pub_tit");
+                                String txt = rs.getString("pub_txt");
+                    %>
                     <article class="container borderSimple">
                         <header class="row color2">
                             <div class="col-l2">
-                                <h5 class="text-center">Center aligned text on all viewport sizes.</h5>
+                                <h5 class="text-center"><%=tit%></h5>
                             </div>
                         </header>
                         <div class="row">
-                            <div class="col-2 color2">
+                            <div class="col-2 color2 d-none d-sm-inline-block">
                                 <div class="btn-group-vertical btn-g">
                                     <button class="btn btn-success">
                                         <i class="fas fa-arrow-alt-circle-up"></i>
+                                    </button>
+                                    <button class="btn disabled">
+                                        <i>5</i>
                                     </button>
                                     <button class="btn btn-danger">
                                         <i class="fas fa-arrow-alt-circle-down"></i>
                                     </button>
                                 </div>
                             </div>
-                            <div class="col-10 color4">
+                            <div class="col-12 col-sm-10 color4">
                                 <p>
-                                    Nam at suscipit nunc, ut ultrices nibh. Integer lacinia quam quis feugiat vulputate. Aenean lobortis interdum vehicula. Quisque egestas auctor aliquam. Integer venenatis, quam a ultrices laoreet, ante justo malesuada sapien, ut bibendum libero ipsum vitae risus. Donec vitae dolor ac eros porta hendrerit. Fusce hendrerit fringilla pretium. Morbi tincidunt nec odio a maximus. Vestibulum pretium aliquet finibus. Cras id lorem et sapien suscipit lacinia. Vivamus dignissim arcu eget ornare consequat. Cras lacinia augue ex, in tempor sem ultricies et. Mauris augue quam, aliquam in venenatis hendrerit, vestibulum aliquam ex. Sed sodales nisl nibh, eu dapibus diam tincidunt vitae. Pellentesque ac ipsum tellus. Donec auctor, velit ut placerat facilisis, tortor tellus consequat nunc, ac euismod lectus velit at nulla.
-
-                                    Integer tellus neque, ullamcorper non auctor et, fringilla ut sapien. Integer sit amet felis feugiat felis pulvinar vehicula. Curabitur vel placerat augue. Etiam hendrerit sit amet dui sed tincidunt. Cras consequat erat a metus imperdiet, et venenatis orci pretium. Etiam laoreet, ligula id aliquet lacinia, orci leo molestie neque, in luctus augue massa nec risus. Pellentesque commodo a nisi quis tincidunt. Nulla sit amet lacinia sapien. Donec sagittis et dui nec varius. Nullam orci nunc, aliquam sed ipsum et, molestie fringilla quam. Duis semper nisl sit amet malesuada condimentum. Praesent eu velit et turpis interdum eleifend ut id magna. Quisque eu arcu eu tellus placerat vehicula.
+                                    <%=txt%>
                                 </p>
                             </div>
                         </div>
-                    </article>
-                    <article class="container borderSimple">
-                        <header class="row color2">
-                            <div class="col-l2">
-                                <p class="text-center">Center aligned text on all viewport sizes.</p>
-                            </div>
-                        </header>
-                        <div class="row">
-                            <div class="col-2 color2">
-                                <div class="btn-group-vertical btn-g">
-                                    <button class="btn btn-success">
-                                        <i class="fas fa-arrow-alt-circle-up"></i>
-                                    </button>
-                                    <button class="btn btn-danger">
-                                        <i class="fas fa-arrow-alt-circle-down"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="col-10 color4">
-                                <p>
-                                    Nam at suscipit nunc, ut ultrices nibh. Integer lacinia quam quis feugiat vulputate. Aenean lobortis interdum vehicula. Quisque egestas auctor aliquam. Integer venenatis, quam a ultrices laoreet, ante justo malesuada sapien, ut bibendum libero ipsum vitae risus. Donec vitae dolor ac eros porta hendrerit. Fusce hendrerit fringilla pretium. Morbi tincidunt nec odio a maximus. Vestibulum pretium aliquet finibus. Cras id lorem et sapien suscipit lacinia. Vivamus dignissim arcu eget ornare consequat. Cras lacinia augue ex, in tempor sem ultricies et. Mauris augue quam, aliquam in venenatis hendrerit, vestibulum aliquam ex. Sed sodales nisl nibh, eu dapibus diam tincidunt vitae. Pellentesque ac ipsum tellus. Donec auctor, velit ut placerat facilisis, tortor tellus consequat nunc, ac euismod lectus velit at nulla.
-
-                                    Integer tellus neque, ullamcorper non auctor et, fringilla ut sapien. Integer sit amet felis feugiat felis pulvinar vehicula. Curabitur vel placerat augue. Etiam hendrerit sit amet dui sed tincidunt. Cras consequat erat a metus imperdiet, et venenatis orci pretium. Etiam laoreet, ligula id aliquet lacinia, orci leo molestie neque, in luctus augue massa nec risus. Pellentesque commodo a nisi quis tincidunt. Nulla sit amet lacinia sapien. Donec sagittis et dui nec varius. Nullam orci nunc, aliquam sed ipsum et, molestie fringilla quam. Duis semper nisl sit amet malesuada condimentum. Praesent eu velit et turpis interdum eleifend ut id magna. Quisque eu arcu eu tellus placerat vehicula.
-                                </p>
+                        <div class="row d-block d-sm-none color2">
+                            <div class="btn-group btn-g color-12">
+                                <button class="btn btn-success">
+                                    <i class="fas fa-arrow-alt-circle-up"></i>
+                                </button>
+                                <button class="btn disabled">
+                                    <i>5</i>
+                                </button>
+                                <button class="btn btn-danger">
+                                    <i class="fas fa-arrow-alt-circle-down"></i>
+                                </button>
                             </div>
                         </div>
                     </article>
+                    <%
+                            }
+                        } catch (Exception e) {
+                            %>
+                    <p>Murió <%=e%></p>
+                    <%
+                        }
+                    %>
                     <!--Primeros 2-5 artículos deben de ser generados por ESTE jsp-->
                 </div>
             </div>
@@ -142,9 +162,10 @@
             $(document).ready(function () {
                 $(window).scroll(function () {
                     if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-                        $.get("InfinitContentServlet", function (data) {
+                        $.get("InfinitContentServlet", {counted:<%=id%>} ,function (data) {
                             $("#content-wrapper").append(data);
                         });
+                        <%id += 10;%>
                     }
                 });
             });

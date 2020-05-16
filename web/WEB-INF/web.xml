@@ -4,9 +4,17 @@
         <servlet-name>InfinitContentServlet</servlet-name>
         <servlet-class>content.InfinitContentServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Voto</servlet-name>
+        <servlet-class>content.Voto</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>InfinitContentServlet</servlet-name>
         <url-pattern>/InfinitContentServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Voto</servlet-name>
+        <url-pattern>/Voto</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

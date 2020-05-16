@@ -24,6 +24,8 @@ public class InfinitContentServlet extends HttpServlet {
             HttpServletResponse response) throws ServletException, IOException {
         try (PrintWriter out = response.getWriter()) {
             String resp = "";
+            String counted = request.getParameter("counted");
+            counter = Integer.parseInt(counted);
             for (int i = 1; i <= 10; i++) {
                 resp += "<article class=\"container borderSimple\">\n"
                         + "                        <header class=\"row color2\">\n"
@@ -70,14 +72,12 @@ public class InfinitContentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-        counter = 1;
         processRequest(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-        counter = 1;
         processRequest(request, response);
     }
 }
