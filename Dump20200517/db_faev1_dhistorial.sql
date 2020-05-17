@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
 -- Host: localhost    Database: db_faev1
 -- ------------------------------------------------------
--- Server version	8.0.20
+-- Server version	5.7.29-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,17 +23,17 @@ DROP TABLE IF EXISTS `dhistorial`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `dhistorial` (
-  `his_id` int unsigned NOT NULL AUTO_INCREMENT,
-  `pub_id` int unsigned NOT NULL,
-  `usr_id` int unsigned NOT NULL,
-  `his_dat` datetime NOT NULL,
-  `his_vot` tinyint unsigned NOT NULL,
-  PRIMARY KEY (`his_id`),
+  `hst_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `pub_id` int(10) unsigned NOT NULL,
+  `usr_id` int(10) unsigned NOT NULL,
+  `hst_dat` datetime NOT NULL,
+  `hst_vot` tinyint(4) NOT NULL,
+  PRIMARY KEY (`hst_id`),
   KEY `pub_id` (`pub_id`),
   KEY `usr_id` (`usr_id`),
-  CONSTRAINT `dhistorial_ibfk_1` FOREIGN KEY (`pub_id`) REFERENCES `mpublicacion` (`pub_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `dhistorial_ibfk_2` FOREIGN KEY (`usr_id`) REFERENCES `musuario` (`usr_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `dhistorial_ibfk_1` FOREIGN KEY (`pub_id`) REFERENCES `mpublicacion` (`pub_id`),
+  CONSTRAINT `dhistorial_ibfk_2` FOREIGN KEY (`usr_id`) REFERENCES `musuario` (`usr_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-17  5:59:18
+-- Dump completed on 2020-05-17  1:24:59

@@ -99,16 +99,12 @@ sesion.getAttribute("usr_id");%>
                             st2 = con.createStatement();
                             String q = "SELECT * FROM MPublicacion LIMIT 4";
                             String q2 = "SELECT * FROM DPublicacion LIMIT 4";
-                            //String q3 = "SELECT * FROM DPublicacion LIMIT ";
-                            //String q4 = "SELECT * FROM DPublicacion LIMIT ";
                             rs = st.executeQuery(q);
                             rs2 = st2.executeQuery(q2);
                             while (rs.next() && rs2.next()) {
                                 String tit = rs.getString("pub_tit");
-                                String txt = rs.getString("pub_txt");
+                                String txt = rs2.getString("pub_txt");
                                 int pub_id = rs.getInt("pub_id");
-                                //String vote = rs.getString("pub_vot");
-                                //String type = rs.getString("tip_pub");
                     %>
                     <article class="container borderSimple">
                         <header class="row color2">
@@ -119,13 +115,13 @@ sesion.getAttribute("usr_id");%>
                         <div class="row">
                             <div class="col-2 color2 d-none d-sm-inline-block">
                                 <div class="btn-group-vertical btn-g">
-                                        <button class="btn btn-success" name="upvote" onclick="votes(<%=pub_id%>)">
+                                        <button class="btn btn-success" name="upvote" onclick="votes(<%=pub_id%>,<%=session.getAttribute("usr_id")%>, '+1')">
                                         <i class="fas fa-arrow-alt-circle-up"></i>
                                     </button>
                                     <button class="btn disabled">
                                         <i>5</i>
                                     </button>
-                                    <button class="btn btn-danger" name="downvote">
+                                    <button class="btn btn-danger" name="downvote" onclick="votes(<%=pub_id%>,<%=session.getAttribute("usr_id")%>, '-1')">
                                         <i class="fas fa-arrow-alt-circle-down"></i>
                                     </button>
                                 </div>
@@ -177,8 +173,8 @@ sesion.getAttribute("usr_id");%>
                     }
                 });
             });
-            function votes(id){
-                $.post("Voto", {counted:<%=id%>});
+            function votes(pub_id, usr_id, upvote){
+                $.post("Voto", {pub_id:pub_id, usr_id:usr_id, vote:upvote});
             }
         </script>
     </body>

@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
 -- Host: localhost    Database: db_faev1
 -- ------------------------------------------------------
--- Server version	8.0.20
+-- Server version	5.7.29-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,13 +23,13 @@ DROP TABLE IF EXISTS `epublicacionetiqueta`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `epublicacionetiqueta` (
-  `eti_id` int unsigned NOT NULL,
-  `dpb_id` int unsigned NOT NULL,
-  PRIMARY KEY (`eti_id`,`dpb_id`),
-  KEY `dpb_id` (`dpb_id`),
-  CONSTRAINT `epublicacionetiqueta_ibfk_1` FOREIGN KEY (`eti_id`) REFERENCES `cetiquetas` (`eti_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `epublicacionetiqueta_ibfk_2` FOREIGN KEY (`dpb_id`) REFERENCES `dpublicacion` (`dpb_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `eti_id` int(10) unsigned NOT NULL,
+  `pub_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`eti_id`,`pub_id`),
+  KEY `pub_id` (`pub_id`),
+  CONSTRAINT `epublicacionetiqueta_ibfk_1` FOREIGN KEY (`eti_id`) REFERENCES `cetiquetas` (`eti_id`),
+  CONSTRAINT `epublicacionetiqueta_ibfk_2` FOREIGN KEY (`pub_id`) REFERENCES `dpublicacion` (`pub_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-17  5:59:18
+-- Dump completed on 2020-05-17  1:24:58

@@ -42,6 +42,12 @@ public class Post extends HttpServlet {
             Connection con = null;
             Statement st = null;
             ResultSet rs = null;
+            Statement st2 = null;
+            ResultSet rs2 = null;
+            Statement st3 = null;
+            ResultSet rs3 = null;
+            Statement st4 = null;
+            ResultSet rs4 = null;
             String categoria = request.getParameter("categoria");
             String titulo = request.getParameter("titulo");
             String cuerpo = request.getParameter("cuerpo");
@@ -50,10 +56,16 @@ public class Post extends HttpServlet {
                 
                 con = DriverManager.getConnection(url);
                 st = con.createStatement();
+                st2 = con.createStatement();
+                st3 = con.createStatement();
                 String q = "INSERT INTO mpublicacion (pub_tit,pub_txt) values("+titulo+","+cuerpo+")";
                 String q2 = "INSERT INTO dpublicacion (pub_vot,tip_pub) values(1,1)";
                 String q3 = "INSERT INTO epublicacionetiqueta (eti_id,pub_id) values(1,1)";
+                //Aquí falta poner la sentencia para agregar el like en el momento en que se crea
+                //Y también falta que se guarden las categorías al crear las publicaciones
                 rs = st.executeQuery(q);
+                rs2 = st2.executeQuery(q2);
+                rs3 = st3.executeQuery(q3);
                 response.sendRedirect("MainPage.jsp");
             } catch (Exception e) {
                 System.out.println(e);

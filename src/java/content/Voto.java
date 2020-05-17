@@ -34,21 +34,22 @@ public class Voto extends HttpServlet {
             Class.forName(DRIVER).newInstance();
             Connection con = null;
             Statement st = null;
+            Statement st2 = null;
             ResultSet rs = null;
-            int voto = 0;
-            int id = Integer.parseInt(request.getParameter("id")); //parametro de la funcion js
-            if(request.getParameter("upvote")!=null){
-                voto = 1;
-            }
-            if(request.getParameter("downvote")!=null){
-                voto = -1;
-            }
+            ResultSet rs2 = null;
+            String voto = (request.getParameter("vote"));
+            String pub_id = (request.getParameter("pub_id"));
+            String usr_id = (request.getParameter("usr_id"));
+            
             try {
                 String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=n0m3l0";
                 con = DriverManager.getConnection(url);
                 st = con.createStatement();
-                String q = "UPDATE dpublicacion SET pub_vot = pub_vote +"+voto+"WHERE pub_id ="+id;
+                String q = "UPDATE DPublicacion SET pub_vot = pub_vote "+voto+" WHERE pub_id = "+pub_id;
                 rs = st.executeQuery(q);
+                st2 = con.createStatement();
+                String q2 = "INSERT INTO DHistorial (pub_id, usr_id, hst_vot, hst_dat) VALUES ("+pub_id+","+usr_id+","+voto+", GETDATE())";
+                rs2 = st2.executeQuery(q2);
             } catch (Exception e) {
                 System.out.println(e);
             }
