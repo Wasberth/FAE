@@ -172,18 +172,21 @@
                                     case 1:
                                         sesion.setAttribute("user", nomUser);
                                         sesion.setAttribute("nivel", "1");
+                                        sesion.setAttribute("usr_id", op.getId());
                                         response.sendRedirect("indexAdmin.jsp");
                                         break;
 
                                     case 2:
                                         sesion.setAttribute("user", nomUser);
                                         sesion.setAttribute("nivel", "2");
+                                        sesion.setAttribute("usr_id", op.getId());
                                         response.sendRedirect("MainPage.jsp");
                                         break;
 
                                     case 3:
                                         sesion.setAttribute("user", nomUser);
                                         sesion.setAttribute("nivel", "3");
+                                        sesion.setAttribute("usr_id", op.getId());
                                         response.sendRedirect("MainPage.jsp");
                                         break;
 

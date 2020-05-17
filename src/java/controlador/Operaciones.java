@@ -8,9 +8,12 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
 
 public class Operaciones {
-
+    
+    private int id ;
+    
     public static Connection getConnection() {
         //cambiar nombre de la bd
         String url = "jdbc:mysql://localhost:3306/fae1?user=root&password=root";
@@ -29,6 +32,7 @@ public class Operaciones {
     }
 
     public int loguear(String usuario, String password) {
+        
         System.out.println("Usuario: "+usuario);
         System.out.println("Password: "+password);
         int nivel = 0;
@@ -43,7 +47,8 @@ public class Operaciones {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                nivel = rs.getInt(1);
+                nivel = rs.getInt("usr_nvl");
+                id = rs.getInt("usr_id");
             }
             con.close();
         } catch (SQLException ed) {
@@ -51,5 +56,13 @@ public class Operaciones {
             System.out.println(Arrays.toString(ed.getStackTrace()));
         }
         return nivel;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
