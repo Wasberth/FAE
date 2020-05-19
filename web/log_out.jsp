@@ -21,8 +21,8 @@
         if(sesion.getAttribute("user")!=null && sesion.getAttribute("nivel")!=null){
             usuario = sesion.getAttribute("user").toString();
             nivel = sesion.getAttribute("nivel").toString();
-                                        response.sendRedirect("index.jsp");
-                                        System.out.println("llegue al log "+usuario);
+            session.invalidate();
+            response.sendRedirect("index.jsp");
         }else{
             out.append("<script>location.replace['index.jsp'];</script>");
         }

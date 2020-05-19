@@ -20,10 +20,16 @@
         <link rel="stylesheet" href="css/mainPage.css">
     </head>
     <body class="color5">
-        <%HttpSession sesion = request.getSession();
-sesion.getAttribute("nomUser");
-sesion.getAttribute("usr_id");
-String nom_user = sesion.getAttribute("user").toString();
+        <%
+            try{
+                HttpSession sesion = request.getSession();
+                sesion.getAttribute("nomUser");
+                sesion.getAttribute("usr_id");
+                String nom_user = sesion.getAttribute("user").toString();
+            }catch(Exception e){
+                response.sendRedirect("errorPage.jsp");
+            }
+            
 
         %>
         <nav class="navbar navbar-expand-lg navbar-light color1 fixed-top">
@@ -41,7 +47,7 @@ String nom_user = sesion.getAttribute("user").toString();
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#">Escribir una publicacion</a>
                             <a class="dropdown-item" href="#">Mi perfil</a>
-                            <a class="dropdown-item" href="log_out.jsp" name="cerrarSesion">Cerrar Sesion <%out.append(" "+nom_user);%></a>
+                            <a class="dropdown-item" href="log_out.jsp" name="cerrarSesion">Cerrar Sesion</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Destacados</a>
                         </div>

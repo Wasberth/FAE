@@ -198,10 +198,8 @@
                         <%
                                         break;
                                 } //cierra switch
-                            }//cierra if
-                            if (request.getParameter("cerrar") != null) {
-                                session.invalidate();
                             }
+                             
                         %>
                     </aside>
                 </div>

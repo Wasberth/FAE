@@ -13,18 +13,22 @@
     </head>
     <body>
         <%
-        
+        try{
         HttpSession sesion = request.getSession();
-        String usuario;
-        String nivel;
+        
         
         if(sesion.getAttribute("user")!=null && sesion.getAttribute("nivel")!=null){
-            usuario = sesion.getAttribute("user").toString();
-            nivel = sesion.getAttribute("nivel").toString();
-            out.append("<a href='index.jsp'?cerrar=true><h5>Cerrar Sesion "+usuario+"</h5></a>");    
+            String usuario = sesion.getAttribute("user").toString();
+            String nivel = sesion.getAttribute("nivel").toString();
+            out.append("<a href='log_out.jsp'?cerrar=true><h5>Cerrar Sesion "+usuario+"</h5></a>");    
         }else{
-            out.append("<script>location.replace['login.jsp'];</script>");
+            response.sendRedirect("errorPage.jsp");
         }
+        
+        }catch(Exception e){
+            response.sendRedirect("errorPage.jsp");
+        }
+        
         
         %>
         <h1>Estás en la página de administradores (Todavia no tiene diseño)</h1>
