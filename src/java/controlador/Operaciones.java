@@ -47,8 +47,8 @@ public class Operaciones {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                nivel = rs.getInt("usr_nvl");
-                id = rs.getInt("usr_id");
+                nivel = rs.getInt("user_level");
+                id = rs.getInt("id_user");
             }
             con.close();
         } catch (SQLException ed) {

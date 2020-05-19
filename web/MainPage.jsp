@@ -4,11 +4,11 @@
     Author     : david
 --%>
 
+
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page language="java" import="java.sql.*"%>
-<%HttpSession sesion = request.getSession();%>
-<%sesion.getAttribute("nomUser");
-sesion.getAttribute("usr_id");%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,6 +20,12 @@ sesion.getAttribute("usr_id");%>
         <link rel="stylesheet" href="css/mainPage.css">
     </head>
     <body class="color5">
+        <%HttpSession sesion = request.getSession();
+sesion.getAttribute("nomUser");
+sesion.getAttribute("usr_id");
+String nom_user = sesion.getAttribute("user").toString();
+
+        %>
         <nav class="navbar navbar-expand-lg navbar-light color1 fixed-top">
             <a class="navbar-brand" href="#"><img class="logo" src="img/FAE_logo.png"></a>
 
@@ -35,6 +41,7 @@ sesion.getAttribute("usr_id");%>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#">Escribir una publicacion</a>
                             <a class="dropdown-item" href="#">Mi perfil</a>
+                            <a class="dropdown-item" href="log_out.jsp" name="cerrarSesion">Cerrar Sesion <%out.append(" "+nom_user);%></a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Destacados</a>
                         </div>
@@ -177,5 +184,9 @@ sesion.getAttribute("usr_id");%>
                 $.post("Voto", {pub_id:pub_id, usr_id:usr_id, vote:upvote});
             }
         </script>
+        
+
+        
+       
     </body>
 </html>

@@ -145,7 +145,7 @@
                         </div>
                         <br>
                         <div class="g-signin2" data-onsuccess="onSignIn"></div>
-                        <script><!--OBTENER PARAMETROS DE GOOGLE LOGIN-->
+                        <!--<script>OBTENER PARAMETROS DE GOOGLE LOGIN
                             function onSignIn(googleUser) {
                                 var profile = googleUser.getBasicProfile();
                                 console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -158,7 +158,7 @@
                                 //FALTA HACER OBJETO SESION DONDE LE PASEN LOS PARAMETROS DE NOMBRE, IMG, EMAIL
                                 window.location.replace("http://localhost:8083/FAEv1.0/MainPage.jsp"); //CAMBIAR EL PUERTO 
                             }
-                            </script>
+                            </script>-->
 
                         </form> 
 
