@@ -49,12 +49,11 @@ ENGINE = InnoDB;
 -- Table `db_FAEv1`.`DUsuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_FAEv1`.`DUsuario` (
-  `usr_did` INT NOT NULL,
-  `usr_id` INT NOT NULL,
+  `usr_id` INT NOT NULL AUTO_INCREMENT,
   `usr_nom` VARCHAR(45) NOT NULL,
   `usr_app` VARCHAR(45) NOT NULL,
   `usr_apm` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`usr_did`),
+  PRIMARY KEY (`usr_id`),
   CONSTRAINT `user_info`
     FOREIGN KEY (`usr_id`)
     REFERENCES `db_FAEv1`.`MUsuario` (`usr_id`)
