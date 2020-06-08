@@ -106,7 +106,7 @@
                         ResultSet rs2 = null;
                         int id=4;
                         try {
-                            String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=n0m3l0";
+                            String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=root";
                             con = DriverManager.getConnection(url);
                             st = con.createStatement();
                             st2 = con.createStatement();

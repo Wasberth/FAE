@@ -14,8 +14,8 @@ and open the template in the editor.
 -- -----------------------------------------------------
 -- Schema db_FAEv1
 -- -----------------------------------------------------
-DROP DATABASE IF EXISTS `db_FAEv1`
-CREATE DARABASE `db_FAEv1` DEFAULT CHARACTER SET utf8 ;
+DROP DATABASE IF EXISTS `db_FAEv1`;
+CREATE DATABASE `db_FAEv1` DEFAULT CHARACTER SET utf8 ;
 USE `db_FAEv1` ;
 
 -- -----------------------------------------------------
@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS `db_FAEv1`.`MUsuario` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+ALTER TABLE `MUsuario` AUTO_INCREMENT = 1;
 
 -- -----------------------------------------------------
 -- Table `db_FAEv1`.`DUsuario`
@@ -61,6 +62,7 @@ CREATE TABLE IF NOT EXISTS `db_FAEv1`.`DUsuario` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+ALTER TABLE `DUsuario` AUTO_INCREMENT = 1;
 
 -- -----------------------------------------------------
 -- Table `db_FAEv1`.`MPublicacion`
@@ -77,6 +79,7 @@ CREATE TABLE IF NOT EXISTS `db_FAEv1`.`MPublicacion` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+ALTER TABLE `MPublicacion` AUTO_INCREMENT = 1;
 
 -- -----------------------------------------------------
 -- Table `db_FAEv1`.`CTipoPublicacion`
@@ -92,13 +95,12 @@ ENGINE = InnoDB;
 -- Table `db_FAEv1`.`DPublicacion`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_FAEv1`.`DPublicacion` (
-  `dpb_id` INT NOT NULL AUTO_INCREMENT,
-  `pub_id` INT NOT NULL,
+  `pub_id` INT NOT NULL AUTO_INCREMENT,
   `typ_id` INT NOT NULL,
   `pub_txt` VARCHAR(45) NOT NULL,
   `pub_dat` DATETIME NOT NULL,
   `pub_vot` SMALLINT(5) NOT NULL,
-  PRIMARY KEY (`dpb_id`),
+  PRIMARY KEY (`pub_id`),
   CONSTRAINT `tipo_publicacion`
     FOREIGN KEY (`typ_id`)
     REFERENCES `db_FAEv1`.`CTipoPublicacion` (`typ_id`)
@@ -111,6 +113,7 @@ CREATE TABLE IF NOT EXISTS `db_FAEv1`.`DPublicacion` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+ALTER TABLE `DPublicacion` AUTO_INCREMENT = 1;
 
 -- -----------------------------------------------------
 -- Table `db_FAEv1`.`CAccion`
@@ -121,12 +124,13 @@ CREATE TABLE IF NOT EXISTS `db_FAEv1`.`CAccion` (
   PRIMARY KEY (`act_id`))
 ENGINE = InnoDB;
 
+ALTER TABLE `CAccion` AUTO_INCREMENT = 1;
 
 -- -----------------------------------------------------
 -- Table `db_FAEv1`.`DHistorial`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_FAEv1`.`DHistorial` (
-  `hst_id` VARCHAR(45) NOT NULL,
+  `hst_id` INT NOT NULL AUTO_INCREMENT,
   `pub_id` INT NOT NULL,
   `usr_id` INT NOT NULL,
   `hst_dat` DATETIME NOT NULL,
@@ -149,6 +153,7 @@ CREATE TABLE IF NOT EXISTS `db_FAEv1`.`DHistorial` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+ALTER TABLE `DHistorial` AUTO_INCREMENT = 1;
 
 -- -----------------------------------------------------
 -- Table `db_FAEv1`.`CEtiquetas`
@@ -164,7 +169,7 @@ ENGINE = InnoDB;
 -- Table `db_FAEv1`.`EPublicacionEtiqueta`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_FAEv1`.`EPublicacionEtiqueta` (
-  `eti_id` INT NOT NULL,
+  `eti_id` INT NOT NULL AUTO_INCREMENT,
   `pub_id` INT NOT NULL,
   CONSTRAINT `publicacion_con_etiqueta`
     FOREIGN KEY (`pub_id`)
@@ -177,5 +182,11 @@ CREATE TABLE IF NOT EXISTS `db_FAEv1`.`EPublicacionEtiqueta` (
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );
+
+ALTER TABLE `EPublicacionEtiqueta` AUTO_INCREMENT = 1;
+
+INSERT INTO CNivel VALUES (1, 'Administrador'), (2, 'Moderador'), (3, 'Usuario');
+INSERT INTO CTipoPublicacion VALUES (1,'Publicación'), (2,'Noticia');
+INSERT INTO CAccion VALUES (1, 'Upvote'), (2, 'Downvote'), (3, 'Report');
 
 -->

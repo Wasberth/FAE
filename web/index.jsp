@@ -4,6 +4,7 @@
     Author     : PORTO
 --%>
 
+<%@page import="config.Conexion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page session="true"%>
 <%@page import="controlador.Operaciones" %>
@@ -21,11 +22,10 @@
         <link rel="stylesheet" href="css/colors.css">
     </head>
     <body class="color5">
-        <%HttpSession sesion = request.getSession();%>
-        
-            
-
-
+        <%
+            Conexion con = new Conexion();
+            HttpSession sesion = request.getSession();
+        %>
 
         <header class="container-fluid col-xs-12 header color1">
             <div class="row">

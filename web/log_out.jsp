@@ -23,6 +23,7 @@
             nivel = sesion.getAttribute("nivel").toString();
             session.invalidate();
             response.sendRedirect("index.jsp");
+            System.out.println("PASE POR LOG OUT WIIII");
         }else{
             out.append("<script>location.replace['index.jsp'];</script>");
         }

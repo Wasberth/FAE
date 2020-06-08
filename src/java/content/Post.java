@@ -17,6 +17,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import config.Conexion;
+import controlador.Operaciones;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,37 +42,52 @@ public class Post extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            HttpSession session = request.getSession();
             String DRIVER = "com.mysql.jdbc.Driver";
             Class.forName(DRIVER).newInstance();
-            Connection con = null;
-            Statement st = null;
-            ResultSet rs = null;
-            Statement st2 = null;
-            ResultSet rs2 = null;
-            Statement st3 = null;
-            ResultSet rs3 = null;
-            Statement st4 = null;
-            ResultSet rs4 = null;
+            java.sql.Connection con;
+            try {
+                con = new Conexion().getConnection();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
             String categoria = request.getParameter("categoria");
             String titulo = request.getParameter("titulo");
             String cuerpo = request.getParameter("cuerpo");
             try {
-                String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=n0m3l0";
-                
+                String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=root";
+
                 con = DriverManager.getConnection(url);
-                st = con.createStatement();
-                st2 = con.createStatement();
-                st3 = con.createStatement();
-                String q = "INSERT INTO mpublicacion (pub_tit,pub_txt) values("+titulo+","+cuerpo+")";
-                String q2 = "INSERT INTO dpublicacion (pub_vot,tip_pub) values(1,1)";
-                String q3 = "INSERT INTO epublicacionetiqueta (eti_id,pub_id) values(1,1)";
+                int usr_id = (int) (session.getAttribute("usr_id"));
+
+                String q = "INSERT INTO MPublicacion (`pub_tit`,`usr_id`) "
+                        + "VALUES (?,?);";
+                String q2 = "INSERT INTO DPublicacion(`typ_id`, `pub_txt`, `pub_dat`, `pub_vot`, `pub_id`) "
+                        + "VALUES (1, ?, CURRENT_TIMESTAMP(), 1, ?);";
+                String q3 = "INSERT INTO DHistorial(`usr_id`, `pub_id`, `hst_dat`, `hst_act`) "
+                        + "VALUES (?, ?. CURRENT_TIMESTAMP(), 1)";
+
                 //Aquí falta poner la sentencia para agregar el like en el momento en que se crea
                 //Y también falta que se guarden las categorías al crear las publicaciones
-                rs = st.executeQuery(q);
-                rs2 = st2.executeQuery(q2);
-                rs3 = st3.executeQuery(q3);
+                PreparedStatement ps = con.prepareStatement(q);
+                PreparedStatement ps2 = con.prepareStatement(q2);
+                PreparedStatement ps3 = con.prepareStatement(q3);
+
+                ps.setString(1, titulo);
+                ps.setInt(2, usr_id);
+                ps.executeUpdate();
+                int id = new Operaciones().getLastPublicacion(usr_id);
+
+                ps2.setString(1, cuerpo);
+                ps2.setInt(2, id);
+                ps2.executeUpdate();
+
+                ps3.setInt(1, usr_id);
+                ps3.setInt(2, id);
+                ps3.executeUpdate();
+
                 response.sendRedirect("MainPage.jsp");
-            } catch (Exception e) {
+            } catch (IOException | SQLException e) {
                 System.out.println(e);
             }
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {

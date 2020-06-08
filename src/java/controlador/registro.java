@@ -8,6 +8,8 @@ package controlador;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Arrays;
 
 /**
  *
@@ -17,7 +19,7 @@ public class registro {
 
     public static Connection getConnection() {
         //cambiar nombre de la bd
-        String url = "jdbc:mysql://localhost:3306/fae1";
+        String url = "jdbc:mysql://localhost:3306/db_faev1";
         String userName = "root";
         String password = "root";
 
@@ -40,26 +42,37 @@ public class registro {
             con = Operaciones.getConnection();
 
             //verificar nombre de las columnas
-            String q = "insert into musuario (user_tag, user_password, user_name, user_appat, user_apmat, user_level)"
-                    + "values (?,?,?,?,?,3); ";
+            String q = "insert into musuario (usr_tag, usr_pas, usr_niv)"
+                    + "values (?,?,3); ";
+            
+            String q2 = "insert into dusuario (usr_nom,usr_app,usr_apm)"
+                    + "values (?,?,?)";
+            
+            
 
             PreparedStatement ps = con.prepareStatement(q);
+            PreparedStatement ps2 = con.prepareStatement(q2);
             ps.setString(1, user_tag);
             ps.setString(2, user_password);
-            ps.setString(3, user_name);
-            ps.setString(4, user_appat);
-            ps.setString(5, user_apmat);
+            ps2.setString(1,user_name);
+            ps2.setString(2,user_appat);
+            ps2.setString(3, user_apmat);
             ps.executeUpdate();
+            ps2.executeUpdate();
+                        
 
-            if (ps != null) {
-                ps.close();
+            if (ps != null && ps2 != null) {
+                //ps.close();
+                //ps2.close();
                 ps = null;
+                ps2 = null;
+                       
                 registro = true;
             }
             con.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
-            System.out.println(e.getStackTrace());
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
         return registro;
     }
