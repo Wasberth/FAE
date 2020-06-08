@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!--
+
+-- MySQL Workbench Forward Engineering
+-- -----------------------------------------------------
+-- Schema db_FAEv1
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema db_FAEv1
+-- -----------------------------------------------------
+DROP DATABASE IF EXISTS `db_FAEv1`
+CREATE DARABASE `db_FAEv1` DEFAULT CHARACTER SET utf8 ;
+USE `db_FAEv1` ;
+
+-- -----------------------------------------------------
+-- Table `db_FAEv1`.`CNivel`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_FAEv1`.`CNivel` (
+  `niv_id` TINYINT NOT NULL,
+  `niv_des` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`niv_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `db_FAEv1`.`MUsuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_FAEv1`.`MUsuario` (
+  `usr_id` INT NOT NULL AUTO_INCREMENT,
+  `usr_tag` VARCHAR(30) NOT NULL,
+  `usr_pas` VARCHAR(30) NOT NULL,
+  `usr_niv` TINYINT NOT NULL,
+  PRIMARY KEY (`usr_id`),
+  CONSTRAINT `nivel_de_usuario`
+    FOREIGN KEY (`usr_niv`)
+    REFERENCES `db_FAEv1`.`CNivel` (`niv_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `db_FAEv1`.`DUsuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_FAEv1`.`DUsuario` (
+  `usr_did` INT NOT NULL,
+  `usr_id` INT NOT NULL,
+  `usr_nom` VARCHAR(45) NOT NULL,
+  `usr_app` VARCHAR(45) NOT NULL,
+  `usr_apm` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`usr_did`),
+  CONSTRAINT `user_info`
+    FOREIGN KEY (`usr_id`)
+    REFERENCES `db_FAEv1`.`MUsuario` (`usr_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `db_FAEv1`.`MPublicacion`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_FAEv1`.`MPublicacion` (
+  `pub_id` INT NOT NULL AUTO_INCREMENT,
+  `pub_tit` VARCHAR(45) NOT NULL,
+  `usr_id` INT NOT NULL,
+  PRIMARY KEY (`pub_id`),
+  CONSTRAINT `author`
+    FOREIGN KEY (`usr_id`)
+    REFERENCES `db_FAEv1`.`MUsuario` (`usr_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `db_FAEv1`.`CTipoPublicacion`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_FAEv1`.`CTipoPublicacion` (
+  `typ_id` INT NOT NULL AUTO_INCREMENT,
+  `typ_des` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`typ_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `db_FAEv1`.`DPublicacion`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_FAEv1`.`DPublicacion` (
+  `dpb_id` INT NOT NULL AUTO_INCREMENT,
+  `pub_id` INT NOT NULL,
+  `typ_id` INT NOT NULL,
+  `pub_txt` VARCHAR(45) NOT NULL,
+  `pub_dat` DATETIME NOT NULL,
+  `pub_vot` SMALLINT(5) NOT NULL,
+  PRIMARY KEY (`dpb_id`),
+  CONSTRAINT `tipo_publicacion`
+    FOREIGN KEY (`typ_id`)
+    REFERENCES `db_FAEv1`.`CTipoPublicacion` (`typ_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `info_publicacion`
+    FOREIGN KEY (`pub_id`)
+    REFERENCES `db_FAEv1`.`MPublicacion` (`pub_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `db_FAEv1`.`CAccion`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_FAEv1`.`CAccion` (
+  `act_id` TINYINT NOT NULL AUTO_INCREMENT,
+  `act_des` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`act_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `db_FAEv1`.`DHistorial`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_FAEv1`.`DHistorial` (
+  `hst_id` VARCHAR(45) NOT NULL,
+  `pub_id` INT NOT NULL,
+  `usr_id` INT NOT NULL,
+  `hst_dat` DATETIME NOT NULL,
+  `hst_act` TINYINT NOT NULL,
+  PRIMARY KEY (`hst_id`),
+  CONSTRAINT `publicacion_en_el_historial`
+    FOREIGN KEY (`pub_id`)
+    REFERENCES `db_FAEv1`.`MPublicacion` (`pub_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `user_en_el_historial`
+    FOREIGN KEY (`usr_id`)
+    REFERENCES `db_FAEv1`.`MUsuario` (`usr_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `historial_accion`
+    FOREIGN KEY (`hst_act`)
+    REFERENCES `db_FAEv1`.`CAccion` (`act_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `db_FAEv1`.`CEtiquetas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_FAEv1`.`CEtiquetas` (
+  `eti_id` INT NOT NULL,
+  `eti_nom` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`eti_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `db_FAEv1`.`EPublicacionEtiqueta`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_FAEv1`.`EPublicacionEtiqueta` (
+  `eti_id` INT NOT NULL,
+  `pub_id` INT NOT NULL,
+  CONSTRAINT `publicacion_con_etiqueta`
+    FOREIGN KEY (`pub_id`)
+    REFERENCES `db_FAEv1`.`MPublicacion` (`pub_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `etiqueta_de_publicacion`
+    FOREIGN KEY (`eti_id`)
+    REFERENCES `db_FAEv1`.`CEtiquetas` (`eti_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+-->
