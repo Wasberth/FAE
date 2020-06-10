@@ -15,7 +15,8 @@ import java.util.Arrays;
  *
  * @author tutus
  */
-public class registro {
+public class adminOperacion {
+
 
     public static Connection getConnection() {
         //cambiar nombre de la bd
@@ -43,7 +44,7 @@ public class registro {
 
             //verificar nombre de las columnas
             String q = "insert into musuario (usr_tag, usr_pas, usr_niv) "
-                    + "values (?,?,3); ";
+                    + "values (?,?,2); ";
             
             String q2 = "insert into dusuario (usr_nom,usr_app,usr_apm) "
                     + "values (?,?,?)";
@@ -75,5 +76,35 @@ public class registro {
             System.out.println(Arrays.toString(e.getStackTrace()));
         }
         return registro;
+    }
+    
+    public boolean eliminar(int usr_id) throws ClassNotFoundException {
+        boolean eliminar = false;
+        Connection con = null;
+        try {
+            con = Operaciones.getConnection();
+
+            String q = "delete from musuario where usr_id = ? ";
+            String q2 = "delete from dusuario where usr_id = ? ";
+            
+            PreparedStatement ps = con.prepareStatement(q);
+            PreparedStatement ps2 = con.prepareStatement(q2);
+            ps.setInt(1, usr_id);
+            ps2.setInt(1,usr_id);
+            ps.executeUpdate();
+            ps2.executeUpdate();
+                        
+
+            if (ps != null && ps2 != null) {
+                ps = null;
+                ps2 = null;
+                eliminar = true;
+            }
+            con.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println(Arrays.toString(e.getStackTrace()));
+        }
+        return eliminar;
     }
 }

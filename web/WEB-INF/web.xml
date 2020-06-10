@@ -12,6 +12,10 @@
         <servlet-name>Post</servlet-name>
         <servlet-class>content.Post</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>adminOps</servlet-name>
+        <servlet-class>controlador.adminOps</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>InfinitContentServlet</servlet-name>
         <url-pattern>/InfinitContentServlet</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>Post</servlet-name>
         <url-pattern>/Post</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminOps</servlet-name>
+        <url-pattern>/adminOps</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -34,6 +34,6 @@
         <h1>Estás en la página de administradores (Todavia no tiene diseño)</h1>
         <br>
         <a href="Agregar.jsp">Agregar articulo</a>
-        <a href="ConsultarAdmin.jsp">Consultar perfiles</a>
+        <a href="ConsultarCons.jsp">Consultar consejeros</a>
     </body>
 </html>
