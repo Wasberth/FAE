@@ -36,13 +36,12 @@ public class adminOperacion {
         return con;
     }
 
-    public boolean registro(String user_tag, String user_password, String user_name, String user_appat, String user_apmat) throws ClassNotFoundException {
+    public boolean registro(consejero cons) throws ClassNotFoundException {
         boolean registro = false;
         Connection con = null;
         try {
             con = Operaciones.getConnection();
-
-            //verificar nombre de las columnas
+            
             String q = "insert into musuario (usr_tag, usr_pas, usr_niv) "
                     + "values (?,?,2); ";
             
@@ -53,11 +52,11 @@ public class adminOperacion {
 
             PreparedStatement ps = con.prepareStatement(q);
             PreparedStatement ps2 = con.prepareStatement(q2);
-            ps.setString(1, user_tag);
-            ps.setString(2, user_password);
-            ps2.setString(1,user_name);
-            ps2.setString(2,user_appat);
-            ps2.setString(3, user_apmat);
+            ps.setString(1, cons.getTag());
+            ps.setString(2, cons.getPass());
+            ps2.setString(1,cons.getName());
+            ps2.setString(2,cons.getAppat());
+            ps2.setString(3, cons.getApmat());
             ps.executeUpdate();
             ps2.executeUpdate();
                         

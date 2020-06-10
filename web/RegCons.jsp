@@ -1,7 +1,7 @@
 <%-- 
-    Document   : indexAdmin
-    Created on : 21/04/2020, 09:56:09 PM
-    Author     : PORTO
+    Document   : RegCons
+    Created on : 10/06/2020, 01:16:33 AM
+    Author     : tutus
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -9,10 +9,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Administradores</title>
+        <title>JSP Page</title>
     </head>
     <body>
-        <%
+          <%
         try{
         HttpSession sesion = request.getSession();
         
@@ -31,10 +31,13 @@
         
         
         %>
-        <h1>Estás en la página de administradores (Todavia no tiene diseño)</h1>
-        <br>
-        <a href="Agregar.jsp">Agregar articulo</a>
-        <a href="ConsultarCons.jsp">Consultar consejeros</a>
-        <a href="RegCons.jsp">Registrar consejero</a>
+        <form action="adminOps" method="POST">
+            Nombre de usuario:<input type="text" name="tag" placeholder="Nombre de usuario" >
+            Contraseña:<input type="password" name="pass" placeholder="Password" >
+            Nombre:<input type="text" name="name" placeholder="Nombre" >
+            Apellido Paterno:<input type="text" name="appat" placeholder="Apellido paterno" >
+            Apellido Materno:<input type="text" name="apmat" placeholder="Apellido materno" >
+            <input type="submit" name="action" value="Registrar">
+        </form>
     </body>
 </html>

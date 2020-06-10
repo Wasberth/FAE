@@ -7,6 +7,8 @@ package controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class adminOps extends HttpServlet {
 
+    consejero cons = new consejero();
+    adminOperacion op = new adminOperacion();
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -75,8 +80,32 @@ public class adminOps extends HttpServlet {
         switch (accion){
             
             case "Eliminar":
-                
+            break;
         
+            case "Registrar":
+                String tag = request.getParameter("tag");
+                String pass = request.getParameter("pass");
+                String name = request.getParameter("name");
+                String appat = request.getParameter("appat");
+                String apmat = request.getParameter("apmat");
+                
+                cons.setTag(tag);
+                cons.setPass(pass);
+                cons.setName(name);
+                cons.setAppat(appat);
+                cons.setApmat(apmat);
+        
+                try {
+                    if ( op.registro(cons) ) {
+                        request.getRequestDispatcher("indexAdmin.jsp").forward(request, response);
+                    } else {
+                        request.getRequestDispatcher("RegCons.jsp").forward(request, response);
+                    }
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(adminOps.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            break;
         }
         
         
