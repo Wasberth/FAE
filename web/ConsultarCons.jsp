@@ -52,7 +52,6 @@
                                     <th>Nombre</th>
                                     <th>Apellido Paterno</th>
                                     <th>Apellido Materno</th>
-                                    <th>Eliminar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -61,6 +60,7 @@
         Statement st = con.createStatement();
         Statement st2 = con.createStatement();
         ResultSet rs,rs2;
+        int[] id = new int[0];
         
         try{
             
@@ -68,12 +68,9 @@
             String q2 = "Select * from dusuario where usr_id=2";
             rs = st.executeQuery(q);
             rs2 = st2.executeQuery(q2);
-            int i = 1;
-            String formu, iterator,identificador;
+            int i = 0;
             while(rs.next() && rs2.next()){
-                formu = "form"+i;
-                iterator = "it"+i;
-                identificador = "ident"+i;
+                id[i]=rs.getInt(1);
 %>                                
                                 <tr>
                                     <td><%=rs.getInt(1) %></td>
@@ -81,12 +78,6 @@
                                     <td><%=rs2.getString(2) %></td>
                                     <td><%=rs2.getFloat(3) %></td>
                                     <td><%=rs2.getInt(4) %></td>
-                                    <td>
-                                        <form action="adminOps" method="POST">
-                                                <input type="hidden" name="<%=iterator%>" value="<%=i%>" >
-                                                <input type="submit" name="action" value="Eliminar">
-                                        </form>
-                                    </td>
                                 </tr>
 <%
             i++;
@@ -107,6 +98,20 @@
 %>           
                             </tbody>
                         </table>
+                        <p>Eliminar consejero por id</p>
+                        <form action="adminOps" method="POST">
+                            <select name="id">
+<%
+                        for (int i = 0; i < id.length; i++) {
+                            int idopt = id[i];
+%>
+                            <option value="<%=idopt%>"> <%=idopt%> </option>
+<%
+                        }
+%>
+                            </select>
+                            <input type="submit" name="action" value="Eliminar">
+                        </form>
                     </div>
                 </center>
             </section>

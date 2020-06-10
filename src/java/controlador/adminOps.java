@@ -80,6 +80,16 @@ public class adminOps extends HttpServlet {
         switch (accion){
             
             case "Eliminar":
+                int id = Integer.parseInt(request.getParameter("id"));
+                try {
+                    if ( op.eliminar(id) ) {
+                        request.getRequestDispatcher("indexAdmin.jsp").forward(request, response);
+                    } else {
+                        request.getRequestDispatcher("ConsultarCons.jsp").forward(request, response);
+                    }
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(adminOps.class.getName()).log(Level.SEVERE, null, ex);
+                }
             break;
         
             case "Registrar":
