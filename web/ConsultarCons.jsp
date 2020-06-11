@@ -112,6 +112,39 @@
                             </select>
                             <input type="submit" name="action" value="Eliminar">
                         </form>
+                            
+                        <p>Cambiar password de consejero por id</p>
+                        <form action="adminOps" method="POST">
+                            <select name="idpass">
+<%
+                        for (int i = 0; i < id.length; i++) {
+                            int idopt = id[i];
+%>
+                            <option value="<%=idopt%>"> <%=idopt%> </option>
+<%
+                        }
+%>
+                            </select>
+                            Password:<input type="text" name="pass">
+                            Nueva password:<input type="text" name="newpass">
+                            <input type="submit" name="action" value="Cambiar password">
+                        </form>
+                            
+                        <p>Cambiar tag de consejero por id</p>
+                        <form action="adminOps" method="POST">
+                            <select name="idtag">
+<%
+                        for (int i = 0; i < id.length; i++) {
+                            int idopt = id[i];
+%>
+                            <option value="<%=idopt%>"> <%=idopt%> </option>
+<%
+                        }
+%>
+                            </select>
+                            Nueva tag:<input type="text" name="newtag">
+                            <input type="submit" name="action" value="Cambiar tag">
+                        </form>
                     </div>
                 </center>
             </section>

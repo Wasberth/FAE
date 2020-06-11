@@ -116,6 +116,35 @@ public class adminOps extends HttpServlet {
                 }
 
             break;
+            
+            case "Cambiar password":
+                int idpass = Integer.parseInt(request.getParameter("idpass"));
+                String passc = request.getParameter("pass");
+                String passn = request.getParameter("newpass");
+                try {
+                    if ( op.cambiarPass(idpass,passc,passn) ) {
+                        request.getRequestDispatcher("indexAdmin.jsp").forward(request, response);
+                    } else {
+                        request.getRequestDispatcher("ConsultarCons.jsp").forward(request, response);
+                    }
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(adminOps.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            break;
+            
+            case "Cambiar tag":
+                int idtag = Integer.parseInt(request.getParameter("idtag"));
+                String newtag = request.getParameter("newtag");
+                try {
+                    if ( op.cambiarTag(idtag,newtag) ) {
+                        request.getRequestDispatcher("indexAdmin.jsp").forward(request, response);
+                    } else {
+                        request.getRequestDispatcher("ConsultarCons.jsp").forward(request, response);
+                    }
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(adminOps.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            break;
         }
         
         
