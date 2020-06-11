@@ -176,4 +176,34 @@ public class adminOperacion {
         }
         return eliminar;
     }
+    
+        public boolean eliminarPub(int idpub) throws ClassNotFoundException {
+        boolean eliminar = false;
+        Connection con = null;
+        try {
+            con = Operaciones.getConnection();
+
+            String q = "delete from mpublicacion where pub_id = ? ";
+            String q2 = "delete from dpublicacion where pub_id = ? ";
+            
+            PreparedStatement ps = con.prepareStatement(q);
+            PreparedStatement ps2 = con.prepareStatement(q2);
+            ps.setInt(1, idpub);
+            ps2.setInt(1,idpub);
+            ps.executeUpdate();
+            ps2.executeUpdate();
+                        
+
+            if (ps != null && ps2 != null) {
+                ps = null;
+                ps2 = null;
+                eliminar = true;
+            }
+            con.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println(Arrays.toString(e.getStackTrace()));
+        }
+        return eliminar;
+    }
 }

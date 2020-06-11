@@ -1,6 +1,6 @@
 <%-- 
-    Document   : ConsultarCons
-    Created on : 10/06/2020, 12:42:20 AM
+    Document   : ConsultarUsers
+    Created on : 11/06/2020, 01:07:00 AM
     Author     : tutus
 --%>
 
@@ -16,26 +16,16 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <%
-        try{
-        HttpSession sesion = request.getSession();
-        
-        
-        if(sesion.getAttribute("user")!=null && sesion.getAttribute("nivel")=="1"){
-            String usuario = sesion.getAttribute("user").toString();
-            String nivel = sesion.getAttribute("nivel").toString();
-            out.append("<a href='log_out.jsp'?cerrar=true><h5>Cerrar Sesion "+usuario+"</h5></a>");    
-        }else{
-            response.sendRedirect("errorPage.jsp");
-        }
-        
-        }catch(Exception e){
-            response.sendRedirect("errorPage.jsp");
-        }
-        
-        
-        %>
-        
+<%
+        int nivel = (Integer) session.getAttribute("nivel");
+        if(nivel==2){
+%>
+    
+        <h1>Estás en la página de consejeros (Todavia no tiene diseño)</h1>
+        <br>
+        <a href="ConsultarUsers.jsp">Consultar usuarios</a>
+        <a href="PubsUsers.jsp">Listar publicaciones de usuarios</a>
+
         <section>
                 <center>
                     <div>
@@ -60,8 +50,8 @@
         
         try{
             
-            String q = "Select * from musuario where usr_niv=2";
-            String q2 = "Select * from dusuario where usr_niv=2";
+            String q = "Select * from musuario where usr_niv=1";
+            String q2 = "Select * from dusuario where usr_niv=1";
             rs = st.executeQuery(q);
             rs2 = st2.executeQuery(q2);
             int i = 0;
@@ -94,8 +84,8 @@
 %>           
                             </tbody>
                         </table>
-                        <p>Eliminar consejero por id</p>
-                        <form action="adminOps" method="POST">
+                        <p>Eliminar usuario por id</p>
+                        <form action="consOps" method="POST">
                             <select name="id">
 <%
                         for (int i = 0; i < id.length; i++) {
@@ -108,41 +98,13 @@
                             </select>
                             <input type="submit" name="action" value="Eliminar">
                         </form>
-                            
-                        <p>Cambiar password de consejero por id</p>
-                        <form action="adminOps" method="POST">
-                            <select name="idpass">
-<%
-                        for (int i = 0; i < id.length; i++) {
-                            int idopt = id[i];
-%>
-                            <option value="<%=idopt%>"> <%=idopt%> </option>
-<%
-                        }
-%>
-                            </select>
-                            Password:<input type="text" name="pass">
-                            Nueva password:<input type="text" name="newpass">
-                            <input type="submit" name="action" value="Cambiar password">
-                        </form>
-                            
-                        <p>Cambiar tag de consejero por id</p>
-                        <form action="adminOps" method="POST">
-                            <select name="idtag">
-<%
-                        for (int i = 0; i < id.length; i++) {
-                            int idopt = id[i];
-%>
-                            <option value="<%=idopt%>"> <%=idopt%> </option>
-<%
-                        }
-%>
-                            </select>
-                            Nueva tag:<input type="text" name="newtag">
-                            <input type="submit" name="action" value="Cambiar tag">
-                        </form>
                     </div>
                 </center>
             </section>
+<%
+        }else{
+              response.sendRedirect("errorPage.jsp");
+         }
+%>
     </body>
 </html>

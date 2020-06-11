@@ -100,7 +100,7 @@
                                         sesion.setAttribute("user", nomUser);
                                         sesion.setAttribute("nivel", "2");
                                         sesion.setAttribute("usr_id", op.getId());
-                                        response.sendRedirect("MainPage.jsp");
+                                        response.sendRedirect("indexCons.jsp");
                                         break;
 
                                     case 3:

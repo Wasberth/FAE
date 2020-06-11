@@ -18,11 +18,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author tutus
  */
-public class adminOps extends HttpServlet {
+public class consOps extends HttpServlet {
 
     consejero cons = new consejero();
     adminOperacion op = new adminOperacion();
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,10 +39,10 @@ public class adminOps extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet adminOps</title>");            
+            out.println("<title>Servlet consOps</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet adminOps at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet consOps at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -75,7 +74,6 @@ public class adminOps extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         String accion = request.getParameter("action");
         switch (accion){
             
@@ -83,63 +81,22 @@ public class adminOps extends HttpServlet {
                 int id = Integer.parseInt(request.getParameter("id"));
                 try {
                     if ( op.eliminar(id) ) {
-                        request.getRequestDispatcher("indexAdmin.jsp").forward(request, response);
+                        request.getRequestDispatcher("indexCons.jsp").forward(request, response);
                     } else {
-                        request.getRequestDispatcher("ConsultarCons.jsp").forward(request, response);
+                        request.getRequestDispatcher("ConsultarUsers.jsp").forward(request, response);
                     }
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(adminOps.class.getName()).log(Level.SEVERE, null, ex);
                 }
             break;
         
-            case "Registrar":
-                String tag = request.getParameter("tag");
-                String pass = request.getParameter("pass");
-                String name = request.getParameter("name");
-                String appat = request.getParameter("appat");
-                String apmat = request.getParameter("apmat");
-                
-                cons.setTag(tag);
-                cons.setPass(pass);
-                cons.setName(name);
-                cons.setAppat(appat);
-                cons.setApmat(apmat);
-        
+            case "Eliminar publicacion":
+                int idpub = Integer.parseInt(request.getParameter("idpub"));
                 try {
-                    if ( op.registro(cons) ) {
-                        request.getRequestDispatcher("indexAdmin.jsp").forward(request, response);
+                    if ( op.eliminarPub(idpub) ) {
+                        request.getRequestDispatcher("indexCons.jsp").forward(request, response);
                     } else {
-                        request.getRequestDispatcher("RegCons.jsp").forward(request, response);
-                    }
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(adminOps.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            break;
-            
-            case "Cambiar password":
-                int idpass = Integer.parseInt(request.getParameter("idpass"));
-                String passc = request.getParameter("pass");
-                String passn = request.getParameter("newpass");
-                try {
-                    if ( op.cambiarPass(idpass,passc,passn) ) {
-                        request.getRequestDispatcher("indexAdmin.jsp").forward(request, response);
-                    } else {
-                        request.getRequestDispatcher("ConsultarCons.jsp").forward(request, response);
-                    }
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(adminOps.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            break;
-            
-            case "Cambiar tag":
-                int idtag = Integer.parseInt(request.getParameter("idtag"));
-                String newtag = request.getParameter("newtag");
-                try {
-                    if ( op.cambiarTag(idtag,newtag) ) {
-                        request.getRequestDispatcher("indexAdmin.jsp").forward(request, response);
-                    } else {
-                        request.getRequestDispatcher("ConsultarCons.jsp").forward(request, response);
+                        request.getRequestDispatcher("ConsultarUsers.jsp").forward(request, response);
                     }
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(adminOps.class.getName()).log(Level.SEVERE, null, ex);
