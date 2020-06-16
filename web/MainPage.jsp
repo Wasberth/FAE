@@ -21,11 +21,12 @@
     </head>
     <body class="color5">
         <%
+            String nom_user="";
             try{
                 HttpSession sesion = request.getSession();
                 sesion.getAttribute("nomUser");
                 sesion.getAttribute("usr_id");
-                String nom_user = sesion.getAttribute("user").toString();
+                nom_user = sesion.getAttribute("user").toString();
             }catch(Exception e){
                 response.sendRedirect("errorPage.jsp");
             }
@@ -104,6 +105,8 @@
                         ResultSet rs = null;
                         Statement st2 = null;
                         ResultSet rs2 = null;
+                        Statement st3 = null;
+                        ResultSet rs3 = null;
                         int id=4;
                         try {
                             String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=root";
@@ -112,6 +115,7 @@
                             st2 = con.createStatement();
                             String q = "SELECT * FROM MPublicacion LIMIT 4";
                             String q2 = "SELECT * FROM DPublicacion LIMIT 4";
+                            String q3 = "SELECT usr_tag FROM MUsuario WHERE usr_id = ? ;";
                             rs = st.executeQuery(q);
                             rs2 = st2.executeQuery(q2);
                             while (rs.next() && rs2.next()) {
@@ -122,7 +126,9 @@
                     <article class="container borderSimple">
                         <header class="row color2">
                             <div class="col-l2">
-                                <h5 class="text-center"><%=tit%></h5>
+                                <!Aqui no va el nom_user por que ese es de la sesion
+                                  Tiene que ir el nombre del usuario desde la bd>
+                                <h5 class="text-center"><%=tit%>de<%=nom_user%></h5>
                             </div>
                         </header>
                         <div class="row">
@@ -160,6 +166,11 @@
                         </div>
                     </article>
                     <%
+                            }
+                            
+                            rs3 = st3.executeQuery(q3);
+                            while(rs3.next()){
+                                
                             }
                         } catch (Exception e) {
                             %>

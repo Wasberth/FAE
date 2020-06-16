@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpSession;
 
 public class Operaciones {
 
@@ -75,9 +74,11 @@ public class Operaciones {
     }
 
     public int getLastPublicacion(int id_usuario) {
+        System.out.println(id_usuario);
         int id = 0;
         try {
-            String q = "SELECT pub_id FROM Mpublicacion WHERE usr_id = ? ORDER BY pub_id DESC LIMIT = 1";
+            String q = "SELECT pub_id FROM Mpublicacion WHERE usr_id = ? ORDER BY pub_id DESC LIMIT 1";
+            System.out.println(q);
             Connection con = null;
             try {
                 con = Operaciones.getConnection();
@@ -89,10 +90,10 @@ public class Operaciones {
             ps.setInt(1, id_usuario);
             rs = ps.executeQuery();
             while (rs.next()) {
-                id = rs.getInt(q);
+                id = rs.getInt(1);
             }
         } catch (SQLException e) {
-            System.out.println("Error getLasPublicacion");
+            System.out.println("Error getLastPublicacion");
             System.out.println(e);
             e.printStackTrace();
         }

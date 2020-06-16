@@ -45,7 +45,7 @@
                                     Statement st = null;
                                     ResultSet rs = null;
                                     try {
-                                        String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=n0m3l0";
+                                        String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=root";
                                         con = DriverManager.getConnection(url);
                                         st = con.createStatement();
                                         String q = "SELECT * FROM cetiquetas";

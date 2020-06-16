@@ -13,8 +13,8 @@
     </head>
     <body>
 <%
-        int nivel = (Integer) session.getAttribute("nivel");
-        if(nivel==2){
+        HttpSession sesion = request.getSession();
+        if(sesion.getAttribute("nivel")=="2"){
 %>
         <h1>Estás en la página de consejeros (Todavia no tiene diseño)</h1>
         <br>

@@ -65,7 +65,7 @@ public class Post extends HttpServlet {
                 String q2 = "INSERT INTO DPublicacion(`typ_id`, `pub_txt`, `pub_dat`, `pub_vot`, `pub_id`) "
                         + "VALUES (1, ?, CURRENT_TIMESTAMP(), 1, ?);";
                 String q3 = "INSERT INTO DHistorial(`usr_id`, `pub_id`, `hst_dat`, `hst_act`) "
-                        + "VALUES (?, ?. CURRENT_TIMESTAMP(), 1)";
+                        + "VALUES (?, ?, CURRENT_TIMESTAMP(), 1)";
 
                 //Aquí falta poner la sentencia para agregar el like en el momento en que se crea
                 //Y también falta que se guarden las categorías al crear las publicaciones
@@ -78,6 +78,9 @@ public class Post extends HttpServlet {
                 ps.executeUpdate();
                 int id = new Operaciones().getLastPublicacion(usr_id);
 
+                System.out.println(id);
+                System.out.println(q2);
+
                 ps2.setString(1, cuerpo);
                 ps2.setInt(2, id);
                 ps2.executeUpdate();
@@ -88,7 +91,9 @@ public class Post extends HttpServlet {
 
                 response.sendRedirect("MainPage.jsp");
             } catch (IOException | SQLException e) {
-                System.out.println(e);
+                System.out.println("Error en el Post");
+                System.err.println(e);
+                e.printStackTrace();
             }
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {
             System.out.println(ex);

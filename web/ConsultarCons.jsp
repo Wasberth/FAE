@@ -17,10 +17,10 @@
     </head>
     <body>
         <%
+            
         try{
+            
         HttpSession sesion = request.getSession();
-        
-        
         if(sesion.getAttribute("user")!=null && sesion.getAttribute("nivel")=="1"){
             String usuario = sesion.getAttribute("user").toString();
             String nivel = sesion.getAttribute("nivel").toString();
@@ -32,7 +32,6 @@
         }catch(Exception e){
             response.sendRedirect("errorPage.jsp");
         }
-        
         
         %>
         
