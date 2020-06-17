@@ -6,6 +6,7 @@
 
 
 
+<%@page import="controlador.Operaciones"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page language="java" import="java.sql.*"%>
 
@@ -98,6 +99,7 @@
                     <!--Primeros 2-5 artículos deben de ser generados por ESTE jsp-->
 
                     <%
+                        Operaciones op = new Operaciones();
                         String DRIVER = "com.mysql.jdbc.Driver";
                         Class.forName(DRIVER).newInstance();
                         Connection con = null;
@@ -122,13 +124,14 @@
                                 String tit = rs.getString("pub_tit");
                                 String txt = rs2.getString("pub_txt");
                                 int pub_id = rs.getInt("pub_id");
+                                String nom_usuario = op.getNombreUser(pub_id);
                     %>
                     <article class="container borderSimple">
                         <header class="row color2">
                             <div class="col-l2">
                                 <!Aqui no va el nom_user por que ese es de la sesion
                                   Tiene que ir el nombre del usuario desde la bd>
-                                <h5 class="text-center"><%=tit%>de<%=nom_user%></h5>
+                                <h5 class="text-center"><%=tit%>de<%=nom_usuario%></h5>
                             </div>
                         </header>
                         <div class="row">

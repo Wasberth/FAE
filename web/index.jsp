@@ -87,7 +87,7 @@
                             if (request.getParameter("btninicar") != null) {
                                 String nomUser = request.getParameter("user");
                                 String password = request.getParameter("password");
-
+                                System.out.println("lalalala"+nomUser+" "+password);
                                 switch (op.loguear(nomUser, password)) {
                                     case 1:
                                         sesion.setAttribute("user", nomUser);

@@ -99,4 +99,41 @@ public class Operaciones {
         }
         return id;
     }
+    
+    public String getNombreUser(int id_pub){
+        String nombre = "";
+        int id_usr = 0;
+        try {
+            Connection con = null;
+            try {
+                con = Operaciones.getConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Operaciones.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            ResultSet rs;
+            String q = "SELECT * FROM mpublicacion where pub_id=" + id_pub + ";";
+            PreparedStatement ps = con.prepareStatement(q);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                id_usr = rs.getInt("usr_id");
+            }
+            
+            ResultSet rs2;
+            String q2 = "SELECT * FROM musuario where usr_id=" + id_usr + ";";
+            PreparedStatement ps2 = con.prepareStatement(q2);
+            rs2 = ps2.executeQuery();
+            while (rs2.next()) {
+                nombre = rs2.getString("usr_tag");
+            }
+            
+            con.close();
+        } catch (SQLException ed) {
+            System.out.println(ed.getMessage());
+            System.out.println(Arrays.toString(ed.getStackTrace()));
+        }
+        
+        return nombre;
+    }
+    
 }
