@@ -115,7 +115,6 @@
                             st2 = con.createStatement();
                             String q = "SELECT * FROM MPublicacion LIMIT 4";
                             String q2 = "SELECT * FROM DPublicacion LIMIT 4";
-                            String q3 = "SELECT usr_tag FROM MUsuario WHERE usr_id = ? ;";
                             rs = st.executeQuery(q);
                             rs2 = st2.executeQuery(q2);
                             while (rs.next() && rs2.next()) {
@@ -168,11 +167,9 @@
                     <%
                             }
                             
-                            rs3 = st3.executeQuery(q3);
-                            while(rs3.next()){
-                                
-                            }
-                        } catch (Exception e) {
+                            
+                        } catch (SQLException e) {
+                            e.printStackTrace();
                             %>
                     <p>Murió <%=e%></p>
                     <%

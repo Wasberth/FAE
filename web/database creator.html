@@ -97,7 +97,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `db_FAEv1`.`DPublicacion` (
   `pub_id` INT NOT NULL AUTO_INCREMENT,
   `typ_id` INT NOT NULL,
-  `pub_txt` VARCHAR(45) NOT NULL,
+  `pub_txt` VARCHAR(255) NOT NULL,
   `pub_dat` DATETIME NOT NULL,
   `pub_vot` SMALLINT(5) NOT NULL,
   PRIMARY KEY (`pub_id`),

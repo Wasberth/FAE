@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package content;
 
 import java.io.IOException;
@@ -41,8 +36,10 @@ public class Post extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String nivel = "";
         try (PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession();
+            nivel = (String) session.getAttribute("nivel");
             String DRIVER = "com.mysql.jdbc.Driver";
             Class.forName(DRIVER).newInstance();
             java.sql.Connection con;
@@ -63,7 +60,7 @@ public class Post extends HttpServlet {
                 String q = "INSERT INTO MPublicacion (`pub_tit`,`usr_id`) "
                         + "VALUES (?,?);";
                 String q2 = "INSERT INTO DPublicacion(`typ_id`, `pub_txt`, `pub_dat`, `pub_vot`, `pub_id`) "
-                        + "VALUES (1, ?, CURRENT_TIMESTAMP(), 1, ?);";
+                        + "VALUES (?, ?, CURRENT_TIMESTAMP(), 1, ?);";
                 String q3 = "INSERT INTO DHistorial(`usr_id`, `pub_id`, `hst_dat`, `hst_act`) "
                         + "VALUES (?, ?, CURRENT_TIMESTAMP(), 1)";
 
@@ -81,9 +78,19 @@ public class Post extends HttpServlet {
                 System.out.println(id);
                 System.out.println(q2);
 
-                ps2.setString(1, cuerpo);
-                ps2.setInt(2, id);
-                ps2.executeUpdate();
+                int nivel2 = Integer.parseInt(nivel);
+                System.out.println(nivel2);
+                if (nivel2 < 3) {
+                    ps2.setInt(1, 2);
+                    ps2.setString(2, cuerpo);
+                    ps2.setInt(3, id);
+                    ps2.executeUpdate();
+                } else if (nivel2 == 3) {
+                    ps2.setInt(1, 3);
+                    ps2.setString(2, cuerpo);
+                    ps2.setInt(3, id);
+                    ps2.executeUpdate();
+                }
 
                 ps3.setInt(1, usr_id);
                 ps3.setInt(2, id);
