@@ -16,20 +16,6 @@ public class Operaciones {
     private int id;
 
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
-        //cambiar nombre de la bd
-//        String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=root";
-//
-//        Connection con = null;
-//
-//        try {
-//            String DRIVER = "com.mysql.jdbc.Driver";
-//            Class.forName(DRIVER).newInstance();
-//            con = DriverManager.getConnection(url);
-//        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
-//            System.out.println(e.getMessage());
-//            System.out.println(Arrays.toString(e.getStackTrace()));
-//        }
-//        return con;
         return new Conexion().getConnection();
     }
 
@@ -99,8 +85,8 @@ public class Operaciones {
         }
         return id;
     }
-    
-    public String getNombreUser(int id_pub){
+
+    public String getNombreUser(int id_pub) {
         String nombre = "";
         int id_usr = 0;
         try {
@@ -110,7 +96,7 @@ public class Operaciones {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Operaciones.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             ResultSet rs;
             String q = "SELECT * FROM mpublicacion where pub_id=" + id_pub + ";";
             PreparedStatement ps = con.prepareStatement(q);
@@ -118,7 +104,7 @@ public class Operaciones {
             while (rs.next()) {
                 id_usr = rs.getInt("usr_id");
             }
-            
+
             ResultSet rs2;
             String q2 = "SELECT * FROM musuario where usr_id=" + id_usr + ";";
             PreparedStatement ps2 = con.prepareStatement(q2);
@@ -126,14 +112,17 @@ public class Operaciones {
             while (rs2.next()) {
                 nombre = rs2.getString("usr_tag");
             }
-            
+
             con.close();
         } catch (SQLException ed) {
             System.out.println(ed.getMessage());
             System.out.println(Arrays.toString(ed.getStackTrace()));
         }
-        
+
         return nombre;
     }
     
+    
+    
+
 }

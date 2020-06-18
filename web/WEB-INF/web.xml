@@ -20,6 +20,10 @@
         <servlet-name>consOps</servlet-name>
         <servlet-class>controlador.consOps</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReporteServlet</servlet-name>
+        <servlet-class>controlador.ReporteServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>InfinitContentServlet</servlet-name>
         <url-pattern>/InfinitContentServlet</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>consOps</servlet-name>
         <url-pattern>/consOps</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReporteServlet</servlet-name>
+        <url-pattern>/ReporteServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
