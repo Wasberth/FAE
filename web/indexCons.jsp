@@ -14,7 +14,8 @@
     <body>
 <%
         HttpSession sesion = request.getSession();
-        if(sesion.getAttribute("nivel")=="2"){
+        sesion.getAttribute("nivel");
+        if(sesion.getAttribute("nivel").toString()=="2"){
 %>
         <h1>Estás en la página de consejeros (Todavia no tiene diseño)</h1>
         <br>

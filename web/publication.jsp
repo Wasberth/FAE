@@ -19,6 +19,13 @@
         <link rel="stylesheet" href="css/colors.css">
     </head>
     <body class="color5">
+        <%
+
+            HttpSession sesion = request.getSession();
+
+            //response.sendRedirect("errorPage.jsp");
+
+        %>
         <header class="container-fluid col-xs-12 header color1">
             <div class="row">
                 <div class="d-none d-sm-inline-block col-sm-4 img-container-1">
@@ -38,8 +45,7 @@
                         <div class="form-group">
                             <select class="form-control" id="exampleFormControlSelect1" form="publicacion" name="categoria" placeholder="Elije una categoría">
                                 <option value="null" selected disabled>-- Elige una etiqueta --</option>
-                                <%
-                                    String DRIVER = "com.mysql.jdbc.Driver";
+                                <%                                    String DRIVER = "com.mysql.jdbc.Driver";
                                     Class.forName(DRIVER).newInstance();
                                     Connection con = null;
                                     Statement st = null;
@@ -85,6 +91,16 @@
                                 <textarea form="publicacion" class="form-control" placeholder="Tu publicación" name="cuerpo"></textarea>
                             </div>
                         </div>
+                        <%
+                            if (Integer.parseInt(sesion.getAttribute("nivel").toString()) < 3) {
+                        %>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name = "noticiaBox" >
+                            <label class="form-check-label" for="exampleCheck1">Noticia</label>
+                        </div>
+                        <%
+                            }
+                        %>
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Publicar" name="btnpublicar">
                         </div>

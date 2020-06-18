@@ -37,11 +37,13 @@ public class Post extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String nivel = "";
+        
         try (PrintWriter out = response.getWriter()) {
+            System.out.println("ESTE ES UN BOX "+request.getParameter("noticiaBox"));
             HttpSession session = request.getSession();
             nivel = (String) session.getAttribute("nivel");
-            String DRIVER = "com.mysql.jdbc.Driver";
-            Class.forName(DRIVER).newInstance();
+            //String DRIVER = "com.mysql.jdbc.Driver";
+            //Class.forName(DRIVER);
             java.sql.Connection con;
             try {
                 con = new Conexion().getConnection();
@@ -102,7 +104,7 @@ public class Post extends HttpServlet {
                 System.err.println(e);
                 e.printStackTrace();
             }
-        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {
+        } catch (ClassNotFoundException ex) {
             System.out.println(ex);
         }
     }

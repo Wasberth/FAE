@@ -41,7 +41,7 @@ public class InfinitContentServlet extends HttpServlet {
                 Statement st2 = null;
                 ResultSet rs2 = null;
                 try {
-                    String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=n0m3l0";
+                    String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=root";
                     con = DriverManager.getConnection(url);
                     st = con.createStatement();
                     st2 = con.createStatement();
