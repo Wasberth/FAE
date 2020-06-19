@@ -54,6 +54,7 @@ public class InfinitContentServlet extends HttpServlet {
                     while (rs.next() && rs2.next()) {
                         String tit = rs.getString("pub_tit");
                         String txt = rs2.getString("pub_txt");
+                        int votos = rs2.getInt("pub_vot");
                         out.println("<article class=\"container borderSimple\">\n" +
 "                        <header class=\"row color2\">\n" +
 "                            <div class=\"col-l2\">\n" +
@@ -67,7 +68,7 @@ public class InfinitContentServlet extends HttpServlet {
 "                                        <i class=\"fas fa-arrow-alt-circle-up\"></i>\n" +
 "                                    </button>\n" +
 "                                    <button class=\"btn disabled\">\n" +
-"                                        <i>5</i>\n" +
+"                                        <i>"+votos+"</i>\n" +
 "                                    </button>\n" +
 "                                    <button class=\"btn btn-danger\" name=\"downvote\" onclick=\"votes("+counter+","+session+", '-1')\">\n" +
 "                                        <i class=\"fas fa-arrow-alt-circle-down\"></i>\n" +
@@ -86,7 +87,7 @@ public class InfinitContentServlet extends HttpServlet {
 "                                    <i class=\"fas fa-arrow-alt-circle-up\"></i>\n" +
 "                                </button>\n" +
 "                                <button class=\"btn disabled\">\n" +
-"                                    <i>5</i>\n" +
+"                                    <i>"+votos+"</i>\n" +
 "                                </button>\n" +
 "                                <button class=\"btn btn-danger\">\n" +
 "                                    <i class=\"fas fa-arrow-alt-circle-down\"></i>\n" +
