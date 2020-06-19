@@ -5,6 +5,8 @@
 --%>
 
 
+<%@page import="controlador.Operaciones"%>
+<%@page import="config.Conexion"%>
 <%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -51,8 +53,7 @@
                                     Statement st = null;
                                     ResultSet rs = null;
                                     try {
-                                        String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=root";
-                                        con = DriverManager.getConnection(url);
+                                        con = new Operaciones().getConnection();
                                         st = con.createStatement();
                                         String q = "SELECT * FROM cetiquetas";
                                         rs = st.executeQuery(q);

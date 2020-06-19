@@ -13,13 +13,14 @@
     </head>
     <body>
           <%
+        String nivel = "";
         try{
         HttpSession sesion = request.getSession();
         
         
         if(sesion.getAttribute("user")!=null && sesion.getAttribute("nivel")!=null){
             String usuario = sesion.getAttribute("user").toString();
-            String nivel = sesion.getAttribute("nivel").toString();
+            nivel = sesion.getAttribute("nivel").toString();
             out.append("<a href='log_out.jsp'?cerrar=true><h5>Cerrar Sesion "+usuario+"</h5></a>");    
         }else{
             response.sendRedirect("errorPage.jsp");
@@ -37,6 +38,19 @@
             Nombre:<input type="text" name="name" placeholder="Nombre" >
             Apellido Paterno:<input type="text" name="appat" placeholder="Apellido paterno" >
             Apellido Materno:<input type="text" name="apmat" placeholder="Apellido materno" >
+            Tipo de usuario: <br>
+        <%
+            if (nivel == "1"){
+        %>
+            <input type="radio" id="n1" name="lvl" value="1">
+            <label for="n1">Administrador</label><br>
+        <%
+            }
+        %>        
+            <input type="radio" id="n2" name="lvl" value="2">
+            <label for="n2">Consejero</label><br>
+            <input type="radio" id="n3" name="lvl" value="3">
+            <label for="n3">Usuario</label><br>
             <input type="submit" name="action" value="Registrar">
         </form>
     </body>

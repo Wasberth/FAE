@@ -22,6 +22,7 @@
         <a href="ConsultarUsers.jsp">Consultar usuarios</a>
         <a href="PubsUsers.jsp">Listar publicaciones de usuarios</a>
         <a href="publication.jsp">Escribir noticia</a>
+        <a href="RegCons.jsp">Registrar usuario</a>
         
 <%
         }else{

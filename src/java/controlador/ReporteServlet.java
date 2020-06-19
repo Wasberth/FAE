@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import config.Conexion;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -28,15 +29,11 @@ public class ReporteServlet extends HttpServlet {
 
         int pub_id = Integer.parseInt(request.getParameter("id"));
 
-        String url = "jdbc:mysql://localhost:3306/db_faev1";
-        String userName = "root";
-        String password = "root";
-
         Connection con = null;
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(url, userName, password);
+            con = new Conexion().getConnection();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println(e.getStackTrace());
