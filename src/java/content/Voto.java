@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -36,8 +37,8 @@ public class Voto extends HttpServlet {
             Connection con = null;
             Statement st = null;
             Statement st2 = null;
-            ResultSet rs = null;
-            ResultSet rs2 = null;
+            int rs;
+            int rs2;
             String voto = (request.getParameter("vote"));
             String pub_id = (request.getParameter("pub_id"));
             String usr_id = (request.getParameter("usr_id"));
@@ -45,12 +46,13 @@ public class Voto extends HttpServlet {
             try {
                 con = new Conexion().getConnection();
                 st = con.createStatement();
-                String q = "UPDATE DPublicacion SET pub_vot = pub_vote "+voto+" WHERE pub_id = "+pub_id;
-                rs = st.executeQuery(q);
+                String q = "UPDATE DPublicacion SET pub_vot = pub_vot "+voto+" WHERE pub_id = "+pub_id;
+                rs = st.executeUpdate(q);
                 st2 = con.createStatement();
                 String q2 = "INSERT INTO DHistorial (pub_id, usr_id, hst_vot, hst_dat) VALUES ("+pub_id+","+usr_id+","+voto+", GETDATE())";
-                rs2 = st2.executeQuery(q2);
-            } catch (Exception e) {
+                rs2 = st2.executeUpdate(q2);
+            } catch (ClassNotFoundException | SQLException e) {
+                System.out.println("Error en voto.java");
                 System.out.println(e);
             }
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {

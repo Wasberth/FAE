@@ -99,8 +99,7 @@
 
                     <!--Primeros 2-5 artículos deben de ser generados por ESTE jsp-->
 
-                    <%                        
-                        Operaciones op = new Operaciones();
+                    <%                        Operaciones op = new Operaciones();
                         String DRIVER = "com.mysql.jdbc.Driver";
                         Class.forName(DRIVER).newInstance();
                         Connection con = null;
@@ -142,10 +141,23 @@
                             <div class="btn-request" data-toggle="modal" data-target="#userModal">
                                 <button type="button" class="btn btn-request" onclick="return setId(<%=pub_id%>)">Reportar</button>
                             </div>
-                            <div>
+                            <%
+                                if (Integer.parseInt(session.getAttribute("usr_id").toString()) < 3) {
+                            %>
+                            <div  class="btn-request" data-toggle="modal" data-target="#eliminarModal">
                                 <button type="button" class="btn btn-request" onclick="return setId(<%=pub_id%>)">Eliminar</button>
-
                             </div>
+                            <%
+                            } else {    
+                                if (Integer.parseInt(session.getAttribute("usr_id").toString()) == rs.getInt("usr_id")) {
+                            %>
+                            <div  class="btn-request" data-toggle="modal" data-target="#eliminarModal">
+                                <button type="button" class="btn btn-request" onclick="return setId(<%=pub_id%>)">Eliminar</button>
+                            </div>
+                            <%
+                                    }
+                                }
+                            %>
                         </header>
                         <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -183,6 +195,38 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                         <button type="button" class="btn btn-primary" onclick="return eliminar()">Reportar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="userModalLabel">¿Seguro que quieres eliminar?</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="list-group" id="list-tab" role="tablist">
+                                                    <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">¿Podre ver de nuevo la publicacion?</a>
+                                                    <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">¿Puedo eliminar una publicacion que no me pertenece?</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-8">
+                                                <div class="tab-content" id="nav-tabContent">
+                                                    <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list"><p>Velit aute mollit ipsum ad dolor consectetur nulla officia culpa adipisicing exercitation fugiat tempor. Voluptate deserunt sit sunt nisi aliqua fugiat proident ea ut. Mollit voluptate reprehenderit occaecat nisi ad non minim tempor sunt voluptate consectetur exercitation id ut nulla. Ea et fugiat aliquip nostrud sunt incididunt consectetur culpa aliquip eiusmod dolor. Anim ad Lorem aliqua in cupidatat nisi enim eu nostrud do aliquip veniam minim.</p></div>
+                                                    <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list"><p>Cupidatat quis ad sint excepteur laborum in esse qui. Et excepteur consectetur ex nisi eu do cillum ad laborum. Mollit et eu officia dolore sunt Lorem culpa qui commodo velit ex amet id ex. Officia anim incididunt laboris deserunt anim aute dolor incididunt veniam aute dolore do exercitation. Dolor nisi culpa ex ad irure in elit eu dolore. Ad laboris ipsum reprehenderit irure non commodo enim culpa commodo veniam incididunt veniam ad.</p></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Mejor no quiero eliminar</button>
+                                        <button type="button" class="btn btn-primary" onclick="return eliminarPub()">Si, quiero eliminarla.</button>
                                     </div>
                                 </div>
                             </div>

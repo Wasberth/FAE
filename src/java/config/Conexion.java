@@ -17,7 +17,7 @@ public final class Conexion {
     private static java.sql.Connection con;
     private static final String URL = "jdbc:mysql://localhost:3306/db_FAEv1";
     private static final String USER = "root";
-    private static final String PASS = "n0m3l0";
+    private static final String PASS = "root";
 
     public java.sql.Connection getConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");

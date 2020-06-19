@@ -53,20 +53,20 @@ public class ReporteServlet extends HttpServlet {
 
                 System.out.println("LLegue a reportar en servlet");
 
-//                String sql = "SELECT usr_id FROM MPublicacion WHERE pub_id = " + pub_id + "";
                 String sql2 = "INSERT INTO DHistorial (pub_id,usr_id,hst_dat,hst_act)"
                         + "VALUES(" + pub_id + ",?,CURRENT_TIMESTAMP(),3)";
 
-//                PreparedStatement ps = con.prepareStatement(sql);
                 PreparedStatement ps2 = con.prepareStatement(sql2);
-//                rs = ps.executeQuery();
-//
-//                while (rs.next()) {
-//                    usr_id = rs.getInt("usr_id");
-//                }
+
                 ps2.setInt(1, usr_id);
                 System.out.println(sql2);
                 rs2 = ps2.executeUpdate();
+                break;
+            case "eliminarPub":
+                System.out.println("Llegue a elimiar pub en servlet");
+                String sql = "DELETE FROM MPublicacion WHERE pub_id = "+pub_id+"";
+                PreparedStatement ps = con.prepareStatement(sql);
+                rs2 = ps.executeUpdate();
                 break;
             default:
                 System.out.println("me fui al default");
