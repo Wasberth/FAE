@@ -54,9 +54,8 @@ public class Post extends HttpServlet {
             String titulo = request.getParameter("titulo");
             String cuerpo = request.getParameter("cuerpo");
             try {
-                String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=root";
 
-                con = DriverManager.getConnection(url);
+                con = new Conexion().getConnection();
                 int usr_id = (int) (session.getAttribute("usr_id"));
 
                 String q = "INSERT INTO MPublicacion (`pub_tit`,`usr_id`) "
@@ -80,19 +79,24 @@ public class Post extends HttpServlet {
                 System.out.println(id);
                 System.out.println(q2);
 
-                int nivel2 = Integer.parseInt(nivel);
-                System.out.println(nivel2);
-                if (nivel2 < 3) {
-                    ps2.setInt(1, 2);
-                    ps2.setString(2, cuerpo);
-                    ps2.setInt(3, id);
-                    ps2.executeUpdate();
-                } else if (nivel2 == 3) {
-                    ps2.setInt(1, 1);
-                    ps2.setString(2, cuerpo);
-                    ps2.setInt(3, id);
-                    ps2.executeUpdate();
+                String tipo = request.getParameter("btnpost");
+                int pubtype = 0;
+                switch(tipo){
+                    case "Publicar":
+                        pubtype = 1;
+                        break;
+                    case "Noticia":
+                        pubtype = 2;
+                        break;
+                    case "Guardar como borrador":
+                        pubtype = 3;
+                        break;
                 }
+                
+                ps2.setInt(1, pubtype);
+                ps2.setString(2, cuerpo);
+                ps2.setInt(3, id);
+                ps2.executeUpdate();
 
                 ps3.setInt(1, usr_id);
                 ps3.setInt(2, id);

@@ -13,8 +13,12 @@ import java.util.logging.Logger;
 
 public class Operaciones {
 
-    private int id;
 
+    private int id;
+    private static int idBorrador;
+    private static String textBorrador;
+    private static String titleBorrador;
+    
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
         return new Conexion().getConnection();
     }
@@ -122,6 +126,49 @@ public class Operaciones {
         return nombre;
     }
     
+    public boolean hasBorrador(int id_usuario) {
+        System.out.println(id_usuario);
+        try {
+            String q = ""
+                    + "SELECT `DPublicacion`.`pub_id` AS `id`, `MPublicacion`.`pub_tit` AS `titulo`, `DPublicacion`.`pub_txt` AS `texto` "
+                    + "FROM `MPublicacion`, `DPublicacion` "
+                    + "WHERE `MPublicacion`.`pub_id` = `DPublicacion`.`pub_id` AND "
+                    + "`DPublicacion`.`typ_id` = 3 AND "
+                    + "`MPublicacion`.`usr_id` = ?";
+            Connection con = null;
+            try {
+                con = Operaciones.getConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Operaciones.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            PreparedStatement ps = con.prepareStatement(q);
+            ResultSet rs = null;
+            ps.setInt(1, id_usuario);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                idBorrador = rs.getInt("id");
+                titleBorrador = rs.getString("titulo");
+                textBorrador = rs.getString("texto");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error hasBorrador");
+            System.out.println(e);
+            e.printStackTrace();
+        }
+        return (idBorrador != 0);
+    }
+    
+    public static int getIdBorrador() {
+        return idBorrador;
+    }
+
+    public static String getTextBorrador() {
+        return textBorrador;
+    }
+
+    public static String getTitleBorrador() {
+        return titleBorrador;
+    }
     
     public int getVotosByIdPub(int idpub) {
         int votos = 0;
