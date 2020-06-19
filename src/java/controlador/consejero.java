@@ -10,7 +10,41 @@ package controlador;
  * @author tutus
  */
 public class consejero {
-    String tag,pass,name,appat,apmat;
+    String tag,pass,npass,name,appat,apmat,nname;
+
+    public String getNpass() {
+        return npass;
+    }
+
+    public void setNpass(String npass) {
+        this.npass = npass;
+    }
+    int nivel, id;
+    
+    public String getNname() {
+        return nname;
+    }
+
+    public void setNname(String nname) {
+        this.nname = nname;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
 
     public String getTag() {
         return tag;

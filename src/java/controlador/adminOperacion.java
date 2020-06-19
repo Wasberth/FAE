@@ -25,7 +25,7 @@ public class adminOperacion {
             con = Operaciones.getConnection();
             
             String q = "insert into musuario (usr_tag, usr_pas, usr_niv) "
-                    + "values (?,?,2); ";
+                    + "values (?,?,?); ";
             
             String q2 = "insert into dusuario (usr_nom,usr_app,usr_apm) "
                     + "values (?,?,?)";
@@ -36,6 +36,7 @@ public class adminOperacion {
             PreparedStatement ps2 = con.prepareStatement(q2);
             ps.setString(1, cons.getTag());
             ps.setString(2, cons.getPass());
+            ps.setInt(3, cons.getNivel());
             ps2.setString(1,cons.getName());
             ps2.setString(2,cons.getAppat());
             ps2.setString(3, cons.getApmat());
