@@ -1,5 +1,6 @@
 package content;
 
+import config.Conexion;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -42,8 +43,7 @@ public class Voto extends HttpServlet {
             String usr_id = (request.getParameter("usr_id"));
             
             try {
-                String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=n0m3l0";
-                con = DriverManager.getConnection(url);
+                con = new Conexion().getConnection();
                 st = con.createStatement();
                 String q = "UPDATE DPublicacion SET pub_vot = pub_vote "+voto+" WHERE pub_id = "+pub_id;
                 rs = st.executeQuery(q);

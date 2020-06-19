@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import config.Conexion;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -18,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class ReporteServlet extends HttpServlet {
 
@@ -27,38 +29,44 @@ public class ReporteServlet extends HttpServlet {
 
         int pub_id = Integer.parseInt(request.getParameter("id"));
 
-        String url = "jdbc:mysql://localhost:3306/db_faev1";
-        String userName = "root";
-        String password = "root";
-
         Connection con = null;
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(url, userName, password);
+            con = new Conexion().getConnection();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println(e.getStackTrace());
         }
         ResultSet rs;
-
+        int rs2;
+        String usr_idS;
+        int usr_id = 0;
         String accion = request.getParameter("accion");
+
+        HttpSession sesion = request.getSession();
+        usr_idS = sesion.getAttribute("usr_id").toString();
+        usr_id = Integer.parseInt(usr_idS);
 
         switch (accion) {
             case "reportar":
-                int usr_id;
-                
+
                 System.out.println("LLegue a reportar en servlet");
 
-                String sql = "SELECT usr_id FROM MPublicacion WHERE pub_id = " + pub_id + "";
+//                String sql = "SELECT usr_id FROM MPublicacion WHERE pub_id = " + pub_id + "";
+                String sql2 = "INSERT INTO DHistorial (pub_id,usr_id,hst_dat,hst_act)"
+                        + "VALUES(" + pub_id + ",?,CURRENT_TIMESTAMP(),3)";
 
-                PreparedStatement ps = con.prepareStatement(sql);
-                rs = ps.executeQuery();
-
-                while (rs.next()) {
-                    usr_id = rs.getInt("usr_id");
-                }
-
+//                PreparedStatement ps = con.prepareStatement(sql);
+                PreparedStatement ps2 = con.prepareStatement(sql2);
+//                rs = ps.executeQuery();
+//
+//                while (rs.next()) {
+//                    usr_id = rs.getInt("usr_id");
+//                }
+                ps2.setInt(1, usr_id);
+                System.out.println(sql2);
+                rs2 = ps2.executeUpdate();
                 break;
             default:
                 System.out.println("me fui al default");
@@ -67,15 +75,6 @@ public class ReporteServlet extends HttpServlet {
 
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -84,16 +83,9 @@ public class ReporteServlet extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(ReporteServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -104,11 +96,6 @@ public class ReporteServlet extends HttpServlet {
         }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
