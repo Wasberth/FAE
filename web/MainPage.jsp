@@ -112,7 +112,7 @@
                         int pub_id = 0;
                         try {
                             String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=root";
-                            con = DriverManager.getConnection(url);
+                            con = Operaciones.getConnection();
                             st = con.createStatement();
                             st2 = con.createStatement();
                             String q = "SELECT * FROM MPublicacion LIMIT 8";

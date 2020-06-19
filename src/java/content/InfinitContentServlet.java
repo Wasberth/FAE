@@ -5,6 +5,7 @@
  */
 package content;
 
+import config.Conexion;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -42,7 +43,7 @@ public class InfinitContentServlet extends HttpServlet {
                 ResultSet rs2 = null;
                 try {
                     String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=root";
-                    con = DriverManager.getConnection(url);
+                    con = new Conexion().getConnection();
                     st = con.createStatement();
                     st2 = con.createStatement();
                     String q = "SELECT * FROM MPublicacion WHERE pub_id="+counter;

@@ -18,25 +18,6 @@ import java.util.Arrays;
  */
 public class adminOperacion {
 
-
-    public static Connection getConnection() {
-        //cambiar nombre de la bd
-        String url = "jdbc:mysql://localhost:3306/db_faev1";
-        String userName = "root";
-        String password = "root";
-
-        Connection con = null;
-
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(url, userName, password);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println(e.getStackTrace());
-        }
-        return con;
-    }
-
     public boolean registro(consejero cons) throws ClassNotFoundException {
         boolean registro = false;
         Connection con = null;

@@ -1,5 +1,6 @@
 package content;
 
+import config.Conexion;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -15,8 +16,7 @@ public class ConsultaBD {
         LinkedList<ConsejerosAtributos> listaConsejeros = new LinkedList<>();
         try {
             Class.forName("org.gjt.mm.mysql.Driver");
-            Connection conexion = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/db_faev1", "root", "root");
+            Connection conexion = new Conexion().getConnection();
             Statement st = conexion.createStatement();
             ResultSet rs = st.executeQuery("select * from musuario");
             while (rs.next()) {

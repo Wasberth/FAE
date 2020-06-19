@@ -23,7 +23,6 @@
     </head>
     <body class="color5">
         <%
-            Conexion con = new Conexion();
             HttpSession sesion = request.getSession();
         %>
 
