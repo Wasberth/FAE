@@ -28,6 +28,10 @@
         <servlet-name>userOps</servlet-name>
         <servlet-class>controlador.userOps</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>pubAServ</servlet-name>
+        <servlet-class>content.pubAServ</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>InfinitContentServlet</servlet-name>
         <url-pattern>/InfinitContentServlet</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>userOps</servlet-name>
         <url-pattern>/userOps</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>pubAServ</servlet-name>
+        <url-pattern>/pubAServ</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

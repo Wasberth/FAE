@@ -1,0 +1,89 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package content;
+
+import controlador.Operaciones;
+import controlador.consejero;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Arrays;
+
+/**
+ *
+ * @author tutus
+ */
+public class pubOperacion {
+    
+    public boolean modificar(Publicacion pub) throws ClassNotFoundException {
+        boolean modif = false;
+        Connection con = null;
+        try {
+            con = Operaciones.getConnection();
+            
+            String q = "update mpublicacion set pub_tit = ? "
+                    + "where pub_id = ?";
+            
+            String q2 = "update dpublicacion set pub_txt = ? "
+                     + "where pub_id = ?";
+
+            PreparedStatement ps = con.prepareStatement(q);
+            PreparedStatement ps2 = con.prepareStatement(q2);
+            ps.setString(1,pub.getTitulo());
+            ps.setInt(2,pub.getPub_id());
+            ps2.setString(1,pub.getTexto());
+            ps2.setInt(2,pub.getPub_id());
+            
+            if (ps.executeUpdate() > 0 && ps2.executeUpdate() > 0) {
+                ps = null;
+                ps2 = null;
+                modif = true;
+            }
+            
+            con.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println(Arrays.toString(e.getStackTrace()));
+        }
+        
+        return modif;
+    }
+    
+    public boolean eliminar(Publicacion pub) throws ClassNotFoundException {
+        boolean elim = false;
+        Connection con = null;
+        try {
+            con = Operaciones.getConnection();
+            
+            String q = "delete from mpublicacion "
+                    + "where pub_id = ?";
+            
+            String q2 = "delete from dpublicacion "
+                    + "where pub_id = ?";
+
+            PreparedStatement ps = con.prepareStatement(q);
+            PreparedStatement ps2 = con.prepareStatement(q2);
+            ps.setInt(1,pub.getPub_id());
+            ps2.setInt(1,pub.getPub_id());
+            
+            if (ps.executeUpdate() > 0 && ps2.executeUpdate() > 0) {
+                ps = null;
+                ps2 = null;
+                elim = true;
+            }
+            
+            con.close();
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println(Arrays.toString(e.getStackTrace()));
+        }
+        
+        return elim;
+    }
+    
+}

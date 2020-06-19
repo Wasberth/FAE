@@ -20,7 +20,7 @@
         <h1>Estás en la página de consejeros (Todavia no tiene diseño)</h1>
         <br>
         <a href="ConsultarUsers.jsp">Consultar usuarios</a>
-        <a href="PubsUsers.jsp">Listar publicaciones de usuarios</a>
+        <a href="PubsUsers.jsp">Consultar publicaciones</a>
         <a href="publication.jsp">Escribir noticia</a>
         <a href="RegCons.jsp">Registrar usuario</a>
         
