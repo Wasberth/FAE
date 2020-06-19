@@ -16,6 +16,21 @@
         <link rel="stylesheet" href="css/colors.css">
     </head>
     <body>
+        <%
+            String nom_user = "";
+            String nivel = "";
+            String id = "0"; 
+            try {
+                HttpSession sesion = request.getSession();
+                id = sesion.getAttribute("usr_id").toString();
+                nom_user = sesion.getAttribute("user").toString();
+                nivel = sesion.getAttribute("nivel").toString();
+            } catch (Exception e) {
+                response.sendRedirect("errorPage.jsp");
+            }
+
+
+        %>
         <header class="container-fluid col-xs-12 header color1">
             <div class="row">
                 <div class="d-none d-sm-inline-block col-sm-4 img-container-1">
@@ -57,8 +72,11 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <!-- Aquí va el formulario y eso -->
-                                            ...
+                                            <form action="userOps" method="POST">
+                                                <input type="hidden" name="id" value="<%=id%>">
+                                                <input type="text" name="newName" placeholder="Nuevo nombre">
+                                                <input type="submit" name="action" value="Cambiar nombre">
+                                            </form>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -100,8 +118,12 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <!-- Aquí va el formulario y eso -->
-                                            ...
+                                            <form action="userOps" method="POST">
+                                                <input type="hidden" name="idp" value="<%=id%>">
+                                                <input type="text" name="currPass" placeholder="Actual contraseña">
+                                                <input type="text" name="newPass" placeholder="Nueva contraseña">
+                                                <input type="submit" name="action" value="Cambiar password">
+                                            </form>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

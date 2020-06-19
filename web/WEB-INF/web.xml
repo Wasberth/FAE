@@ -24,6 +24,10 @@
         <servlet-name>ReporteServlet</servlet-name>
         <servlet-class>controlador.ReporteServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>userOps</servlet-name>
+        <servlet-class>controlador.userOps</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>InfinitContentServlet</servlet-name>
         <url-pattern>/InfinitContentServlet</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>ReporteServlet</servlet-name>
         <url-pattern>/ReporteServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>userOps</servlet-name>
+        <url-pattern>/userOps</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

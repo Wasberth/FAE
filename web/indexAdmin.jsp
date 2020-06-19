@@ -34,6 +34,6 @@
         <h1>Estás en la página de administradores (Todavia no tiene diseño)</h1>
         <br>
             <a href="CrudAdministrador.jsp">Consultar consejeros</a>
-        <a href="RegCons.jsp">Registrar consejero</a>
+        <a href="RegCons.jsp">Registrar usuario</a>
     </body>
 </html>
