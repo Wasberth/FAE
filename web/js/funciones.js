@@ -17,7 +17,7 @@ function eliminar() {
                 data: {id: id},
                 dataType: 'json',
                 success: function (data, textStatus, jqXHR) {
-                    //location.href="MainPage.jsp";
+                    location.href="MainPage.jsp";
 
                 }
             });
@@ -26,7 +26,7 @@ function eliminar() {
                 icon: "success",
 
             });
-            //location.reload();
+           location.reload();
         } else {
             swal("Aún no se ha reportado ninguna publicación.");
         }

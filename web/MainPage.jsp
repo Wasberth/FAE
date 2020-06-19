@@ -42,18 +42,19 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="#">Home</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Menú
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Escribir una publicacion</a>
-                            <a class="dropdown-item" href="#">Mi perfil</a>
-                            <a class="dropdown-item" href="log_out.jsp" name="cerrarSesion">Cerrar Sesion</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Destacados</a>
-                        </div>
+                    <li>
+                        <a class="nav-link" href="publication.jsp">Escribir una publicacion</a>
+
                     </li>
+                    <li>
+                        <a class="nav-link" href="profile.jsp">Mi perfil</a>
+
+                    </li>
+                    <li>
+                        <a class="nav-link" href="log_out.jsp" name="cerrarSesion">Cerrar Sesion</a>
+
+                    </li>
+
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
                     <button class="btn color3 mr-sm-2" type="button">Mi perfil</button>
@@ -215,10 +216,9 @@
                         </div>
                     </article>
                     <%
-                            }
-                        }
-
-                    } catch (SQLException e) {
+                                }
+}
+                           } catch (SQLException e) {
                         e.printStackTrace();
                     %>
                     <p>Murió <%=e%></p>
