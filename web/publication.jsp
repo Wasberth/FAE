@@ -96,9 +96,7 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fas fa-paragraph"></i></div>
                                 </div>
-                                <textarea form="publicacion" class="form-control" placeholder="Tu publicación" name="cuerpo">
-                                    <%=texto%>
-                                </textarea>
+                                <textarea form="publicacion" class="form-control" placeholder="Tu publicación" name="cuerpo"><%=texto%></textarea>
                             </div>
                         </div>
                         <div class="form-group">

@@ -37,9 +37,9 @@ public class Post extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String nivel = "";
-        
+
         try (PrintWriter out = response.getWriter()) {
-            System.out.println("ESTE ES UN BOX "+request.getParameter("noticiaBox"));
+            System.out.println("ESTE ES UN BOX " + request.getParameter("noticiaBox"));
             HttpSession session = request.getSession();
             nivel = (String) session.getAttribute("nivel");
             //String DRIVER = "com.mysql.jdbc.Driver";
@@ -57,13 +57,17 @@ public class Post extends HttpServlet {
 
                 con = new Conexion().getConnection();
                 int usr_id = (int) (session.getAttribute("usr_id"));
+                Operaciones op = new Operaciones();
+                boolean borrador = new Operaciones().hasBorrador(usr_id);
 
-                String q = "INSERT INTO MPublicacion (`pub_tit`,`usr_id`) "
-                        + "VALUES (?,?);";
-                String q2 = "INSERT INTO DPublicacion(`typ_id`, `pub_txt`, `pub_dat`, `pub_vot`, `pub_id`) "
-                        + "VALUES (?, ?, CURRENT_TIMESTAMP(), 1, ?);";
-                String q3 = "INSERT INTO DHistorial(`usr_id`, `pub_id`, `hst_dat`, `hst_act`) "
-                        + "VALUES (?, ?, CURRENT_TIMESTAMP(), 1)";
+                String q = borrador ? "UPDATE MPublicacion SET `pub_tit` = ? WHERE pub_id = " + op.getIdBorrador()
+                        : "INSERT INTO MPublicacion (`pub_tit`,`usr_id`) VALUES (?,?);";
+
+                String q2 = borrador ? "UPDATE DPublicacion SET `typ_id` = ?, `pub_txt` = ?, `pub_dat` = CURRENT_TIMESTAMP() WHERE pub_id = ?"
+                        : "INSERT INTO DPublicacion(`typ_id`, `pub_txt`, `pub_dat`, `pub_vot`, `pub_id`) VALUES (?, ?, CURRENT_TIMESTAMP(), 1, ?);";
+
+                String q3 = borrador ? "UPDATE DHistorial SET `hst_dat` = CURRENT_TIMESTAMP() WHERE `pub_id` = " + op.getIdBorrador()
+                        : "INSERT INTO DHistorial(`usr_id`, `pub_id`, `hst_dat`, `hst_act`) VALUES (?, ?, CURRENT_TIMESTAMP(), 1)";
 
                 //Aquí falta poner la sentencia para agregar el like en el momento en que se crea
                 //Y también falta que se guarden las categorías al crear las publicaciones
@@ -72,7 +76,9 @@ public class Post extends HttpServlet {
                 PreparedStatement ps3 = con.prepareStatement(q3);
 
                 ps.setString(1, titulo);
-                ps.setInt(2, usr_id);
+                if (!borrador) {
+                    ps.setInt(2, usr_id);
+                }
                 ps.executeUpdate();
                 int id = new Operaciones().getLastPublicacion(usr_id);
 
@@ -81,7 +87,7 @@ public class Post extends HttpServlet {
 
                 String tipo = request.getParameter("btnpost");
                 int pubtype = 0;
-                switch(tipo){
+                switch (tipo) {
                     case "Publicar":
                         pubtype = 1;
                         break;
@@ -92,14 +98,16 @@ public class Post extends HttpServlet {
                         pubtype = 3;
                         break;
                 }
-                
+
                 ps2.setInt(1, pubtype);
                 ps2.setString(2, cuerpo);
                 ps2.setInt(3, id);
                 ps2.executeUpdate();
 
-                ps3.setInt(1, usr_id);
-                ps3.setInt(2, id);
+                if (!borrador) {
+                    ps3.setInt(1, usr_id);
+                    ps3.setInt(2, id);
+                }
                 ps3.executeUpdate();
 
                 response.sendRedirect("MainPage.jsp");
