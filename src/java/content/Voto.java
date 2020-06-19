@@ -49,7 +49,15 @@ public class Voto extends HttpServlet {
                 String q = "UPDATE DPublicacion SET pub_vot = pub_vot "+voto+" WHERE pub_id = "+pub_id;
                 rs = st.executeUpdate(q);
                 st2 = con.createStatement();
-                String q2 = "INSERT INTO DHistorial (pub_id, usr_id, hst_vot, hst_dat) VALUES ("+pub_id+","+usr_id+","+voto+", GETDATE())";
+                
+                int act = 0;
+                if(voto == "1"){
+                    act = 1;
+                }else{
+                    act = 2;
+                }
+                
+                String q2 = "INSERT INTO DHistorial (pub_id, usr_id, hst_act, hst_dat) VALUES ("+pub_id+","+usr_id+","+act+", GETDATE())";
                 rs2 = st2.executeUpdate(q2);
             } catch (ClassNotFoundException | SQLException e) {
                 System.out.println("Error en voto.java");
