@@ -123,6 +123,29 @@ public class Operaciones {
     }
     
     
-    
+    public int getVotosByIdPub(int idpub) {
+        int votos = 0;
+        try {
+            String q = "SELECT * FROM dpublicacion WHERE pub_id = ? ";
+            Connection con = null;
+            try {
+                con = Operaciones.getConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Operaciones.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            PreparedStatement ps = con.prepareStatement(q);
+            ResultSet rs = null;
+            ps.setInt(1, idpub);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                votos = rs.getInt("pub_vot");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getLastPublicacion");
+            System.out.println(e);
+            e.printStackTrace();
+        }
+        return votos;
+    }
 
 }

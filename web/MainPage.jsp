@@ -99,7 +99,8 @@
 
                     <!--Primeros 2-5 artículos deben de ser generados por ESTE jsp-->
 
-                    <%                        Operaciones op = new Operaciones();
+                    <%                        
+                        Operaciones op = new Operaciones();
                         String DRIVER = "com.mysql.jdbc.Driver";
                         Class.forName(DRIVER).newInstance();
                         Connection con = null;
@@ -111,6 +112,7 @@
                         ResultSet rs3 = null;
                         int id = 4;
                         int pub_id = 0;
+                        int votos = 0;
                         try {
                             String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=root";
                             con = Operaciones.getConnection();
@@ -125,7 +127,7 @@
                                 String txt = rs2.getString("pub_txt");
                                 pub_id = rs.getInt("pub_id");
                                 String nom_usuario = op.getNombreUser(pub_id);
-
+                                votos = op.getVotosByIdPub(pub_id);
                                 if (rs2.getInt("typ_id") != 3) {
 
 
@@ -192,7 +194,7 @@
                                         <i class="fas fa-arrow-alt-circle-up"></i>
                                     </button>
                                     <button class="btn disabled">
-                                        <i>5</i>
+                                        <i><%=votos%></i>
                                     </button>
                                     <button class="btn btn-danger" name="downvote" onclick="votes(<%=pub_id%>,<%=session.getAttribute("usr_id")%>, '-1')">
                                         <i class="fas fa-arrow-alt-circle-down"></i>
@@ -211,7 +213,7 @@
                                     <i class="fas fa-arrow-alt-circle-up"></i>
                                 </button>
                                 <button class="btn disabled">
-                                    <i>5</i>
+                                    <i><%=votos%></i>
                                 </button>
                                 <button class="btn btn-danger">
                                     <i class="fas fa-arrow-alt-circle-down"></i>
