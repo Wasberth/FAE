@@ -108,13 +108,10 @@ public class adminOperacion {
             String q = "update musuario set usr_tag=? where usr_id =?; ";
            
             PreparedStatement ps = con.prepareStatement(q);
-            ps.setInt(1, id);
-            ps.setString(2, tag);
-            ps.executeUpdate();
+            ps.setString(1, tag);
+            ps.setInt(2, id);
             
-            if (ps != null) {
-                //ps.close();
-                //ps2.close();
+            if (ps.executeUpdate() > 0) {
                 ps = null;
                        
                 cambio = true;
