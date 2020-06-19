@@ -29,8 +29,6 @@ public class adminOperacion {
             
             String q2 = "insert into dusuario (usr_nom,usr_app,usr_apm) "
                     + "values (?,?,?)";
-            
-            
 
             PreparedStatement ps = con.prepareStatement(q);
             PreparedStatement ps2 = con.prepareStatement(q2);

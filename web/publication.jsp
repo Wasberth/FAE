@@ -69,15 +69,22 @@
                                     }
                                 %>
                             </select>
-
                         </div>
+                        <%
+                            Operaciones op = new Operaciones();
+                            String titulo = "", texto = "";
+                            if (op.hasBorrador(Integer.parseInt(sesion.getAttribute("usr_id").toString()))) {
+                                titulo = op.getTitleBorrador();
+                                texto = op.getTextBorrador();
+                            }
+                        %>
                         <div class="form-group">
                             <div class="input-group">
                                 <label class="sr-only" for="user">Título</label>
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fas fa-quote-left"></i></div>
                                 </div>
-                                <input type="text" class="form-control" required name="titulo" placeholder="Título">
+                                <input type="text" class="form-control" required name="titulo" placeholder="Título" value="<%=titulo%>">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fas fa-quote-right"></i></div>
                                 </div>
@@ -89,21 +96,21 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fas fa-paragraph"></i></div>
                                 </div>
-                                <textarea form="publicacion" class="form-control" placeholder="Tu publicación" name="cuerpo"></textarea>
+                                <textarea form="publicacion" class="form-control" placeholder="Tu publicación" name="cuerpo">
+                                    <%=texto%>
+                                </textarea>
                             </div>
                         </div>
-                        <%
-                            if (Integer.parseInt(sesion.getAttribute("nivel").toString()) < 3) {
-                        %>
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name = "noticiaBox" >
-                            <label class="form-check-label" for="exampleCheck1">Noticia</label>
-                        </div>
-                        <%
-                            }
-                        %>
                         <div class="form-group">
-                            <input type="submit" class="btn btn-primary" value="Publicar" name="btnpublicar">
+                            <input type="submit" class="btn btn-primary" value="Publicar" name="btnpost">
+                            <%
+                                if (Integer.parseInt(sesion.getAttribute("nivel").toString()) < 3) {
+                            %>
+                            <input type="submit" class="btn btn-danger" value="Noticia" name="btnpost">
+                            <%
+                                }
+                            %>
+                            <input type="submit" class="btn btn-secondary" value="Guardar como borrador" name="btnpost">
                         </div>
                     </form>
                 </div>
