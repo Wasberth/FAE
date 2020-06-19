@@ -127,14 +127,10 @@ public class Operaciones {
     }
     
     public boolean hasBorrador(int id_usuario) {
-        System.out.println(id_usuario);
+        System.out.println("Entré a hasborrador");
         try {
             String q = ""
-                    + "SELECT `DPublicacion`.`pub_id` AS `id`, `MPublicacion`.`pub_tit` AS `titulo`, `DPublicacion`.`pub_txt` AS `texto` "
-                    + "FROM `MPublicacion`, `DPublicacion` "
-                    + "WHERE `MPublicacion`.`pub_id` = `DPublicacion`.`pub_id` AND "
-                    + "`DPublicacion`.`typ_id` = 3 AND "
-                    + "`MPublicacion`.`usr_id` = ?";
+                    + "SELECT `DPublicacion`.`pub_id` AS `id`, `MPublicacion`.`pub_tit` AS `titulo`, `DPublicacion`.`pub_txt` AS `texto` FROM `MPublicacion`, `DPublicacion` WHERE `MPublicacion`.`pub_id` = `DPublicacion`.`pub_id` AND `DPublicacion`.`typ_id` = 3 AND `MPublicacion`.`usr_id` = ?";
             Connection con = null;
             try {
                 con = Operaciones.getConnection();
@@ -145,10 +141,19 @@ public class Operaciones {
             ResultSet rs = null;
             ps.setInt(1, id_usuario);
             rs = ps.executeQuery();
+            int i = 0;
             while (rs.next()) {
+                i++;
                 idBorrador = rs.getInt("id");
+                System.out.println(q);
+                System.out.println("Esta es la id "+ rs.getInt("id"));
                 titleBorrador = rs.getString("titulo");
                 textBorrador = rs.getString("texto");
+            }
+            if(i == 0){
+                idBorrador = 0;
+                titleBorrador = "";
+                textBorrador = "";
             }
         } catch (SQLException e) {
             System.out.println("Error hasBorrador");
