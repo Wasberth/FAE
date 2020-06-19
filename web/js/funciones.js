@@ -1,4 +1,5 @@
-function eliminar(id) {
+var id;
+function eliminar() {
     console.log(id);
     swal({
         title: "Estas seguro?",
@@ -35,4 +36,8 @@ function eliminar(id) {
         
     });
 
+}
+
+function setId(id_d){
+   id = id_d;
 }

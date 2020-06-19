@@ -88,7 +88,7 @@ public class Post extends HttpServlet {
                     ps2.setInt(3, id);
                     ps2.executeUpdate();
                 } else if (nivel2 == 3) {
-                    ps2.setInt(1, 3);
+                    ps2.setInt(1, 1);
                     ps2.setString(2, cuerpo);
                     ps2.setInt(3, id);
                     ps2.executeUpdate();

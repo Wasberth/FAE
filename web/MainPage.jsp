@@ -137,7 +137,7 @@
                                 <h5 class="text-center"><%=tit%> de <%=nom_usuario%></h5>
                             </div>
                             <div class="btn-request" data-toggle="modal" data-target="#userModal">
-                                <button type="button" class="btn btn-request">Reportar</button>
+                                <button type="button" class="btn btn-request" onclick="return setId(<%=pub_id%>)">Reportar</button>
                             </div>
                         </header>
                         <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
@@ -175,7 +175,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" onclick="return eliminar(<%=pub_id%>)">Reportar</button>
+                                        <button type="button" class="btn btn-primary" onclick="return eliminar()">Reportar</button>
                                     </div>
                                 </div>
                             </div>
