@@ -38,6 +38,10 @@ function eliminar() {
 
 }
 
+function eliminarPub(){
+    console.log("llegue a eliminarPub");
+}
+
 function setId(id_d){
    id = id_d;
 }

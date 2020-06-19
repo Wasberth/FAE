@@ -140,6 +140,10 @@
                             <div class="btn-request" data-toggle="modal" data-target="#userModal">
                                 <button type="button" class="btn btn-request" onclick="return setId(<%=pub_id%>)">Reportar</button>
                             </div>
+                            <div>
+                                <button type="button" class="btn btn-request" onclick="return setId(<%=pub_id%>)">Eliminar</button>
+
+                            </div>
                         </header>
                         <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -216,9 +220,9 @@
                         </div>
                     </article>
                     <%
-                                }
-}
-                           } catch (SQLException e) {
+                            }
+                        }
+                    } catch (SQLException e) {
                         e.printStackTrace();
                     %>
                     <p>Murió <%=e%></p>
