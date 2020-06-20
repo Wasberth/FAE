@@ -51,6 +51,7 @@ public class Post extends HttpServlet {
                 System.out.println(ex);
             }
             String categoria = request.getParameter("categoria");
+            System.out.println("Categoria: " + categoria);
             String titulo = request.getParameter("titulo");
             String cuerpo = request.getParameter("cuerpo");
             try {
@@ -69,11 +70,14 @@ public class Post extends HttpServlet {
                 String q3 = borrador ? "UPDATE DHistorial SET `hst_dat` = CURRENT_TIMESTAMP() WHERE `pub_id` = " + op.getIdBorrador()
                         : "INSERT INTO DHistorial(`usr_id`, `pub_id`, `hst_dat`, `hst_act`) VALUES (?, ?, CURRENT_TIMESTAMP(), 1)";
 
-                //Aquí falta poner la sentencia para agregar el like en el momento en que se crea
-                //Y también falta que se guarden las categorías al crear las publicaciones
+                String q4 = categoria == null ? "" : "INSERT INTO EPublicacionetiqueta VALUES(?,?)";
+
+                ResultSet rs;
+                int eti_id = 0;
                 PreparedStatement ps = con.prepareStatement(q);
                 PreparedStatement ps2 = con.prepareStatement(q2);
                 PreparedStatement ps3 = con.prepareStatement(q3);
+                PreparedStatement ps4 = con.prepareStatement(q4);
 
                 ps.setString(1, titulo);
                 if (!borrador) {
@@ -81,9 +85,6 @@ public class Post extends HttpServlet {
                 }
                 ps.executeUpdate();
                 int id = new Operaciones().getLastPublicacion(usr_id);
-
-                System.out.println(id);
-                System.out.println(q2);
 
                 String tipo = request.getParameter("btnpost");
                 int pubtype = 0;
@@ -110,6 +111,11 @@ public class Post extends HttpServlet {
                 }
                 ps3.executeUpdate();
 
+                if (categoria != "") {
+                    ps4.setInt(1, id);
+                    ps4.setInt(2, Integer.parseInt(categoria));
+                }
+                con.close();
                 response.sendRedirect("MainPage.jsp");
             } catch (IOException | SQLException e) {
                 System.out.println("Error en el Post");

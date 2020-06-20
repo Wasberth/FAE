@@ -125,6 +125,13 @@
                                 String tit = rs.getString("pub_tit");
                                 String txt = rs2.getString("pub_txt");
                                 pub_id = rs.getInt("pub_id");
+                                String q3 = "SELECT CEtiquetas.eti_nom AS `nombre` FROM CEtiquetas, EPublicacionetiqueta WHERE CEtiquetas.eti_id = EPublicacionetiqueta.eti_id AND EPublicacionetiqueta.pub_id = " + pub_id + ";";
+                                st3 = con.createStatement();
+                                rs3 = st3.executeQuery(q3);
+                                String etiqueta_nom = "";
+                                if (rs3.next()) {
+                                    etiqueta_nom = rs3.getString("nombre");
+                                }
                                 String nom_usuario = op.getNombreUser(pub_id);
                                 votos = op.getVotosByIdPub(pub_id);
                                 if (rs2.getInt("typ_id") != 3) {
@@ -137,6 +144,14 @@
                                 <!Aqui no va el nom_user por que ese es de la sesion
                                     Tiene que ir el nombre del usuario desde la bd>
                                 <h5 class="text-center"><%=tit%> de <%=nom_usuario%></h5>
+                                <%
+                                    if (!etiqueta_nom.equals("")) {
+                                %>
+                                <br>
+                                <h6 class="small"><%=etiqueta_nom%></h6>
+                                <%
+                                    }
+                                %>
                             </div>
                             <div class="btn-request" data-toggle="modal" data-target="#userModal">
                                 <button type="button" class="btn btn-request" onclick="return setId(<%=pub_id%>)">Reportar</button>
@@ -148,7 +163,7 @@
                                 <button type="button" class="btn btn-request" onclick="return setId(<%=pub_id%>)">Eliminar</button>
                             </div>
                             <%
-                            } else {    
+                            } else {
                                 if (Integer.parseInt(session.getAttribute("usr_id").toString()) == rs.getInt("usr_id")) {
                             %>
                             <div  class="btn-request" data-toggle="modal" data-target="#eliminarModal">

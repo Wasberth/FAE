@@ -18,7 +18,7 @@ public class Operaciones {
     private static int idBorrador;
     private static String textBorrador;
     private static String titleBorrador;
-    
+    private String etiqueta="";
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
         return new Conexion().getConnection();
     }
@@ -82,6 +82,7 @@ public class Operaciones {
             while (rs.next()) {
                 id = rs.getInt(1);
             }
+            con.close();
         } catch (SQLException e) {
             System.out.println("Error getLastPublicacion");
             System.out.println(e);
@@ -155,6 +156,7 @@ public class Operaciones {
                 titleBorrador = "";
                 textBorrador = "";
             }
+            con.close();
         } catch (SQLException e) {
             System.out.println("Error hasBorrador");
             System.out.println(e);
@@ -192,6 +194,7 @@ public class Operaciones {
             while (rs.next()) {
                 votos = rs.getInt("pub_vot");
             }
+            con.close();
         } catch (SQLException e) {
             System.out.println("Error getLastPublicacion");
             System.out.println(e);
@@ -199,5 +202,7 @@ public class Operaciones {
         }
         return votos;
     }
+    
+    
 
 }
