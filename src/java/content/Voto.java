@@ -8,6 +8,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -59,10 +61,17 @@ public class Voto extends HttpServlet {
                 
                 String q2 = "INSERT INTO DHistorial (pub_id, usr_id, hst_act, hst_dat) VALUES ("+pub_id+","+usr_id+","+act+", CURRENT_TIMESTAMP())";
                 rs2 = st2.executeUpdate(q2);
+                con.close();
             } catch (ClassNotFoundException | SQLException e) {
                 System.out.println("Error en voto.java");
                 System.out.println(e);
+            }finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsultaBD.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {
             System.out.println(ex);
         }

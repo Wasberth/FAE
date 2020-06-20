@@ -6,6 +6,8 @@
 
 
 
+<%@page import="java.util.logging.Logger"%>
+<%@page import="java.util.logging.Level"%>
 <%@page import="controlador.Operaciones"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page language="java" import="java.sql.*"%>
@@ -148,7 +150,7 @@
                                 <button type="button" class="btn btn-request" onclick="return setId(<%=pub_id%>)">Eliminar</button>
                             </div>
                             <%
-                            } else {    
+                            } else {
                                 if (Integer.parseInt(session.getAttribute("usr_id").toString()) == rs.getInt("usr_id")) {
                             %>
                             <div  class="btn-request" data-toggle="modal" data-target="#eliminarModal">
@@ -268,11 +270,18 @@
                     <%
                             }
                         }
+                        con.close();
                     } catch (SQLException e) {
                         e.printStackTrace();
                     %>
                     <p>Murió <%=e%></p>
                     <%
+                        } finally {
+                            try {
+                                con.close();
+                            } catch (SQLException ex) {
+                                Logger.getLogger(Operaciones.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
                     %>
                     <!--Primeros 2-5 artículos deben de ser generados por ESTE jsp-->

@@ -44,7 +44,7 @@ public class Post extends HttpServlet {
             nivel = (String) session.getAttribute("nivel");
             //String DRIVER = "com.mysql.jdbc.Driver";
             //Class.forName(DRIVER);
-            java.sql.Connection con;
+            java.sql.Connection con = null;
             try {
                 con = new Conexion().getConnection();
             } catch (SQLException ex) {
@@ -111,11 +111,18 @@ public class Post extends HttpServlet {
                 ps3.executeUpdate();
 
                 response.sendRedirect("MainPage.jsp");
+                con.close();
             } catch (IOException | SQLException e) {
                 System.out.println("Error en el Post");
                 System.err.println(e);
                 e.printStackTrace();
+            }finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsultaBD.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
         } catch (ClassNotFoundException ex) {
             System.out.println(ex);
         }

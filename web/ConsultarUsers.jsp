@@ -4,6 +4,9 @@
     Author     : tutus
 --%>
 
+<%@page import="java.util.logging.Level"%>
+<%@page import="java.util.logging.Logger"%>
+<%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="controlador.Operaciones"%>
@@ -79,6 +82,12 @@
             System.out.println(e.getMessage());
             System.out.println(e.getStackTrace());
 
+        }finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Operaciones.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
 %>           

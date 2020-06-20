@@ -6,14 +6,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConsultaBD {
 
     public static LinkedList<ConsejerosAtributos> getConsejeros() {
         LinkedList<ConsejerosAtributos> listaConsejeros = new LinkedList<>();
+        Connection conexion = null;
         try {
+            conexion = new Conexion().getConnection();
             Class.forName("org.gjt.mm.mysql.Driver");
-            Connection conexion = new Conexion().getConnection();
             Statement st = conexion.createStatement();
             ResultSet rs = st.executeQuery("select * from musuario");
             while (rs.next()) {
@@ -24,9 +27,16 @@ public class ConsultaBD {
                 contacto.setUsr_pas(rs.getString("usr_pas"));
                 listaConsejeros.add(contacto);
             }
+            conexion.close();
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("No se conecto a consultar ");
             e.printStackTrace();
+        }finally{
+            try {
+                conexion.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsultaBD.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return listaConsejeros;
     }
@@ -34,9 +44,10 @@ public class ConsultaBD {
     
     public static LinkedList<Publicacion> getPublicaciones() {
         LinkedList<Publicacion> listaPublicaciones = new LinkedList<>();
+        Connection conexion = null;
         try {
             Class.forName("org.gjt.mm.mysql.Driver");
-            Connection conexion = new Conexion().getConnection();
+            conexion = new Conexion().getConnection();
             Statement st = conexion.createStatement();
             Statement st2 = conexion.createStatement();
             ResultSet rs = st.executeQuery("select * from mpublicacion");
@@ -54,6 +65,12 @@ public class ConsultaBD {
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("No se conecto a consultar ");
             e.printStackTrace();
+        }finally{
+            try {
+                conexion.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsultaBD.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return listaPublicaciones;
     }

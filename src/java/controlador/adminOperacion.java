@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -54,6 +56,12 @@ public class adminOperacion {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             System.out.println(Arrays.toString(e.getStackTrace()));
+        }finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(adminOperacion.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return registro;
     }
@@ -95,6 +103,12 @@ public class adminOperacion {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             System.out.println(Arrays.toString(e.getStackTrace()));
+        }finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(adminOperacion.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return cambio;
     }
@@ -120,6 +134,12 @@ public class adminOperacion {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             System.out.println(Arrays.toString(e.getStackTrace()));
+        }finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(adminOperacion.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return cambio;
     }
@@ -150,6 +170,12 @@ public class adminOperacion {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             System.out.println(Arrays.toString(e.getStackTrace()));
+        }finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(adminOperacion.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return eliminar;
     }
@@ -180,6 +206,12 @@ public class adminOperacion {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             System.out.println(Arrays.toString(e.getStackTrace()));
+        }finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(adminOperacion.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return eliminar;
     }

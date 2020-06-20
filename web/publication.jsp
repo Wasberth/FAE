@@ -5,6 +5,8 @@
 --%>
 
 
+<%@page import="java.util.logging.Logger"%>
+<%@page import="java.util.logging.Level"%>
 <%@page import="controlador.Operaciones"%>
 <%@page import="config.Conexion"%>
 <%@page import="java.sql.*"%>
@@ -64,8 +66,15 @@
                                 <option value="<%=id%>"><%=tag%></option>
                                 <%
                                         }
+                                        con.close();
                                     } catch (Exception e) {
                                         System.out.println(e);
+                                    } finally {
+                                        try {
+                                            con.close();
+                                        } catch (SQLException ex) {
+                                            Logger.getLogger(Operaciones.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
                                     }
                                 %>
                             </select>
