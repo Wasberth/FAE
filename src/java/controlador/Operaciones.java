@@ -13,12 +13,12 @@ import java.util.logging.Logger;
 
 public class Operaciones {
 
-
     private int id;
     private static int idBorrador;
     private static String textBorrador;
     private static String titleBorrador;
-    private String etiqueta="";
+    private String etiqueta = "";
+
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
         return new Conexion().getConnection();
     }
@@ -126,7 +126,7 @@ public class Operaciones {
 
         return nombre;
     }
-    
+
     public boolean hasBorrador(int id_usuario) {
         System.out.println("Entré a hasborrador");
         try {
@@ -147,11 +147,11 @@ public class Operaciones {
                 i++;
                 idBorrador = rs.getInt("id");
                 System.out.println(q);
-                System.out.println("Esta es la id "+ rs.getInt("id"));
+                System.out.println("Esta es la id " + rs.getInt("id"));
                 titleBorrador = rs.getString("titulo");
                 textBorrador = rs.getString("texto");
             }
-            if(i == 0){
+            if (i == 0) {
                 idBorrador = 0;
                 titleBorrador = "";
                 textBorrador = "";
@@ -164,7 +164,7 @@ public class Operaciones {
         }
         return (idBorrador != 0);
     }
-    
+
     public static int getIdBorrador() {
         return idBorrador;
     }
@@ -177,11 +177,38 @@ public class Operaciones {
         return titleBorrador;
     }
     
+    public void resetRowNumber(){
+        Connection con = null;
+        try {
+            String q = "SET @row_number:=0;";
+            try {
+                con = Operaciones.getConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Operaciones.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            PreparedStatement ps = con.prepareStatement(q);
+            int rs = 0;
+            rs = ps.executeUpdate();
+            con.close();
+        } catch (SQLException e) {
+            System.out.println("Error getLastPublicacion");
+            System.out.println(e);
+            e.printStackTrace();
+        }finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Operaciones.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }
+
     public int getVotosByIdPub(int idpub) {
         int votos = 0;
+        Connection con = null;
         try {
             String q = "SELECT * FROM dpublicacion WHERE pub_id = ? ";
-            Connection con = null;
             try {
                 con = Operaciones.getConnection();
             } catch (ClassNotFoundException ex) {
@@ -199,10 +226,14 @@ public class Operaciones {
             System.out.println("Error getLastPublicacion");
             System.out.println(e);
             e.printStackTrace();
+        }finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Operaciones.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return votos;
     }
-    
-    
 
 }

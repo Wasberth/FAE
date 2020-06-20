@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -35,9 +37,9 @@ public class InfinitContentServlet extends HttpServlet {
             Connection con = null;
             String DRIVER = "com.mysql.jdbc.Driver";
             Class.forName(DRIVER).newInstance();
-            Statement st = null;
+            PreparedStatement st = null;
             ResultSet rs = null;
-            Statement st2 = null;
+            PreparedStatement st2 = null;
             ResultSet rs2 = null;
 
             String counted = request.getParameter("counted");
@@ -45,18 +47,20 @@ public class InfinitContentServlet extends HttpServlet {
             for (int i = counter; i <= counter + 10; i++) {
 
                 try {
-                    String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=root";
+                    HttpSession session = request.getSession();
                     con = new Conexion().getConnection();
-                    st = con.createStatement();
-                    st2 = con.createStatement();
-                    String q = "SELECT * FROM MPublicacion WHERE pub_id=" + counter;
-                    String q2 = "SELECT * FROM DPublicacion WHERE pub_id=" + counter;
+                    String q = request.getParameter("q");
+                    String q2 = request.getParameter("q2");
+                    st = con.prepareStatement(q);
+                    st2 = con.prepareStatement(q2);
+                    st.setInt(1, counter);
+                    st2.setInt(1, counter);
                     rs = st.executeQuery(q);
                     rs2 = st2.executeQuery(q2);
-                    String session = "session.ession.getAttribute('usr_id')"; //Aquí hay que meter la sesión
                     while (rs.next() && rs2.next()) {
                         String tit = rs.getString("pub_tit");
                         String txt = rs2.getString("pub_txt");
+                        int id = rs.getInt("pub_id");
                         int votos = rs2.getInt("pub_vot");
                         out.println("<article class=\"container borderSimple\">\n"
                                 + "                        <header class=\"row color2\">\n"
@@ -67,13 +71,13 @@ public class InfinitContentServlet extends HttpServlet {
                                 + "                        <div class=\"row\">\n"
                                 + "                            <div class=\"col-2 color2 d-none d-sm-inline-block\">\n"
                                 + "                                <div class=\"btn-group-vertical btn-g\">\n"
-                                + "                                        <button class=\"btn btn-success\" name=\"upvote\" onclick=\"votes(" + counter + "," + session + ", '+1')\">\n"
+                                + "                                        <button class=\"btn btn-success\" name=\"upvote\" onclick=\"votes(" + id + "," + session.getAttribute("usr_id") + ", '+1')\">\n"
                                 + "                                        <i class=\"fas fa-arrow-alt-circle-up\"></i>\n"
                                 + "                                    </button>\n"
                                 + "                                    <button class=\"btn disabled\">\n"
                                 + "                                        <i>" + votos + "</i>\n"
                                 + "                                    </button>\n"
-                                + "                                    <button class=\"btn btn-danger\" name=\"downvote\" onclick=\"votes(" + counter + "," + session + ", '-1')\">\n"
+                                + "                                    <button class=\"btn btn-danger\" name=\"downvote\" onclick=\"votes(" + id + "," + session.getAttribute("usr_id") + ", '-1')\">\n"
                                 + "                                        <i class=\"fas fa-arrow-alt-circle-down\"></i>\n"
                                 + "                                    </button>\n"
                                 + "                                </div>\n"

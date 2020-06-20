@@ -194,4 +194,71 @@ VALUES (1,'Cafeteria'),(2,'Canchas'),(3,'Direccion'),(4,'Policias'),(5,'Docentes
 (8,'Programacion'),(9,'MQSA');
 
 SELECT CEtiquetas.eti_nom FROM CEtiquetas, EPublicacionetiqueta WHERE CEtiquetas.eti_id = EPublicacionetiqueta.eti_id AND EPublicacionetiqueta.pub_id = 13;
+
+--Votos, Fecha, Noticias, Etiquetas
+--Orden: 1er Select MPublicacion(pub_id, pub_tit, usr_id)     2do DPublicacion(pub_id typ_id pub_txt pub_dat pub_vot)
+--Sin filtro
+SELECT @row_number:=@row_number+1 AS row_number, MPublicacion.* 
+FROM MPublicacion, DPublicacion 
+WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id != 3 
+LIMIT 4;
+
+SELECT @row_number:=@row_number+1 AS row_number, * 
+FROM DPublicacion 
+WHERE typ_id != 3 
+LIMIT 4;
+
+--Votos
+SELECT @row_number:=@row_number+1 AS row_number, MPublicacion.* 
+FROM MPublicacion, DPublicacion 
+WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id != 3 
+ORDER BY DPublicacion.pub_vot DESC 
+LIMIT 4;
+
+SELECT @row_number:=@row_number+1 AS row_number, * FROM 
+DPublicacion WHERE typ_id != 3 
+ORDER BY pub_vot DESC 
+LIMIT 4;
+
+--Fecha
+SELECT @row_number:=@row_number+1 AS row_number, MPublicacion.* 
+FROM MPublicacion, DPublicacion 
+WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id != 3 
+ORDER BY DPublicacion.pub_dat DESC 
+LIMIT 4;
+
+SELECT @row_number:=@row_number+1 AS row_number, * 
+FROM DPublicacion 
+WHERE typ_id != 3 
+ORDER BY pub_dat DESC 
+LIMIT 4;
+
+--Noticias
+SELECT @row_number:=@row_number+1 AS row_number, MPublicacion.* 
+FROM MPublicacion, DPublicacion 
+WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id != 3 
+ORDER BY DPublicacion.typ_id DESC 
+LIMIT 4;
+
+SELECT @row_number:=@row_number+1 AS row_number, * 
+FROM DPublicacion 
+WHERE typ_id != 3 
+ORDER BY typ_id DESC 
+LIMIT 4;
+
+--Etiquetas
+SELECT @row_number:=@row_number+1 AS row_number, MPublicacion.* FROM MPublicacion, DPublicacion, EPublicacionEtiqueta, CEtiquetas 
+    WHERE DPublicacion.pub_id = MPublicacion.pub_id AND 
+          MPublicacion.pub_id = EPublicacionEtiqueta.pub_id AND
+          CEtiquetas.eti_id = CEtiquetas.eti_id AND
+          DPublicacion.typ_id != 3 AND
+          CEtiquetas.eti_nom = ''
+    ORDER BY DPublicacion.typ_id DESC LIMIT 4;
+
+SELECT @row_number:=@row_number+1 AS row_number, DPublicacion.* FROM DPublicacion, EPublicacionEtiqueta, CEtiquetas 
+    WHERE DPublicacion.pub_id = EPublicacionEtiqueta.pub_id AND
+          CEtiquetas.eti_id = CEtiquetas.eti_id AND
+          DPublicacion.typ_id != 3 AND
+          CEtiquetas.eti_nom = ''
+    ORDER BY DPublicacion.typ_id DESC LIMIT 4;
 -->

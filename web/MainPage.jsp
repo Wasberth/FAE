@@ -19,6 +19,12 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="css/colors.css">
         <link rel="stylesheet" href="css/mainPage.css">
+        <script>
+            function filtrar(filtro) {
+                document.getElementById("filtro").value = filtro;
+                document.getElementById("Filtrar").submit();
+            }
+        </script>
     </head>
     <body class="color5">
         <%
@@ -95,6 +101,32 @@
                             </div>
                         </a>
                     </article>
+
+                    <article class="container borderSimple d-none d-sm-inline-block">
+                        <form id="Filtrar" method="post" action="MainPage.jsp">
+                            <input id="filtro" type="hidden" name="filter">
+                            <div class="row">
+                                <div class="col-sm-2 color2 btn-group btn-g">
+                                    <button class="btn" onclick="return filtrar('votos')">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        <h5>Populares</h5>
+                                    </button>
+                                </div>
+                                <div class="col-sm-2 color2 btn-group btn-g">
+                                    <button class="btn" onclick="return filtrar('fecha')">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        <h5>Nuevos</h5>
+                                    </button>
+                                </div>
+                                <div class="col-sm-2 color2 btn-group btn-g">
+                                    <button class="btn" onclick="return filtrar('noticias')">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        <h5>Noticias</h5>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </article>
                     <!--Este artículo es obligatorio-->
 
                     <!--Primeros 2-5 artículos deben de ser generados por ESTE jsp-->
@@ -112,13 +144,125 @@
                         int id = 4;
                         int pub_id = 0;
                         int votos = 0;
+                        String q = "", q2 = "", qinf = "", qinf2 = "";
                         try {
-                            String url = "jdbc:mysql://localhost:3306/db_faev1?user=root&password=root";
                             con = Operaciones.getConnection();
                             st = con.createStatement();
                             st2 = con.createStatement();
-                            String q = "SELECT * FROM MPublicacion LIMIT 8";
-                            String q2 = "SELECT * FROM DPublicacion LIMIT 8";
+                            if (request.getParameter("filter") == null) {
+                                switch (request.getParameter("filter").toString()) {
+                                    case "votos":
+                                        q = "SELECT MPublicacion.* "
+                                                + "FROM MPublicacion, DPublicacion "
+                                                + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id != 3 "
+                                                + "ORDER BY DPublicacion.pub_vot DESC "
+                                                + "LIMIT 4;";
+                                        q2 = "SELECT * FROM "
+                                                + "DPublicacion WHERE typ_id != 3 "
+                                                + "ORDER BY pub_vot DESC "
+                                                + "LIMIT 4;";
+                                        qinf = "SELECT @row_number:=@row_number+1 AS row_number, MPublicacion.* "
+                                                + "FROM MPublicacion, DPublicacion "
+                                                + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id != 3 AND row_number = ? "
+                                                + "ORDER BY DPublicacion.pub_vot DESC "
+                                                + "LIMIT 4;";
+                                        qinf2 = "SELECT @row_number:=@row_number+1 AS row_number, * FROM "
+                                                + "DPublicacion WHERE typ_id != 3 AND row_number= ? "
+                                                + "ORDER BY pub_vot DESC "
+                                                + "LIMIT 4;";
+                                        break;
+                                    case "fecha":
+                                        q = "SELECT MPublicacion.* "
+                                                + "FROM MPublicacion, DPublicacion "
+                                                + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id != 3 "
+                                                + "ORDER BY DPublicacion.pub_dat DESC "
+                                                + "LIMIT 4;";
+                                        q2 = "SELECT * "
+                                                + "FROM DPublicacion "
+                                                + "WHERE typ_id != 3 "
+                                                + "ORDER BY pub_dat DESC "
+                                                + "LIMIT 4;";
+                                        qinf = "SELECT @row_number:=@row_number+1 AS row_number, MPublicacion.* "
+                                                + "FROM MPublicacion, DPublicacion "
+                                                + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id != 3 AND row_num = ? "
+                                                + "ORDER BY DPublicacion.pub_dat DESC "
+                                                + "LIMIT 4;";
+                                        qinf2 = "SELECT @row_number:=@row_number+1 AS row_number, * "
+                                                + "FROM DPublicacion "
+                                                + "WHERE typ_id != 3 AND row_num = ? "
+                                                + "ORDER BY pub_dat DESC "
+                                                + "LIMIT 4;";
+                                        break;
+                                    case "noticias":
+                                        q = "SELECT MPublicacion.* "
+                                                + "FROM MPublicacion, DPublicacion "
+                                                + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id != 3 "
+                                                + "ORDER BY DPublicacion.typ_id DESC "
+                                                + "LIMIT 4;";
+                                        q2 = "SELECT * "
+                                                + "FROM DPublicacion "
+                                                + "WHERE typ_id != 3 "
+                                                + "ORDER BY typ_id DESC "
+                                                + "LIMIT 4;";
+                                        qinf = "SELECT @row_number:=@row_number+1 AS row_number, MPublicacion.* "
+                                                + "FROM MPublicacion, DPublicacion "
+                                                + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id != 3 AND row_num = ? "
+                                                + "ORDER BY DPublicacion.typ_id DESC "
+                                                + "LIMIT 4;";
+                                        qinf2 = "SELECT @row_number:=@row_number+1 AS row_number, * "
+                                                + "FROM DPublicacion "
+                                                + "WHERE typ_id != 3 AND row_num = ? "
+                                                + "ORDER BY typ_id DESC "
+                                                + "LIMIT 4;";
+                                        break;
+                                    default:
+                                        q = "SELECT MPublicacion.* FROM MPublicacion, DPublicacion, EPublicacionEtiqueta, CEtiquetas "
+                                                + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND "
+                                                + "MPublicacion.pub_id = EPublicacionEtiqueta.pub_id AND "
+                                                + "CEtiquetas.eti_id = CEtiquetas.eti_id AND "
+                                                + "DPublicacion.typ_id != 3 AND "
+                                                + "CEtiquetas.eti_nom = '" + request.getParameter("filter").toString() + "' "
+                                                + "ORDER BY DPublicacion.typ_id DESC LIMIT 4;";
+                                        q2 = "SELECT DPublicacion.* FROM DPublicacion, EPublicacionEtiqueta, CEtiquetas "
+                                                + "WHERE DPublicacion.pub_id = EPublicacionEtiqueta.pub_id AND "
+                                                + "CEtiquetas.eti_id = CEtiquetas.eti_id AND "
+                                                + "DPublicacion.typ_id != 3 AND "
+                                                + "CEtiquetas.eti_nom = '" + request.getParameter("filter").toString() + "' "
+                                                + "ORDER BY DPublicacion.typ_id DESC LIMIT 4;";
+                                        qinf = "SELECT @row_number:=@row_number+1 AS row_number, MPublicacion.* FROM MPublicacion, DPublicacion, EPublicacionEtiqueta, CEtiquetas "
+                                                + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND "
+                                                + "MPublicacion.pub_id = EPublicacionEtiqueta.pub_id AND "
+                                                + "CEtiquetas.eti_id = CEtiquetas.eti_id AND "
+                                                + "DPublicacion.typ_id != 3 AND "
+                                                + "CEtiquetas.eti_nom = '" + request.getParameter("filter").toString() + "' AND "
+                                                + "row_num = ? "
+                                                + "ORDER BY DPublicacion.typ_id DESC LIMIT 4;";
+                                        qinf2 = "SELECT @row_number:=@row_number+1 AS row_number, DPublicacion.* FROM DPublicacion, EPublicacionEtiqueta, CEtiquetas "
+                                                + "WHERE DPublicacion.pub_id = EPublicacionEtiqueta.pub_id AND "
+                                                + "CEtiquetas.eti_id = CEtiquetas.eti_id AND "
+                                                + "DPublicacion.typ_id != 3 AND "
+                                                + "CEtiquetas.eti_nom = '" + request.getParameter("filter").toString() + "' AND "
+                                                + "row_num = ? "
+                                                + "ORDER BY DPublicacion.typ_id DESC LIMIT 4;";
+                                }
+                            } else {
+                                q = "SELECT MPublicacion.* "
+                                        + "FROM MPublicacion, DPublicacion "
+                                        + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id != 3 "
+                                        + "LIMIT 4;";
+                                q2 = "SELECT * "
+                                        + "FROM DPublicacion "
+                                        + "WHERE typ_id != 3 "
+                                        + "LIMIT 4;";
+                                qinf = "SELECT @row_number:=@row_number+1 AS row_number, MPublicacion.* "
+                                        + "FROM MPublicacion, DPublicacion "
+                                        + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id != 3 AND row_num = ? "
+                                        + "LIMIT 4;";
+                                qinf2 = "SELECT @row_number:=@row_number+1 AS row_number, * "
+                                        + "FROM DPublicacion "
+                                        + "WHERE typ_id != 3 AND row_num = ? "
+                                        + "LIMIT 4;";
+                            }
                             rs = st.executeQuery(q);
                             rs2 = st2.executeQuery(q2);
                             while (rs.next() && rs2.next()) {
@@ -133,7 +277,7 @@
                                     etiqueta_nom = rs3.getString("nombre");
                                 }
                                 String nom_usuario = op.getNombreUser(pub_id);
-                                votos = op.getVotosByIdPub(pub_id);
+                                votos = rs2.getInt("pub_vot");
                                 if (rs2.getInt("typ_id") != 3) {
 
 
@@ -141,8 +285,6 @@
                     <article class="container borderSimple">
                         <header class="row color2">
                             <div class="col-l2">
-                                <!Aqui no va el nom_user por que ese es de la sesion
-                                    Tiene que ir el nombre del usuario desde la bd>
                                 <h5 class="text-center"><%=tit%> de <%=nom_usuario%></h5>
                                 <%
                                     if (!etiqueta_nom.equals("")) {
@@ -302,7 +444,7 @@
                                         $(document).ready(function () {
                                             $(window).scroll(function () {
                                                 if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-                                                    $.get("InfinitContentServlet", {counted:<%=id%>}, function (data) {
+                                                    $.get("InfinitContentServlet", {counted:<%=id%>, q:<%=qinf%>, q2:<%=qinf2%>}, function (data) {
                                                         $("#content-wrapper").append(data);
                                                     });
             <%id += 10;%>

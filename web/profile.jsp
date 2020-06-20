@@ -19,7 +19,7 @@
         <%
             String nom_user = "";
             String nivel = "";
-            String id = "0"; 
+            String id = "0";
             try {
                 HttpSession sesion = request.getSession();
                 id = sesion.getAttribute("usr_id").toString();
@@ -107,28 +107,27 @@
                             <div class="modal fade" id="passModal" tabindex="-1" role="dialog" aria-labelledby="passModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="passModalLabel">
-                                                Cambiar contraseña
-                                                <br>
-                                                <small class="text-warning">No compartas tu contraseña con nadie</small>
-                                            </h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="userOps" method="POST">
+                                        <form action="userOps" method="POST">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="passModalLabel">
+                                                    Cambiar contraseña
+                                                    <br>
+                                                    <small class="text-warning">No compartas tu contraseña con nadie</small>
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
                                                 <input type="hidden" name="idp" value="<%=id%>">
                                                 <input type="text" name="currPass" placeholder="Actual contraseña">
                                                 <input type="text" name="newPass" placeholder="Nueva contraseña">
-                                                <input type="submit" name="action" value="Cambiar password">
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
-                                        </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                <input type="submit" class="btn btn-primary" name="action" value="Cambiar password">
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
