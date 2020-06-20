@@ -126,11 +126,12 @@
                                         <h5>Noticias</h5>
                                     </button>
                                 </div>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Dropdown button
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <div class="dropdown show">
+                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true">
+                                        Dropdown link
+                                    </a>
+
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         <%                                            Operaciones op = new Operaciones();
                                             String DRIVER = "com.mysql.jdbc.Driver";
                                             Class.forName(DRIVER).newInstance();
@@ -139,7 +140,7 @@
                                             ResultSet rs4 = null;
                                             con = Operaciones.getConnection();
                                             st4 = con.createStatement();
-                                            
+
                                             String q4 = "SELECT * FROM CEtiquetas;";
                                             rs4 = st4.executeQuery(q4);
                                             while (rs4.next()) {
@@ -158,8 +159,7 @@
 
                     <!--Primeros 2-5 artículos deben de ser generados por ESTE jsp-->
 
-                    <%                   
-                        
+                    <%
                         Statement st = null;
                         ResultSet rs = null;
                         Statement st2 = null;
@@ -472,11 +472,12 @@
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script type="text/javascript">
                                         $(document).ready(function () {
                                             $(window).scroll(function () {
                                                 if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-                                                    $.get("InfinitContentServlet", {counted:<%=id%>, q:`<%=qinf%>`, q2:`<%=qinf2%>`}, function (data) {
+                                                    $.get("InfinitContentServlet", {counted:<%=id%>, q: `<%=qinf%>`, q2: `<%=qinf2%>`}, function (data) {
                                                         $("#content-wrapper").append(data);
                                                     });
             <%id += 10;%>
@@ -487,10 +488,6 @@
                                             $.post("Voto", {pub_id: pub_id, usr_id: usr_id, vote: upvote});
                                         }
         </script>
-        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="js/funciones.js" type="text/javascript"></script>
     </body>
 </html>
