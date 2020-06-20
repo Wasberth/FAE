@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -48,6 +50,12 @@ public class pubOperacion {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             System.out.println(Arrays.toString(e.getStackTrace()));
+        }finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsultaBD.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         return modif;
@@ -81,6 +89,12 @@ public class pubOperacion {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             System.out.println(Arrays.toString(e.getStackTrace()));
+        }finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsultaBD.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         return elim;

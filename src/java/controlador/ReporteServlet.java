@@ -61,14 +61,17 @@ public class ReporteServlet extends HttpServlet {
                 ps2.setInt(1, usr_id);
                 System.out.println(sql2);
                 rs2 = ps2.executeUpdate();
+                con.close();
                 break;
             case "eliminarPub":
                 System.out.println("Llegue a elimiar pub en servlet");
                 String sql = "DELETE FROM MPublicacion WHERE pub_id = "+pub_id+"";
                 PreparedStatement ps = con.prepareStatement(sql);
                 rs2 = ps.executeUpdate();
+                con.close();
                 break;
             default:
+                con.close();
                 System.out.println("me fui al default");
 
         }

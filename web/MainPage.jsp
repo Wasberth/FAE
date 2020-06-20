@@ -6,6 +6,8 @@
 
 
 
+<%@page import="java.util.logging.Logger"%>
+<%@page import="java.util.logging.Level"%>
 <%@page import="controlador.Operaciones"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page language="java" import="java.sql.*"%>
@@ -425,11 +427,18 @@
                     <%
                             }
                         }
+                        con.close();
                     } catch (SQLException e) {
                         e.printStackTrace();
                     %>
                     <p>Murió <%=e%></p>
                     <%
+                        } finally {
+                            try {
+                                con.close();
+                            } catch (SQLException ex) {
+                                Logger.getLogger(Operaciones.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
                     %>
                     <!--Primeros 2-5 artículos deben de ser generados por ESTE jsp-->

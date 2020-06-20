@@ -1,6 +1,7 @@
 package controlador;
 
 import config.Conexion;
+import content.ConsultaBD;
 import java.awt.BorderLayout;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -28,8 +29,8 @@ public class Operaciones {
         System.out.println("Usuario: " + usuario);
         System.out.println("Password: " + password);
         int nivel = 0;
+        Connection con = null;
         try {
-            Connection con = null;
             try {
                 con = Operaciones.getConnection();
             } catch (ClassNotFoundException ex) {
@@ -51,6 +52,12 @@ public class Operaciones {
         } catch (SQLException ed) {
             System.out.println(ed.getMessage());
             System.out.println(Arrays.toString(ed.getStackTrace()));
+        }finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsultaBD.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return nivel;
     }
@@ -66,10 +73,10 @@ public class Operaciones {
     public int getLastPublicacion(int id_usuario) {
         System.out.println(id_usuario);
         int id = 0;
+        Connection con = null;
         try {
             String q = "SELECT pub_id FROM Mpublicacion WHERE usr_id = ? ORDER BY pub_id DESC LIMIT 1";
             System.out.println(q);
-            Connection con = null;
             try {
                 con = Operaciones.getConnection();
             } catch (ClassNotFoundException ex) {
@@ -87,6 +94,12 @@ public class Operaciones {
             System.out.println("Error getLastPublicacion");
             System.out.println(e);
             e.printStackTrace();
+        }finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsultaBD.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return id;
     }
@@ -94,8 +107,8 @@ public class Operaciones {
     public String getNombreUser(int id_pub) {
         String nombre = "";
         int id_usr = 0;
+        Connection con = null;
         try {
-            Connection con = null;
             try {
                 con = Operaciones.getConnection();
             } catch (ClassNotFoundException ex) {
@@ -122,6 +135,12 @@ public class Operaciones {
         } catch (SQLException ed) {
             System.out.println(ed.getMessage());
             System.out.println(Arrays.toString(ed.getStackTrace()));
+        }finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsultaBD.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         return nombre;
@@ -129,10 +148,11 @@ public class Operaciones {
 
     public boolean hasBorrador(int id_usuario) {
         System.out.println("Entré a hasborrador");
+        Connection con = null;
         try {
             String q = ""
                     + "SELECT `DPublicacion`.`pub_id` AS `id`, `MPublicacion`.`pub_tit` AS `titulo`, `DPublicacion`.`pub_txt` AS `texto` FROM `MPublicacion`, `DPublicacion` WHERE `MPublicacion`.`pub_id` = `DPublicacion`.`pub_id` AND `DPublicacion`.`typ_id` = 3 AND `MPublicacion`.`usr_id` = ?";
-            Connection con = null;
+            
             try {
                 con = Operaciones.getConnection();
             } catch (ClassNotFoundException ex) {
@@ -161,6 +181,12 @@ public class Operaciones {
             System.out.println("Error hasBorrador");
             System.out.println(e);
             e.printStackTrace();
+        }finally{
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsultaBD.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return (idBorrador != 0);
     }

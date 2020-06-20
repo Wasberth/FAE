@@ -80,7 +80,7 @@
                     <tr>
                         <td><input id="id <%=lista.get(i).getPub_id()%>" disabled type="text"  value="<%=lista.get(i).getUser_id()%>"></td>
                         <td><input id="titulo <%=lista.get(i).getPub_id()%>" disabled type="text"   value="<%=lista.get(i).getTitulo()%>"></td>
-                        <td><input id="texto <%=lista.get(i).getPub_id()%>" disabled type="text"   value="<%=lista.get(i).getTexto()%>"></td>
+                        <td><input id="texto <%=lista.get(i).getPub_id()%>" disabled type="text"  value="<%=lista.get(i).getTexto()%>"></td>
                         <td><input id="votos <%=lista.get(i).getPub_id()%>" disabled type="text"  value="<%=lista.get(i).getVotos()%>"></td>
                         <td><input id="date <%=lista.get(i).getPub_id()%>" disabled type="text"   value="<%=lista.get(i).getDate()%>"></td>
                         <td>
@@ -100,12 +100,12 @@
                                             document.getElementById('input <%=lista.get(i).getPub_id()%>').hidden = true;
 
                                         })()">
-                                <input id="submit <%=lista.get(i).getPub_id()%>" type="button" hidden value="Guardar cambios" onclick="(function () {
-                                            document.getElementById('input titulo <%=lista.get(i).getPub_id()%>').value = document.getElementById('titulo <%=lista.get(i).getUser_id()%>').value;
-                                            document.getElementById('input texto <%=lista.get(i).getPub_id()%>').value = document.getElementById('texto <%=lista.get(i).getUser_id()%>').value;
+                                <input id="submit <%=lista.get(i).getPub_id()%>" type="button" hidden name="action" value="Guardar cambios" onclick="(function () {
+                                            document.getElementById('titulo <%=lista.get(i).getPub_id()%>').value = document.getElementById('input titulo <%=lista.get(i).getUser_id()%>').value;
+                                            document.getElementById('texto <%=lista.get(i).getPub_id()%>').value = document.getElementById('input texto <%=lista.get(i).getUser_id()%>').value;
                                             document.getElementById('form <%=lista.get(i).getPub_id()%>').submit();
                                         })()">
-                                <input id="cancel <%=lista.get(i).getPub_id()%>" type="button" name="action" hidden value="Cancelar" onclick="(function () {
+                                <input id="cancel <%=lista.get(i).getPub_id()%>" type="button" hidden value="Cancelar" onclick="(function () {
                                             location.reload();
                                         })()">
                             </form>
