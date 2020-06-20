@@ -77,7 +77,7 @@ public class pubAServ extends HttpServlet {
             Publicacion publicacion = new Publicacion();
             pubOperacion op = new pubOperacion();
             String action = request.getParameter("action");
-            
+            System.out.println("Accion en pubAServ "+action);
             switch(action){
                 
                 case "Guardar cambios":

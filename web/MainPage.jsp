@@ -126,6 +126,31 @@
                                         <h5>Noticias</h5>
                                     </button>
                                 </div>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Dropdown button
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <%                                            Operaciones op = new Operaciones();
+                                            String DRIVER = "com.mysql.jdbc.Driver";
+                                            Class.forName(DRIVER).newInstance();
+                                            Connection con = null;
+                                            Statement st4 = null;
+                                            ResultSet rs4 = null;
+                                            con = Operaciones.getConnection();
+                                            st4 = con.createStatement();
+                                            
+                                            String q4 = "SELECT * FROM CEtiquetas;";
+                                            rs4 = st4.executeQuery(q4);
+                                            while (rs4.next()) {
+                                                System.out.println("alo");
+                                        %> 
+                                        <a class="dropdown-item" onclick="return filtrar('<%=rs4.getString("eti_nom")%>')"><%=rs4.getString("eti_nom")%></a>
+                                        <%
+                                            }
+                                        %>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </article>
@@ -133,10 +158,8 @@
 
                     <!--Primeros 2-5 artículos deben de ser generados por ESTE jsp-->
 
-                    <%                        Operaciones op = new Operaciones();
-                        String DRIVER = "com.mysql.jdbc.Driver";
-                        Class.forName(DRIVER).newInstance();
-                        Connection con = null;
+                    <%                   
+                        
                         Statement st = null;
                         ResultSet rs = null;
                         Statement st2 = null;
@@ -151,7 +174,7 @@
                             con = Operaciones.getConnection();
                             st = con.createStatement();
                             st2 = con.createStatement();
-                            if (request.getParameter("filter") == null) {
+                            if (request.getParameter("filter") != null) {
                                 switch (request.getParameter("filter").toString()) {
                                     case "votos":
                                         q = "SELECT MPublicacion.* "
@@ -453,7 +476,7 @@
                                         $(document).ready(function () {
                                             $(window).scroll(function () {
                                                 if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-                                                    $.get("InfinitContentServlet", {counted:<%=id%>, q:<%=qinf%>, q2:<%=qinf2%>}, function (data) {
+                                                    $.get("InfinitContentServlet", {counted:<%=id%>, q:`<%=qinf%>`, q2:`<%=qinf2%>`}, function (data) {
                                                         $("#content-wrapper").append(data);
                                                     });
             <%id += 10;%>
@@ -464,7 +487,7 @@
                                             $.post("Voto", {pub_id: pub_id, usr_id: usr_id, vote: upvote});
                                         }
         </script>
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

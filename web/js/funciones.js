@@ -1,5 +1,5 @@
 var id;
-function eliminar() {
+function eliminar() { //Aquie sta la funcion 
     console.log(id);
     swal({
         title: "Estas seguro?",
@@ -11,14 +11,14 @@ function eliminar() {
         if (willDelete) {
             console.log("Antes del url js ");
             var url = "ReporteServlet?accion=reportar";
-            $.ajax({
+            $.ajax({ //AJAX CON TIPO POST Y LE DIGO EN LA URL QUE EJECUTE LA VAR URL QUE INCLUYE MI SERVLET CON UNA ACCION POR QUE YO USO UN SWITCH
                 type: 'POST',
                 url: url,
-                data: {id: id},
+                data: {id: id}, //lE PASO UN PARAMETRO X
                 dataType: 'json',
                 success: function (data, textStatus, jqXHR) {
                     location.href="MainPage.jsp";
-
+//eSTA ES UNA ANIMACION Xd
                 }
             });
             
