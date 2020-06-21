@@ -58,7 +58,7 @@ public class ConsultaBD {
                 pub.setPub_id(rs.getInt("pub_id"));
                 pub.setTitulo(rs.getString("pub_tit"));
                 pub.setTexto(rs2.getString("pub_txt"));
-                pub.setVotos(rs.getInt("pub_vot"));
+                pub.setVotos(rs2.getInt("pub_vot"));
                 pub.setDate(rs2.getDate("pub_dat"));
                 listaPublicaciones.add(pub);
             }

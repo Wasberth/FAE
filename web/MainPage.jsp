@@ -30,6 +30,7 @@
     </head>
     <body class="color5">
         <%
+            Operaciones op = new Operaciones();
             String nom_user = "";
             try {
                 HttpSession sesion = request.getSession();
@@ -72,10 +73,9 @@
         <div id="content-box" class="container-fluid content">
             <div class="row">
                 <aside class="col-3 px-1 position-fixed offset-8 d-none d-sm-inline-block color3" id="sticky-sidebar">
+                    <h4 style="color:white;">Publicaciones destacadas</h4>
                     <br>
-                    <h4>Noticia destacada 1</h4><br>
-                    <h4>Noticia destacada 2</h4><br>
-                    <h4>Noticia destacada 3</h4><br>
+                    <%=op.getPublicacionesPopulares()%>
                 </aside>
             </div>
             <div class="row">
@@ -132,7 +132,7 @@
                                     </a>
 
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <%                                            Operaciones op = new Operaciones();
+                                        <%
                                             String DRIVER = "com.mysql.jdbc.Driver";
                                             Class.forName(DRIVER).newInstance();
                                             Connection con = null;
@@ -221,23 +221,19 @@
                                     case "noticias":
                                         q = "SELECT MPublicacion.* "
                                                 + "FROM MPublicacion, DPublicacion "
-                                                + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id != 3 "
-                                                + "ORDER BY DPublicacion.typ_id DESC "
+                                                + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id = 2 "
                                                 + "LIMIT 4;";
                                         q2 = "SELECT * "
                                                 + "FROM DPublicacion "
-                                                + "WHERE typ_id != 3 "
-                                                + "ORDER BY typ_id DESC "
+                                                + "WHERE typ_id = 2 "
                                                 + "LIMIT 4;";
                                         qinf = "SELECT @row_number:=@row_number+1 AS row_number, MPublicacion.* "
                                                 + "FROM MPublicacion, DPublicacion "
-                                                + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id != 3 AND row_num = ? "
-                                                + "ORDER BY DPublicacion.typ_id DESC "
+                                                + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id = 2 AND row_num = ? "
                                                 + "LIMIT 4;";
                                         qinf2 = "SELECT @row_number:=@row_number+1 AS row_number, * "
                                                 + "FROM DPublicacion "
-                                                + "WHERE typ_id != 3 AND row_num = ? "
-                                                + "ORDER BY typ_id DESC "
+                                                + "WHERE typ_id = 2 AND row_num = ? "
                                                 + "LIMIT 4;";
                                         break;
                                     default:

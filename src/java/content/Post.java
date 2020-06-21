@@ -111,9 +111,10 @@ public class Post extends HttpServlet {
                 }
                 ps3.executeUpdate();
 
-                if (categoria != "") {
-                    ps4.setInt(1, id);
-                    ps4.setInt(2, Integer.parseInt(categoria));
+                if (q4 != "") {
+                    ps4.setInt(1, Integer.parseInt(categoria));
+                    ps4.setInt(2, id);   
+                    ps4.executeUpdate();
                 }
                 con.close();
                 response.sendRedirect("MainPage.jsp");

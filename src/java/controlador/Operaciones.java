@@ -52,7 +52,7 @@ public class Operaciones {
         } catch (SQLException ed) {
             System.out.println(ed.getMessage());
             System.out.println(Arrays.toString(ed.getStackTrace()));
-        }finally{
+        } finally {
             try {
                 con.close();
             } catch (SQLException ex) {
@@ -94,7 +94,7 @@ public class Operaciones {
             System.out.println("Error getLastPublicacion");
             System.out.println(e);
             e.printStackTrace();
-        }finally{
+        } finally {
             try {
                 con.close();
             } catch (SQLException ex) {
@@ -135,7 +135,7 @@ public class Operaciones {
         } catch (SQLException ed) {
             System.out.println(ed.getMessage());
             System.out.println(Arrays.toString(ed.getStackTrace()));
-        }finally{
+        } finally {
             try {
                 con.close();
             } catch (SQLException ex) {
@@ -152,7 +152,7 @@ public class Operaciones {
         try {
             String q = ""
                     + "SELECT `DPublicacion`.`pub_id` AS `id`, `MPublicacion`.`pub_tit` AS `titulo`, `DPublicacion`.`pub_txt` AS `texto` FROM `MPublicacion`, `DPublicacion` WHERE `MPublicacion`.`pub_id` = `DPublicacion`.`pub_id` AND `DPublicacion`.`typ_id` = 3 AND `MPublicacion`.`usr_id` = ?";
-            
+
             try {
                 con = Operaciones.getConnection();
             } catch (ClassNotFoundException ex) {
@@ -181,7 +181,7 @@ public class Operaciones {
             System.out.println("Error hasBorrador");
             System.out.println(e);
             e.printStackTrace();
-        }finally{
+        } finally {
             try {
                 con.close();
             } catch (SQLException ex) {
@@ -202,8 +202,8 @@ public class Operaciones {
     public static String getTitleBorrador() {
         return titleBorrador;
     }
-    
-    public void resetRowNumber(){
+
+    public void resetRowNumber() {
         Connection con = null;
         try {
             String q = "SET @row_number:=0;";
@@ -220,7 +220,7 @@ public class Operaciones {
             System.out.println("Error getLastPublicacion");
             System.out.println(e);
             e.printStackTrace();
-        }finally{
+        } finally {
             try {
                 con.close();
             } catch (SQLException ex) {
@@ -252,7 +252,7 @@ public class Operaciones {
             System.out.println("Error getLastPublicacion");
             System.out.println(e);
             e.printStackTrace();
-        }finally{
+        } finally {
             try {
                 con.close();
             } catch (SQLException ex) {
@@ -260,6 +260,44 @@ public class Operaciones {
             }
         }
         return votos;
+    }
+
+    public String getPublicacionesPopulares() {
+        String publicaciones = "";
+        Connection con = null;
+        try {
+            String q = "SELECT MPublicacion.pub_tit AS `titulo` "
+                    + "FROM MPublicacion, DPublicacion "
+                    + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id = 1 "
+                    + "ORDER BY DPublicacion.pub_vot DESC "
+                    + "LIMIT 3;";
+            System.out.println(q);
+            try {
+                con = Operaciones.getConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Operaciones.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            PreparedStatement ps = con.prepareStatement(q);
+            ResultSet rs = null;
+            rs = ps.executeQuery();
+            int i = 0;
+            while (rs.next()) {
+                i++;
+                publicaciones = "<h4 style='color:whitesmoke;'>" + i + ". "+ publicaciones + rs.getString("titulo") + "</h4>\n";
+            }
+            con.close();
+        } catch (SQLException e) {
+            System.out.println("Error getPublicacionesPopulares");
+            System.out.println(e);
+            e.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsultaBD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return publicaciones;
     }
 
 }

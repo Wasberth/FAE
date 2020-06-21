@@ -6,6 +6,7 @@
 package content;
 
 import config.Conexion;
+import controlador.Operaciones;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -34,6 +35,7 @@ public class InfinitContentServlet extends HttpServlet {
             HttpServletResponse response) throws ServletException, IOException {
         try (PrintWriter out = response.getWriter()) {
             String resp = "";
+            new Operaciones().resetRowNumber();
             Connection con = null;
             String DRIVER = "com.mysql.jdbc.Driver";
             Class.forName(DRIVER).newInstance();
