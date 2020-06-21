@@ -250,14 +250,14 @@ LIMIT 4;
 SELECT @row_number:=@row_number+1 AS row_number, MPublicacion.* FROM MPublicacion, DPublicacion, EPublicacionEtiqueta, CEtiquetas 
     WHERE DPublicacion.pub_id = MPublicacion.pub_id AND 
           MPublicacion.pub_id = EPublicacionEtiqueta.pub_id AND
-          CEtiquetas.eti_id = CEtiquetas.eti_id AND
+          EPublicacionEtiqueta.eti_id = CEtiquetas.eti_id AND
           DPublicacion.typ_id != 3 AND
-          CEtiquetas.eti_nom = ''
+          CEtiquetas.eti_nom = 'Direccion'
     ORDER BY DPublicacion.typ_id DESC LIMIT 4;
 
 SELECT @row_number:=@row_number+1 AS row_number, DPublicacion.* FROM DPublicacion, EPublicacionEtiqueta, CEtiquetas 
     WHERE DPublicacion.pub_id = EPublicacionEtiqueta.pub_id AND
-          CEtiquetas.eti_id = CEtiquetas.eti_id AND
+          EPublicacionEtiqueta.eti_id = CEtiquetas.eti_id AND
           DPublicacion.typ_id != 3 AND
           CEtiquetas.eti_nom = ''
     ORDER BY DPublicacion.typ_id DESC LIMIT 4;

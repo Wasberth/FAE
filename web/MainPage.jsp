@@ -240,27 +240,27 @@
                                         q = "SELECT MPublicacion.* FROM MPublicacion, DPublicacion, EPublicacionEtiqueta, CEtiquetas "
                                                 + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND "
                                                 + "MPublicacion.pub_id = EPublicacionEtiqueta.pub_id AND "
-                                                + "CEtiquetas.eti_id = CEtiquetas.eti_id AND "
+                                                + "EPublicacionEtiqueta.eti_id = CEtiquetas.eti_id AND "
                                                 + "DPublicacion.typ_id != 3 AND "
                                                 + "CEtiquetas.eti_nom = '" + request.getParameter("filter").toString() + "' "
                                                 + "ORDER BY DPublicacion.typ_id DESC LIMIT 4;";
                                         q2 = "SELECT DPublicacion.* FROM DPublicacion, EPublicacionEtiqueta, CEtiquetas "
                                                 + "WHERE DPublicacion.pub_id = EPublicacionEtiqueta.pub_id AND "
-                                                + "CEtiquetas.eti_id = CEtiquetas.eti_id AND "
+                                                + "EPublicacionEtiqueta.eti_id = CEtiquetas.eti_id AND "
                                                 + "DPublicacion.typ_id != 3 AND "
                                                 + "CEtiquetas.eti_nom = '" + request.getParameter("filter").toString() + "' "
                                                 + "ORDER BY DPublicacion.typ_id DESC LIMIT 4;";
                                         qinf = "SELECT @row_number:=@row_number+1 AS row_number, MPublicacion.* FROM MPublicacion, DPublicacion, EPublicacionEtiqueta, CEtiquetas "
                                                 + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND "
                                                 + "MPublicacion.pub_id = EPublicacionEtiqueta.pub_id AND "
-                                                + "CEtiquetas.eti_id = CEtiquetas.eti_id AND "
+                                                + "EPublicacionEtiqueta.eti_id = CEtiquetas.eti_id AND "
                                                 + "DPublicacion.typ_id != 3 AND "
                                                 + "CEtiquetas.eti_nom = '" + request.getParameter("filter").toString() + "' AND "
                                                 + "row_num = ? "
                                                 + "ORDER BY DPublicacion.typ_id DESC LIMIT 4;";
                                         qinf2 = "SELECT @row_number:=@row_number+1 AS row_number, DPublicacion.* FROM DPublicacion, EPublicacionEtiqueta, CEtiquetas "
                                                 + "WHERE DPublicacion.pub_id = EPublicacionEtiqueta.pub_id AND "
-                                                + "CEtiquetas.eti_id = CEtiquetas.eti_id AND "
+                                                + "EPublicacionEtiqueta.eti_id = CEtiquetas.eti_id AND "
                                                 + "DPublicacion.typ_id != 3 AND "
                                                 + "CEtiquetas.eti_nom = '" + request.getParameter("filter").toString() + "' AND "
                                                 + "row_num = ? "
@@ -284,6 +284,8 @@
                                         + "WHERE typ_id != 3 AND row_num = ? "
                                         + "LIMIT 4;";
                             }
+                            System.out.println(q + "\n" + q2);
+                                    
                             rs = st.executeQuery(q);
                             rs2 = st2.executeQuery(q2);
                             while (rs.next() && rs2.next()) {
