@@ -73,13 +73,12 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <%
-                            LinkedList<Publicacion> lista = ConsultaBD.getPublicaciones();
+                        <%                            LinkedList<Publicacion> lista = ConsultaBD.getPublicaciones();
                             for (int i = 0; i < lista.size(); i++) {
                         %>
                     <tr>
                         <td><input id="id <%=lista.get(i).getPub_id()%>" disabled type="text"  value="<%=lista.get(i).getUser_id()%>"></td>
-                        
+
                         <td><input id="titulo <%=lista.get(i).getPub_id()%>" disabled type="text"   value="<%=lista.get(i).getTitulo()%>"></td>
                         <td><input id="texto <%=lista.get(i).getPub_id()%>" disabled type="text"  value="<%=lista.get(i).getTexto()%>"></td>
                         <td><input id="votos <%=lista.get(i).getPub_id()%>" disabled type="text"  value="<%=lista.get(i).getVotos()%>"></td>
@@ -127,8 +126,6 @@
                 </tbody>
             </table>
         </div>
-
-
     </div>
 </div>
 

@@ -4,13 +4,10 @@
     Author     : tutus
 --%>
 
-<%@page import="java.util.logging.Level"%>
-<%@page import="java.util.logging.Logger"%>
-<%@page import="java.sql.SQLException"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Statement"%>
-<%@page import="controlador.Operaciones"%>
-<%@page import="java.sql.Connection"%>
+
+<%@page import="content.Usuario"%>
+<%@page import="java.util.LinkedList"%>
+<%@page import="content.ConsultaBD"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -30,86 +27,83 @@
         <a href="PubsUsers.jsp">Listar publicaciones de usuarios</a>
 
         <section>
-                <center>
-                    <div>
-                        <hr>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Tag</th>
-                                    <th>Nombre</th>
-                                    <th>Apellido Paterno</th>
-                                    <th>Apellido Materno</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-<%
-        Connection con = Operaciones.getConnection();
-        Statement st = con.createStatement();
-        Statement st2 = con.createStatement();
-        ResultSet rs,rs2;
-        int[] id = new int[0];
-        
-        try{
-            
-            String q = "Select * from musuario where usr_niv=1";
-            String q2 = "Select * from dusuario where usr_niv=1";
-            rs = st.executeQuery(q);
-            rs2 = st2.executeQuery(q2);
-            int i = 0;
-            while(rs.next() && rs2.next()){
-                id[i]=rs.getInt(1);
-%>                                
-                                <tr>
-                                    <td><%=rs.getInt(1) %></td>
-                                    <td><%=rs.getString(2) %></td>
-                                    <td><%=rs2.getString(2) %></td>
-                                    <td><%=rs2.getFloat(3) %></td>
-                                    <td><%=rs2.getInt(4) %></td>
-                                </tr>
-<%
-            i++;
-            }
+                <table class="table table-hover" >
+                <thead>
+                    <tr>
+                        <th>Usuario ID</th>
+                        <th>Username</th>
+                        <th>Nombre</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
+                        <th>Nivel</th>
+                        <th>Modificar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <%
+                            LinkedList<Usuario> lista = ConsultaBD.getConsejeros();
+                            for (int i = 0; i < lista.size(); i++) {
+                        %>
+                    <tr>
+                        <td><input id="id <%=lista.get(i).getUsr_id()%>" disabled type="text"  value="<%=lista.get(i).getUsr_id()%>"></td>
+                        <td><input id="tag <%=lista.get(i).getUsr_id()%>" disabled type="text"   value="<%=lista.get(i).getUsr_tag()%>"></td>
+                        <td><input id="nom <%=lista.get(i).getUsr_id()%>" disabled type="text"  value="<%=lista.get(i).getUsr_nom()%>"></td>
+                        <td><input id="app <%=lista.get(i).getUsr_id()%>" disabled type="text"  value="<%=lista.get(i).getUsr_app()%>"></td>
+                        <td><input id="apm <%=lista.get(i).getUsr_id()%>" disabled type="text"   value="<%=lista.get(i).getUsr_apm()%>"></td>
+                        <td><input id="niv <%=lista.get(i).getUsr_id()%>" disabled type="number"   value="<%=lista.get(i).getUsr_niv()%>"></td>
+                        <td>
+                            <form id="form <%=lista.get(i).getUsr_id()%>" method="POST" action="saveUsrChanges.jsp">
+                                <input id="input tag <%=lista.get(i).getUsr_id()%>" name="usr_tag" type="hidden">
+                                <input id="input nom <%=lista.get(i).getUsr_id()%>" name="usr_nom" type="hidden">
+                                <input id="input app <%=lista.get(i).getUsr_id()%>" name="usr_app" type="hidden">
+                                <input id="input apm <%=lista.get(i).getUsr_id()%>" name="usr_apm" type="hidden">
+                                <input id="input niv <%=lista.get(i).getUsr_id()%>" name="usr_niv" type="hidden">
+                                <input id="<%=lista.get(i).getUsr_id()%>" value="<%=lista.get(i).getUsr_id()%>" name="usr_id" type="hidden">
+                                <input id="input <%=lista.get(i).getUsr_id()%>" class="editar" type="button" value="Editar" onclick="(function () {
+                                            var botones = document.getElementsByClassName('editar');
+                                            for (var i = 0; i < botones.length; i++) {
+                                                botones[i].hidden = true;
+                                            }
+                                            document.getElementById('tag <%=lista.get(i).getUsr_id()%>').disabled = false;
+                                            document.getElementById('nom <%=lista.get(i).getUsr_id()%>').disabled = false;
+                                            document.getElementById('app <%=lista.get(i).getUsr_id()%>').disabled = false;
+                                            document.getElementById('apm <%=lista.get(i).getUsr_id()%>').disabled = false;
+                                            document.getElementById('niv <%=lista.get(i).getUsr_id()%>').disabled = false;
+                                            document.getElementById('submit <%=lista.get(i).getUsr_id()%>').hidden = false;
+                                            document.getElementById('cancel <%=lista.get(i).getUsr_id()%>').hidden = false;
+                                            document.getElementById('input <%=lista.get(i).getUsr_id()%>').hidden = true;
 
-            rs.close();
-            st.close();
-            con.close();
-
-        }catch(Exception e){
-
-            System.out.println("Error, Fallo de conexion con la BD");
-            System.out.println(e.getMessage());
-            System.out.println(e.getStackTrace());
-
-        }finally{
-            try {
-                con.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(Operaciones.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-%>           
-                            </tbody>
-                        </table>
-                        <p>Eliminar usuario por id</p>
-                        <form action="consOps" method="POST">
-                            <select name="id">
-<%
-                        for (int i = 0; i < id.length; i++) {
-                            int idopt = id[i];
-%>
-                            <option value="<%=idopt%>"> <%=idopt%> </option>
-<%
+                                        })()">
+                                <input id="submit <%=lista.get(i).getUsr_id()%>" type="button" hidden name="action" value="Guardar cambios" onclick="(function () {
+                                            document.getElementById('input tag <%=lista.get(i).getUsr_id()%>').value = document.getElementById('tag <%=lista.get(i).getUsr_id()%>').value;
+                                            document.getElementById('input nom <%=lista.get(i).getUsr_id()%>').value = document.getElementById('nom <%=lista.get(i).getUsr_id()%>').value;
+                                            document.getElementById('input app <%=lista.get(i).getUsr_id()%>').value = document.getElementById('app <%=lista.get(i).getUsr_id()%>').value;
+                                            document.getElementById('input apm <%=lista.get(i).getUsr_id()%>').value = document.getElementById('apm <%=lista.get(i).getUsr_id()%>').value;
+                                            document.getElementById('input niv <%=lista.get(i).getUsr_id()%>').value = document.getElementById('niv <%=lista.get(i).getUsr_id()%>').value;
+                                            document.getElementById('form <%=lista.get(i).getUsr_id()%>').submit();
+                                        })()">
+                                <input id="cancel <%=lista.get(i).getUsr_id()%>" type="button" hidden value="Cancelar" onclick="(function () {
+                                            location.reload();
+                                        })()">
+                            </form>
+                        </td>
+                        <td>
+                            <form action="deleteusr.jsp" method="POST">
+                                <input id="delete <%=lista.get(i).getUsr_id()%>" name="UserDelete" type="hidden" value="<%=lista.get(i).getUsr_id()%>">
+                                <input type="submit" name="action" value="Eliminar">
+                            </form>
+                        </td>
+                    </tr>
+                    <%
                         }
-%>
-                            </select>
-                            <input type="submit" name="action" value="Eliminar">
-                        </form>
-                    </div>
-                </center>
-            </section>
+
+                    %>
+                    </tr>
+
+                </tbody>
+            </table>
 <%
         }else{
               response.sendRedirect("errorPage.jsp");

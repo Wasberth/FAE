@@ -186,15 +186,13 @@
                                                 + "DPublicacion WHERE typ_id != 3 "
                                                 + "ORDER BY pub_vot DESC "
                                                 + "LIMIT 4;";
-                                        qinf = "SELECT @row_number:=@row_number+1 AS row_number, MPublicacion.* "
+                                        qinf = "SELECT MPublicacion.* "
                                                 + "FROM MPublicacion, DPublicacion "
-                                                + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id != 3 AND row_number = ? "
-                                                + "ORDER BY DPublicacion.pub_vot DESC "
-                                                + "LIMIT 4;";
-                                        qinf2 = "SELECT @row_number:=@row_number+1 AS row_number, * FROM "
-                                                + "DPublicacion WHERE typ_id != 3 AND row_number= ? "
-                                                + "ORDER BY pub_vot DESC "
-                                                + "LIMIT 4;";
+                                                + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id != 3 "
+                                                + "ORDER BY DPublicacion.pub_vot DESC ;";
+                                        qinf2 = "SELECT * FROM "
+                                                + "DPublicacion WHERE typ_id != 3 "
+                                                + "ORDER BY pub_vot DESC ;";
                                         break;
                                     case "fecha":
                                         q = "SELECT MPublicacion.* "
@@ -207,16 +205,14 @@
                                                 + "WHERE typ_id != 3 "
                                                 + "ORDER BY pub_dat DESC "
                                                 + "LIMIT 4;";
-                                        qinf = "SELECT @row_number:=@row_number+1 AS row_number, MPublicacion.* "
+                                        qinf = "SELECT MPublicacion.* "
                                                 + "FROM MPublicacion, DPublicacion "
-                                                + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id != 3 AND row_num = ? "
-                                                + "ORDER BY DPublicacion.pub_dat DESC "
-                                                + "LIMIT 4;";
-                                        qinf2 = "SELECT @row_number:=@row_number+1 AS row_number, * "
+                                                + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id != 3 "
+                                                + "ORDER BY DPublicacion.pub_dat DESC ;";
+                                        qinf2 = "SELECT * "
                                                 + "FROM DPublicacion "
-                                                + "WHERE typ_id != 3 AND row_num = ? "
-                                                + "ORDER BY pub_dat DESC "
-                                                + "LIMIT 4;";
+                                                + "WHERE typ_id != 3 "
+                                                + "ORDER BY pub_dat DESC ;";
                                         break;
                                     case "noticias":
                                         q = "SELECT MPublicacion.* "
@@ -227,14 +223,12 @@
                                                 + "FROM DPublicacion "
                                                 + "WHERE typ_id = 2 "
                                                 + "LIMIT 4;";
-                                        qinf = "SELECT @row_number:=@row_number+1 AS row_number, MPublicacion.* "
+                                        qinf = "SELECT MPublicacion.* "
                                                 + "FROM MPublicacion, DPublicacion "
-                                                + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id = 2 AND row_num = ? "
-                                                + "LIMIT 4;";
-                                        qinf2 = "SELECT @row_number:=@row_number+1 AS row_number, * "
+                                                + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id = 2;";
+                                        qinf2 = "SELECT * "
                                                 + "FROM DPublicacion "
-                                                + "WHERE typ_id = 2 AND row_num = ? "
-                                                + "LIMIT 4;";
+                                                + "WHERE typ_id = 2;";
                                         break;
                                     default:
                                         q = "SELECT MPublicacion.* FROM MPublicacion, DPublicacion, EPublicacionEtiqueta, CEtiquetas "
@@ -250,21 +244,19 @@
                                                 + "DPublicacion.typ_id != 3 AND "
                                                 + "CEtiquetas.eti_nom = '" + request.getParameter("filter").toString() + "' "
                                                 + "ORDER BY DPublicacion.typ_id DESC LIMIT 4;";
-                                        qinf = "SELECT @row_number:=@row_number+1 AS row_number, MPublicacion.* FROM MPublicacion, DPublicacion, EPublicacionEtiqueta, CEtiquetas "
+                                        qinf = "SELECT MPublicacion.* FROM MPublicacion, DPublicacion, EPublicacionEtiqueta, CEtiquetas "
                                                 + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND "
                                                 + "MPublicacion.pub_id = EPublicacionEtiqueta.pub_id AND "
                                                 + "EPublicacionEtiqueta.eti_id = CEtiquetas.eti_id AND "
                                                 + "DPublicacion.typ_id != 3 AND "
-                                                + "CEtiquetas.eti_nom = '" + request.getParameter("filter").toString() + "' AND "
-                                                + "row_num = ? "
-                                                + "ORDER BY DPublicacion.typ_id DESC LIMIT 4;";
-                                        qinf2 = "SELECT @row_number:=@row_number+1 AS row_number, DPublicacion.* FROM DPublicacion, EPublicacionEtiqueta, CEtiquetas "
+                                                + "CEtiquetas.eti_nom = '" + request.getParameter("filter").toString() + "' "
+                                                + "ORDER BY DPublicacion.typ_id DESC;";
+                                        qinf2 = "SELECT DPublicacion.* FROM DPublicacion, EPublicacionEtiqueta, CEtiquetas "
                                                 + "WHERE DPublicacion.pub_id = EPublicacionEtiqueta.pub_id AND "
                                                 + "EPublicacionEtiqueta.eti_id = CEtiquetas.eti_id AND "
                                                 + "DPublicacion.typ_id != 3 AND "
-                                                + "CEtiquetas.eti_nom = '" + request.getParameter("filter").toString() + "' AND "
-                                                + "row_num = ? "
-                                                + "ORDER BY DPublicacion.typ_id DESC LIMIT 4;";
+                                                + "CEtiquetas.eti_nom = '" + request.getParameter("filter").toString() + "' "
+                                                + "ORDER BY DPublicacion.typ_id DESC;";
                                 }
                             } else {
                                 q = "SELECT MPublicacion.* "
@@ -275,14 +267,12 @@
                                         + "FROM DPublicacion "
                                         + "WHERE typ_id != 3 "
                                         + "LIMIT 4;";
-                                qinf = "SELECT @row_number:=@row_number+1 AS row_number, MPublicacion.* "
+                                qinf = "SELECT MPublicacion.* "
                                         + "FROM MPublicacion, DPublicacion "
-                                        + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id != 3 AND row_num = ? "
-                                        + "LIMIT 4;";
-                                qinf2 = "SELECT @row_number:=@row_number+1 AS row_number, * "
+                                        + "WHERE DPublicacion.pub_id = MPublicacion.pub_id AND DPublicacion.typ_id != 3;";
+                                qinf2 = "SELECT * "
                                         + "FROM DPublicacion "
-                                        + "WHERE typ_id != 3 AND row_num = ? "
-                                        + "LIMIT 4;";
+                                        + "WHERE typ_id != 3;";
                             }
                             System.out.println(q + "\n" + q2);
                                     
@@ -478,7 +468,7 @@
                                                     $.get("InfinitContentServlet", {counted:<%=id%>, q: `<%=qinf%>`, q2: `<%=qinf2%>`}, function (data) {
                                                         $("#content-wrapper").append(data);
                                                     });
-            <%id += 10;%>
+            <%id += 4;%>
                                                 }
                                             });
                                         });

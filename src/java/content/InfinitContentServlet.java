@@ -5,16 +5,13 @@
  */
 package content;
 
-import config.Conexion;
 import controlador.Operaciones;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -46,24 +43,21 @@ public class InfinitContentServlet extends HttpServlet {
 
             String counted = request.getParameter("counted");
             counter = Integer.parseInt(counted);
-            for (int i = counter; i <= counter + 10; i++) {
-
                 try {
                     HttpSession session = request.getSession();
-                    con = new Conexion().getConnection();
-                    String q = request.getParameter("q");
-                    String q2 = request.getParameter("q2");
-                    st = con.prepareStatement(q);
-                    st2 = con.prepareStatement(q2);
-                    st.setInt(1, counter);
-                    st2.setInt(1, counter);
-                    rs = st.executeQuery(q);
-                    rs2 = st2.executeQuery(q2);
-                    while (rs.next() && rs2.next()) {
-                        String tit = rs.getString("pub_tit");
-                        String txt = rs2.getString("pub_txt");
-                        int id = rs.getInt("pub_id");
-                        int votos = rs2.getInt("pub_vot");
+                    LinkedList<Publicacion> publicaciones = ConsultaBD.getPubs();
+                    
+                    for (int j = 0; j < 4; j++) {
+                        try {
+                            publicaciones.get(j+counter);
+                        } catch (Exception e) {
+                            System.out.println("Ya no hay publicaciones");
+                            break;
+                        }
+                        String tit = publicaciones.get(j + counter).getTitulo();
+                        String txt = publicaciones.get(j + counter).getTexto();
+                        int id = publicaciones.get(j+counter).getPub_id();
+                        int votos = publicaciones.get(j+counter).getVotos();
                         out.println("<article class=\"container borderSimple\">\n"
                                 + "                        <header class=\"row color2\">\n"
                                 + "                            <div class=\"col-l2\">\n"
@@ -108,15 +102,7 @@ public class InfinitContentServlet extends HttpServlet {
                 } catch (Exception e) {
                     System.out.println(e);
                 }
-                counter++;
-            }
             out.write(resp);
-            try {
-                con.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("No se cerro la conexon ininit");
-            }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(InfinitContentServlet.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -17,12 +17,26 @@ public final class Conexion {
     private static java.sql.Connection con;
     private static final String URL = "jdbc:mysql://localhost:3306/db_FAEv1";
     private static final String USER = "root";
-    private static final String PASS = "root";
+    private static final String PASS = "n0m3l0";
 
     public java.sql.Connection getConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
         con = DriverManager.getConnection(URL, USER, PASS);
         return con;
     }
+
+    public static String getURL() {
+        return URL;
+    }
+
+    public static String getUSER() {
+        return USER;
+    }
+
+    public static String getPASS() {
+        return PASS;
+    }
+    
+    
 
 }

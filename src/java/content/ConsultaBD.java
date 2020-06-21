@@ -1,6 +1,7 @@
 package content;
 
 import config.Conexion;
+import controlador.Operaciones;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,37 +12,41 @@ import java.util.logging.Logger;
 
 public class ConsultaBD {
 
-    public static LinkedList<ConsejerosAtributos> getConsejeros() {
-        LinkedList<ConsejerosAtributos> listaConsejeros = new LinkedList<>();
+    private static LinkedList<Publicacion> listaPublicacionesq = new LinkedList<>();
+
+    public static LinkedList<Usuario> getConsejeros() {
+        LinkedList<Usuario> listaUsuarios = new LinkedList<>();
         Connection conexion = null;
         try {
             conexion = new Conexion().getConnection();
             Class.forName("org.gjt.mm.mysql.Driver");
             Statement st = conexion.createStatement();
-            ResultSet rs = st.executeQuery("select * from musuario");
+            ResultSet rs = st.executeQuery("SELECT MUsuario.usr_id AS `ID`, MUsuario.usr_tag AS `tag`, "
+                    + "MUsuario.usr_niv AS `niv`, DUsuario.usr_nom AS `nombre`, "
+                    + "DUsuario.usr_app AS `appat`, DUsuario.usr_apm AS `apmat` "
+                    + "FROM MUsuario, DUsuario "
+                    + "WHERE MUsuario.usr_id = DUsuario.usr_id;");
             while (rs.next()) {
-                ConsejerosAtributos contacto = new ConsejerosAtributos();
-                contacto.setUsr_id(rs.getInt("usr_id"));
-                contacto.setUsr_niv(rs.getInt("usr_niv"));
-                contacto.setUsr_tag(rs.getString("usr_tag"));
-                contacto.setUsr_pas(rs.getString("usr_pas"));
-                listaConsejeros.add(contacto);
+                Usuario user = new Usuario(rs.getInt("ID"),
+                        rs.getInt("niv"), rs.getString("tag"),
+                        rs.getString("nombre"), rs.getString("appat"),
+                        rs.getString("apmat"));
+                listaUsuarios.add(user);
             }
             conexion.close();
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("No se conecto a consultar ");
             e.printStackTrace();
-        }finally{
+        } finally {
             try {
                 conexion.close();
             } catch (SQLException ex) {
                 Logger.getLogger(ConsultaBD.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return listaConsejeros;
+        return listaUsuarios;
     }
-    
-    
+
     public static LinkedList<Publicacion> getPublicaciones() {
         LinkedList<Publicacion> listaPublicaciones = new LinkedList<>();
         Connection conexion = null;
@@ -65,7 +70,7 @@ public class ConsultaBD {
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("No se conecto a consultar ");
             e.printStackTrace();
-        }finally{
+        } finally {
             try {
                 conexion.close();
             } catch (SQLException ex) {
@@ -73,5 +78,42 @@ public class ConsultaBD {
             }
         }
         return listaPublicaciones;
+    }
+
+    public static void getPublicaciones(String q, String q2) {
+        Connection conexion = null;
+        listaPublicacionesq.clear();
+        new Operaciones().resetRowNumber();
+        try {
+            Class.forName("org.gjt.mm.mysql.Driver");
+            conexion = new Conexion().getConnection();
+            Statement st = conexion.createStatement();
+            Statement st2 = conexion.createStatement();
+            ResultSet rs = st.executeQuery(q);
+            ResultSet rs2 = st2.executeQuery(q2);
+            while (rs.next() && rs2.next()) {
+                Publicacion pub = new Publicacion();
+                pub.setUser_id(rs.getInt("usr_id"));
+                pub.setPub_id(rs.getInt("pub_id"));
+                pub.setTitulo(rs.getString("pub_tit"));
+                pub.setTexto(rs2.getString("pub_txt"));
+                pub.setVotos(rs2.getInt("pub_vot"));
+                pub.setDate(rs2.getDate("pub_dat"));
+                listaPublicacionesq.add(pub);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("No se conecto a consultar q q2");
+            e.printStackTrace();
+        } finally {
+            try {
+                conexion.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsultaBD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public static LinkedList<Publicacion> getPubs() {
+        return listaPublicacionesq;
     }
 }
