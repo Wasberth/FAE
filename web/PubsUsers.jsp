@@ -29,12 +29,11 @@
                 if(sesion.getAttribute("nivel")!="1"){
                     sesion.removeAttribute("user");
                     sesion.removeAttribute("nivel");
-                    response.sendRedirect("ErrorPage.jsp");
                 }else{
                 String nom_user = sesion.getAttribute("user").toString();
                 }
             }catch(Exception e){
-                response.sendRedirect("ErrorPage.jsp");
+                response.sendRedirect("errorPage.jsp");
             }
 
         %>
@@ -50,7 +49,7 @@
                         <a class="nav-link" href="indexAdmin.jsp">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Logout.jsp"><i class="fas fa-cart-plus">Cerrar Sesión</a>
+                        <a class="nav-link" href="Logout.jsp"><i class="fas fa-cart-plus">Cerrar Sesión</i></a>
                     </li>
                 </ul>
 
@@ -63,6 +62,7 @@
                 <thead>
                     <tr>
                         <th>Usuario ID</th>
+                        <th>Status</th>
                         <th>Titulo</th>
                         <th>Texto</th>
                         <th>Votos</th>
@@ -79,12 +79,13 @@
                         %>
                     <tr>
                         <td><input id="id <%=lista.get(i).getPub_id()%>" disabled type="text"  value="<%=lista.get(i).getUser_id()%>"></td>
+                        
                         <td><input id="titulo <%=lista.get(i).getPub_id()%>" disabled type="text"   value="<%=lista.get(i).getTitulo()%>"></td>
                         <td><input id="texto <%=lista.get(i).getPub_id()%>" disabled type="text"  value="<%=lista.get(i).getTexto()%>"></td>
                         <td><input id="votos <%=lista.get(i).getPub_id()%>" disabled type="text"  value="<%=lista.get(i).getVotos()%>"></td>
                         <td><input id="date <%=lista.get(i).getPub_id()%>" disabled type="text"   value="<%=lista.get(i).getDate()%>"></td>
                         <td>
-                            <form id="form <%=lista.get(i).getPub_id()%>" method="POST" action="pubAServ">
+                            <form id="form <%=lista.get(i).getPub_id()%>" method="POST" action="saveChanges.jsp">
                                 <input id="input titulo <%=lista.get(i).getPub_id()%>" name="titulo_pub" type="hidden">
                                 <input id="input texto <%=lista.get(i).getPub_id()%>" name="texto_pub" type="hidden">
                                 <input id="<%=lista.get(i).getPub_id()%>" value="<%=lista.get(i).getPub_id()%>" name="pub_id" type="hidden">
@@ -101,8 +102,8 @@
 
                                         })()">
                                 <input id="submit <%=lista.get(i).getPub_id()%>" type="button" hidden name="action" value="Guardar cambios" onclick="(function () {
-                                            document.getElementById('titulo <%=lista.get(i).getPub_id()%>').value = document.getElementById('input titulo <%=lista.get(i).getUser_id()%>').value;
-                                            document.getElementById('texto <%=lista.get(i).getPub_id()%>').value = document.getElementById('input texto <%=lista.get(i).getUser_id()%>').value;
+                                            document.getElementById('input titulo <%=lista.get(i).getPub_id()%>').value = document.getElementById('titulo <%=lista.get(i).getPub_id()%>').value;
+                                            document.getElementById('input texto <%=lista.get(i).getPub_id()%>').value = document.getElementById('texto <%=lista.get(i).getPub_id()%>').value;
                                             document.getElementById('form <%=lista.get(i).getPub_id()%>').submit();
                                         })()">
                                 <input id="cancel <%=lista.get(i).getPub_id()%>" type="button" hidden value="Cancelar" onclick="(function () {
@@ -111,7 +112,7 @@
                             </form>
                         </td>
                         <td>
-                            <form action="pubAServ" method="POST">
+                            <form action="delete.jsp" method="POST">
                                 <input id="delete <%=lista.get(i).getPub_id()%>" name="publicacionDelete" type="hidden" value="<%=lista.get(i).getPub_id()%>">
                                 <input type="submit" name="action" value="Eliminar">
                             </form>
