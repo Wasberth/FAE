@@ -283,7 +283,8 @@ public class Operaciones {
             int i = 0;
             while (rs.next()) {
                 i++;
-                publicaciones = "<h4 style='color:whitesmoke;'>" + i + ". "+ publicaciones + rs.getString("titulo") + "</h4>\n";
+                publicaciones = publicaciones + "<h4 style='color:whitesmoke;'>" + i + ". " + rs.getString("titulo") + "</h4>\n";
+                System.out.println(publicaciones);
             }
             con.close();
         } catch (SQLException e) {
