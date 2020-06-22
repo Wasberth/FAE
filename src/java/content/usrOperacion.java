@@ -71,8 +71,8 @@ public class usrOperacion {
         try {
             con = Operaciones.getConnection();
 
-            String q = "delete from mpublicacion "
-                    + "where pub_id = ?";
+            String q = "delete from musuario "
+                    + "where usr_id = ?";
 
             PreparedStatement ps = con.prepareStatement(q);
             ps.setInt(1, id);
@@ -93,7 +93,7 @@ public class usrOperacion {
                 Logger.getLogger(ConsultaBD.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
+        System.out.println(elim);
         return elim;
     }
 }

@@ -13,10 +13,7 @@
         <title>JSP Page</title>
     </head>
     <%
-        if (new usrOperacion().eliminar(Integer.parseInt(request.getParameter("publicacionDelete")))) {
-            request.getRequestDispatcher("ConsultarUsers.jsp").forward(request, response);
-        } else {
-            request.getRequestDispatcher("indexAdmin.jsp").forward(request, response);
-        }
+        new usrOperacion().eliminar(Integer.parseInt(request.getParameter("UserDelete")));
+        request.getRequestDispatcher("ConsultarUsers.jsp").forward(request, response);
     %>
 </html>
