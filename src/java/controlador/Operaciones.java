@@ -301,4 +301,68 @@ public class Operaciones {
         return publicaciones;
     }
 
+    public int getDenunciasByIdPub(int idpub) {
+        int denunciadas = 0;
+        Connection con = null;
+        try {
+            String q = "SELECT COUNT(*) AS `denunciadas` FROM MPublicacion, DHistorial WHERE DHistorial.pub_id = MPublicacion.pub_id AND DHistorial.hst_act = 3 AND MPublicacion.pub_id = ?;";
+            try {
+                con = Operaciones.getConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Operaciones.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            PreparedStatement ps = con.prepareStatement(q);
+            ResultSet rs = null;
+            ps.setInt(1, idpub);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                denunciadas = rs.getInt("denunciadas");
+            }
+            con.close();
+        } catch (SQLException e) {
+            System.out.println("Error getLastPublicacion");
+            System.out.println(e);
+            e.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Operaciones.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return denunciadas;
+    }
+
+    public String getEtiquetaByIdPub(int pub_id) {
+        String publicaciones = "";
+        Connection con = null;
+        try {
+            String q = "SELECT CEtiquetas.eti_nom AS `nombre` FROM CEtiquetas, EPublicacionetiqueta WHERE CEtiquetas.eti_id = EPublicacionetiqueta.eti_id AND EPublicacionetiqueta.pub_id = " + pub_id + ";";
+            System.out.println(q);
+            try {
+                con = Operaciones.getConnection();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Operaciones.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            PreparedStatement ps = con.prepareStatement(q);
+            ResultSet rs = null;
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                publicaciones = rs.getString("nombre");
+            }
+            con.close();
+        } catch (SQLException e) {
+            System.out.println("Error getPublicacionesPopulares");
+            System.out.println(e);
+            e.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsultaBD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return publicaciones;
+    }
+
 }

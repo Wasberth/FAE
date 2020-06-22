@@ -28,6 +28,14 @@ and open the template in the editor.
     background: #CCE6F4;
 }
 
+.color6{
+    background: #DB7E0B;
+}
+
+.color7{
+    background: #82DEFF;
+}
+
 .borderSimple{
     border: 1px solid black;
 }

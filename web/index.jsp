@@ -92,14 +92,14 @@
                                         sesion.setAttribute("user", nomUser);
                                         sesion.setAttribute("nivel", "1");
                                         sesion.setAttribute("usr_id", op.getId());
-                                        response.sendRedirect("indexAdmin.jsp");
+                                        response.sendRedirect("ConsultarUsers.jsp");
                                         break;
 
                                     case 2:
                                         sesion.setAttribute("user", nomUser);
                                         sesion.setAttribute("nivel", "2");
                                         sesion.setAttribute("usr_id", op.getId());
-                                        response.sendRedirect("indexCons.jsp");
+                                        response.sendRedirect("PubsUsers.jsp");
                                         break;
 
                                     case 3:

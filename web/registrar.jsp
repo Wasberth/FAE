@@ -59,14 +59,14 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="fas fa-arrow-alt-circle-right"></i></div>
                         </div>
-                        <input id="apmat" type="password" class="form-control" required name="appat" placeholder="Apellido Paterno">
+                        <input id="apmat" type="text" class="form-control" required name="appat" placeholder="Apellido Paterno">
                     </div>
                     <div class="input-group">
                         <label class="sr-only" for="user">Usuario</label>
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="fas fa-arrow-alt-circle-right"></i></div>
                         </div>
-                        <input id="appat" type="password" class="form-control" required name="apmat" placeholder="Apellido Materno">
+                        <input id="appat" type="text" class="form-control" required name="apmat" placeholder="Apellido Materno">
                     </div>
                 </div>
                 <input class="btn btn-primary" type="submit" value="Registrarse">

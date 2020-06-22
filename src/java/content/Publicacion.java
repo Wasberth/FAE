@@ -12,10 +12,18 @@ import java.util.Date;
  * @author tutus
  */
 public class Publicacion {
-    int user_id, votos, pub_id;
+    int user_id, votos, pub_id, typ_id;
     java.util.Date date = new java.util.Date(); 
-    String titulo, user_name, texto ;
+    String titulo, user_name, texto;
 
+    public int getTyp_id() {
+        return typ_id;
+    }
+
+    public void setTyp_id(int typ_id) {
+        this.typ_id = typ_id;
+    }
+    
     public String getTexto() {
         return texto;
     }

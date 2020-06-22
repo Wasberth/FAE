@@ -99,6 +99,7 @@ public class ConsultaBD {
                 pub.setTexto(rs2.getString("pub_txt"));
                 pub.setVotos(rs2.getInt("pub_vot"));
                 pub.setDate(rs2.getDate("pub_dat"));
+                pub.setTyp_id(rs2.getInt("typ_id"));
                 listaPublicacionesq.add(pub);
             }
         } catch (ClassNotFoundException | SQLException e) {

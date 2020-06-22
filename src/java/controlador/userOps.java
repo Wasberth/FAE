@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -76,12 +77,17 @@ public class userOps extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        HttpSession session = request.getSession();
+        
         String accion = request.getParameter("action");
         switch (accion){
             
             case "Cambiar nombre":
                 int id = Integer.parseInt(request.getParameter("id"));
                 String nName = request.getParameter("newName");
+                
+                session.setAttribute("user", nName);
+                
                 try {
                     if ( op.cambiarTag(id,nName) ) {
                         request.getRequestDispatcher("MainPage.jsp").forward(request, response);

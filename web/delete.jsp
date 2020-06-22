@@ -18,12 +18,8 @@
         pubOperacion op = new pubOperacion();
         int id_pubd = Integer.parseInt(request.getParameter("publicacionDelete"));
         publicacion.setPub_id(id_pubd);
-
-        if (op.eliminar(publicacion)) {
-            request.getRequestDispatcher("PubsUsers.jsp").forward(request, response);
-        } else {
-            request.getRequestDispatcher("indexAdmin.jsp").forward(request, response);
-        }
+        op.eliminar(publicacion);
+        request.getRequestDispatcher("PubsUsers.jsp").forward(request, response);
     %>
     <body>
         <h1>Hello World!</h1>

@@ -6,6 +6,8 @@
 
 
 
+<%@page import="content.InfinitContentServlet"%>
+<%@page import="content.ConsultaBD"%>
 <%@page import="java.util.logging.Logger"%>
 <%@page import="java.util.logging.Level"%>
 <%@page import="controlador.Operaciones"%>
@@ -31,6 +33,7 @@
     <body class="color5">
         <%
             Operaciones op = new Operaciones();
+            InfinitContentServlet.resetCounter();
             String nom_user = "";
             try {
                 HttpSession sesion = request.getSession();
@@ -45,28 +48,47 @@
         %>
         <nav class="navbar navbar-expand-lg navbar-light color1 fixed-top">
             <a class="navbar-brand" href="#"><img class="logo" src="img/FAE_logo.png"></a>
-
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="publication.jsp">Escribir una publicacion</a>
-
-                    </li>
-                    <li>
-                        <a class="nav-link" href="profile.jsp">Mi perfil</a>
-
-                    </li>
-                    <li>
-                        <a class="nav-link" href="log_out.jsp" name="cerrarSesion">Cerrar Sesion</a>
-
+                        <a class="nav-link" href="MainPage.jsp" style="color:whitesmoke;">Página principal</a>
                     </li>
 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:whitesmoke;">
+                            Menú
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="publication.jsp">Escribir una publicación</a>
+                            <a class="dropdown-item" href="profile.jsp">Mi perfil</a>
+                            <%                                if (Integer.parseInt(session.getAttribute("nivel").toString()) < 3) {
+                            %>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="PubsUsers.jsp">Consultar publicaciones</a>
+                            <%
+                                }
+                                if (Integer.parseInt(session.getAttribute("nivel").toString()) < 2) {
+                            %>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="ConsultarUsers.jsp">Consultar usuarios</a>
+                            <a class="dropdown-item" href="RegCons.jsp">Registrar usuario</a>
+                            <%
+                                }
+                            %>
+                        </div>
+                    </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
-                    <button class="btn color3 mr-sm-2" type="button">Mi perfil</button>
+                    <div class="dropdown">
+                        <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Opciones del Perfil
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="profile.jsp">Mi perfil</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="log_out.jsp" name="cerrarSesion">Cerrar Sesion</a>
+                        </div>
+                    </div>
                 </form>
             </div>
         </nav>
@@ -92,12 +114,10 @@
                     <article class="container borderSimple d-none d-sm-inline-block">
                         <a href="publication.jsp">
                             <div class="row">
-                                <div class="col-sm-2 color2 btn-group btn-g">
-                                    <button class="btn">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </button>
+                                <div class="col-sm-1 color2 form-control text-center" style="border: transparent; border-radius: 0; color: whitesmoke;">
+                                    <i class="fas fa-pencil-alt"></i>
                                 </div>
-                                <div class="col-sm-10 color4 form-control">
+                                <div class="col-sm-11 color4 form-control" style="border: transparent; border-radius: 0; color: black;">
                                     Escribir una publicacion
                                 </div>
                             </div>
@@ -107,30 +127,26 @@
                     <article class="container borderSimple d-none d-sm-inline-block">
                         <form id="Filtrar" method="post" action="MainPage.jsp">
                             <input id="filtro" type="hidden" name="filter">
-                            <div class="row">
-                                <div class="col-sm-2 color2 btn-group btn-g">
-                                    <button class="btn" onclick="return filtrar('votos')">
-                                        <i class="fas fa-pencil-alt"></i>
-                                        <h5>Populares</h5>
+                            <div class="row color2">
+                                <div class="color2 btn-group">
+                                    <button class="btn color2" onclick="return filtrar('votos')">
+                                        <i class="fas fa-star" style="color: whitesmoke;"> Populares</i>
                                     </button>
                                 </div>
-                                <div class="col-sm-2 color2 btn-group btn-g">
-                                    <button class="btn" onclick="return filtrar('fecha')">
-                                        <i class="fas fa-pencil-alt"></i>
-                                        <h5>Nuevos</h5>
+                                <div class="color2 btn-group">
+                                    <button class="btn color2" onclick="return filtrar('fecha')">
+                                        <i class="fas fa-clock" style="color: whitesmoke;"> Nuevos</i>
                                     </button>
                                 </div>
-                                <div class="col-sm-2 color2 btn-group btn-g">
-                                    <button class="btn" onclick="return filtrar('noticias')">
-                                        <i class="fas fa-pencil-alt"></i>
-                                        <h5>Noticias</h5>
+                                <div class="color2 btn-group">
+                                    <button class="btn color2" onclick="return filtrar('noticias')">
+                                        <i class="fas fa-newspaper" style="color: whitesmoke;"> Noticias</i>
                                     </button>
                                 </div>
-                                <div class="dropdown show">
-                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true">
-                                        Dropdown link
+                                <div class="dropdown show color2">
+                                    <a style="color: whitesmoke;" class="btn color2 dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true">
+                                        <i class="fas fa-tags" style="color: whitesmoke;"> Etiquetas</i>
                                     </a>
-
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         <%
                                             String DRIVER = "com.mysql.jdbc.Driver";
@@ -274,14 +290,18 @@
                                         + "FROM DPublicacion "
                                         + "WHERE typ_id != 3;";
                             }
+                            ConsultaBD.getPublicaciones(qinf, qinf2);
                             System.out.println(q + "\n" + q2);
-                                    
+
                             rs = st.executeQuery(q);
                             rs2 = st2.executeQuery(q2);
                             while (rs.next() && rs2.next()) {
                                 String tit = rs.getString("pub_tit");
                                 String txt = rs2.getString("pub_txt");
                                 pub_id = rs.getInt("pub_id");
+                                String estilo1 = rs2.getInt("typ_id") == 2? "color6" : "color2";
+                                String estilo2 = rs2.getInt("typ_id") == 2? "color7" : "color4";
+                                
                                 String q3 = "SELECT CEtiquetas.eti_nom AS `nombre` FROM CEtiquetas, EPublicacionetiqueta WHERE CEtiquetas.eti_id = EPublicacionetiqueta.eti_id AND EPublicacionetiqueta.pub_id = " + pub_id + ";";
                                 st3 = con.createStatement();
                                 rs3 = st3.executeQuery(q3);
@@ -296,38 +316,20 @@
 
                     %>
                     <article class="container borderSimple">
-                        <header class="row color2">
-                            <div class="col-l2">
-                                <h5 class="text-center"><%=tit%> de <%=nom_usuario%></h5>
-                                <%
-                                    if (!etiqueta_nom.equals("")) {
-                                %>
-                                <br>
-                                <h6 class="small"><%=etiqueta_nom%></h6>
-                                <%
-                                    }
-                                %>
+                        <header class="row <%=estilo1%>">
+                            <div class="col-l2" style="padding-left:5px;">
+                                <small><i class="fas fa-user" style="color: silver;"> <%=nom_usuario%></i></small>
+                                <p class="text-center" style="margin-bottom: 3px;">
+                                    <span class="h5"><%=tit%></span>
+                                    <%
+                                        if (!etiqueta_nom.equals("")) {
+                                    %>
+                                    <span class="color5" style="margin-left: 10px; padding-left:2px; "><i class="fas fa-tag"> <%=etiqueta_nom%></i></span>
+                                    <%
+                                        }
+                                    %>
+                                </p>
                             </div>
-                            <div class="btn-request" data-toggle="modal" data-target="#userModal">
-                                <button type="button" class="btn btn-request" onclick="return setId(<%=pub_id%>)">Reportar</button>
-                            </div>
-                            <%
-                                if (Integer.parseInt(session.getAttribute("usr_id").toString()) < 3) {
-                            %>
-                            <div  class="btn-request" data-toggle="modal" data-target="#eliminarModal">
-                                <button type="button" class="btn btn-request" onclick="return setId(<%=pub_id%>)">Eliminar</button>
-                            </div>
-                            <%
-                            } else {
-                                if (Integer.parseInt(session.getAttribute("usr_id").toString()) == rs.getInt("usr_id")) {
-                            %>
-                            <div  class="btn-request" data-toggle="modal" data-target="#eliminarModal">
-                                <button type="button" class="btn btn-request" onclick="return setId(<%=pub_id%>)">Eliminar</button>
-                            </div>
-                            <%
-                                    }
-                                }
-                            %>
                         </header>
                         <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -402,8 +404,8 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-2 color2 d-none d-sm-inline-block">
-                                <div class="btn-group-vertical btn-g">
+                            <div class="col-2 <%=estilo1%> d-none d-sm-inline-block">
+                                <div class="btn-group-vertical btn-g" style="margin-bottom: 3px;">
                                     <button class="btn btn-success" name="upvote" onclick="votes(<%=pub_id%>,<%=session.getAttribute("usr_id")%>, '+1')">
                                         <i class="fas fa-arrow-alt-circle-up"></i>
                                     </button>
@@ -414,14 +416,26 @@
                                         <i class="fas fa-arrow-alt-circle-down"></i>
                                     </button>
                                 </div>
+                                <div class="btn-group-vertical btn-g" data-toggle="modal" data-target="#userModal" style="margin-bottom: 3px;">
+                                    <button type="button" class="btn btn-secondary" onclick="return setId(<%=pub_id%>)"><i class="far fa-flag"></i></button>
+                                </div>
+                                <%
+                                    if (Integer.parseInt(session.getAttribute("nivel").toString()) < 3 || Integer.parseInt(session.getAttribute("usr_id").toString()) == rs.getInt("usr_id")) {
+                                %>
+                                <div class="btn-group-vertical btn-g" data-toggle="modal" data-target="#eliminarModal" style="margin-bottom: 3px;">
+                                    <button type="button" class="btn btn-warning" onclick="return setId(<%=pub_id%>)"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+                                <%
+                                    }
+                                %>
                             </div>
-                            <div class="col-12 col-sm-10 color4">
+                            <div class="col-12 col-sm-10 <%=estilo2%>">
                                 <p>
                                     <%=txt%>
                                 </p>
                             </div>
                         </div>
-                        <div class="row d-block d-sm-none color2">
+                        <div class="row d-block d-sm-none <%=estilo1%>">
                             <div class="btn-group btn-g color-12">
                                 <button class="btn btn-success">
                                     <i class="fas fa-arrow-alt-circle-up"></i>
@@ -432,6 +446,18 @@
                                 <button class="btn btn-danger">
                                     <i class="fas fa-arrow-alt-circle-down"></i>
                                 </button>
+                                <div class="btn-group-vertical btn-g" data-toggle="modal" data-target="#userModal">
+                                    <button type="button" class="btn btn-secondary" onclick="return setId(<%=pub_id%>)"><i class="far fa-flag"></i></button>
+                                </div>
+                                <%
+                                    if (Integer.parseInt(session.getAttribute("nivel").toString()) < 3 || Integer.parseInt(session.getAttribute("usr_id").toString()) == rs.getInt("usr_id")) {
+                                %>
+                                <div class="btn-group-vertical btn-g" data-toggle="modal" data-target="#eliminarModal">
+                                    <button type="button" class="btn btn-warning" onclick="return setId(<%=pub_id%>)"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+                                <%
+                                    }
+                                %>
                             </div>
                         </div>
                     </article>
@@ -462,19 +488,18 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script type="text/javascript">
-                                        $(document).ready(function () {
-                                            $(window).scroll(function () {
-                                                if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-                                                    $.get("InfinitContentServlet", {counted:<%=id%>, q: `<%=qinf%>`, q2: `<%=qinf2%>`}, function (data) {
-                                                        $("#content-wrapper").append(data);
-                                                    });
-            <%id += 4;%>
-                                                }
+                                            $(document).ready(function () {
+                                                $(window).scroll(function () {
+                                                    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                                                        $.get("InfinitContentServlet", {counted:<%=id%>, q: `<%=qinf%>`, q2: `<%=qinf2%>`}, function (data) {
+                                                            $("#content-wrapper").append(data);
+                                                        });
+                                                    }
+                                                });
                                             });
-                                        });
-                                        function votes(pub_id, usr_id, upvote) {
-                                            $.post("Voto", {pub_id: pub_id, usr_id: usr_id, vote: upvote});
-                                        }
+                                            function votes(pub_id, usr_id, upvote) {
+                                                $.post("Voto", {pub_id: pub_id, usr_id: usr_id, vote: upvote});
+                                            }
         </script>
         <script src="js/funciones.js" type="text/javascript"></script>
     </body>

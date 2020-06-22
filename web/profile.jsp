@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="css/publication.css">
         <link rel="stylesheet" href="css/colors.css">
     </head>
-    <body>
+    <body class="color5">
         <%
             String nom_user = "";
             String nivel = "";
@@ -31,20 +31,56 @@
 
 
         %>
-        <header class="container-fluid col-xs-12 header color1">
-            <div class="row">
-                <div class="d-none d-sm-inline-block col-sm-4 img-container-1">
-                    <img class="logo" src="img/FAE_logo.png">
-                </div>
-                <div class="d-inline-block d-sm-none col-xs-4 img-container-1">
-                    <img class="logo-simple" src="img/FAE_simple.png">
-                </div>
+        <nav class="navbar navbar-expand-lg navbar-light color1 fixed-top">
+            <a class="navbar-brand" href="#"><img class="logo" src="img/FAE_logo.png"></a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="MainPage.jsp" style="color:whitesmoke;">Página principal</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:whitesmoke;">
+                            Menú
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="publication.jsp">Escribir una publicación</a>
+                            <a class="dropdown-item" href="profile.jsp">Mi perfil</a>
+                            <%                                if (Integer.parseInt(session.getAttribute("nivel").toString()) < 3) {
+                            %>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="PubsUsers.jsp">Consultar publicaciones</a>
+                            <%
+                                }
+                                if (Integer.parseInt(session.getAttribute("nivel").toString()) < 2) {
+                            %>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="ConsultarUsers.jsp">Consultar usuarios</a>
+                            <a class="dropdown-item" href="RegCons.jsp">Registrar usuario</a>
+                            <%
+                                }
+                            %>
+                        </div>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <div class="dropdown">
+                        <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Opciones del Perfil
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="profile.jsp">Mi perfil</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="log_out.jsp" name="cerrarSesion">Cerrar Sesion</a>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </header>
-        <div class="container-fluid">
+        </nav>
+        <div class="container-fluid content">
             <div class="row content">
                 <div class="col-12 col-md-8">
-                    <h2> Crear una publicación</h2>
+                    <h2> Mi perfil</h2>
                     <br>
                     <h4>
                         Nombre de Usuario
@@ -53,7 +89,7 @@
                     <div class="row">
                         <div class="col-6">
                             <p>
-                                Insertar nombre de usuario aquí<br>
+                                <%=nom_user%><br>
                                 <small class="text-muted">Recuerda seguir los lineamientos respecto al nombre de usuario</small>
                             </p>
                         </div>
@@ -65,23 +101,25 @@
                             <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="userModalLabel">Cambiar nombre de usuario</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="userOps" method="POST">
+                                        <form action="userOps" method="POST">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="userModalLabel">Cambiar nombre de usuario</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
                                                 <input type="hidden" name="id" value="<%=id%>">
-                                                <input type="text" name="newName" placeholder="Nuevo nombre">
-                                                <input type="submit" name="action" value="Cambiar nombre">
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
-                                        </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputPassword1">Nuevo nombre</label>
+                                                    <input type="text" class="form-control" name="newName" placeholder="Nuevo nombre">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <input class="btn btn-primary" type="submit" name="action" value="Cambiar nombre">
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -89,13 +127,13 @@
                     </div>
                     <br><br>
                     <h4>
-                        Nombre de Usuario
+                        Contraseña
                     </h4>
                     <br>
                     <div class="row">
                         <div class="col-6">
                             <p>
-                                Insertar "*" como caracteres tenga la contraseña<br>
+                                *******<br>
                                 <small class="text-muted">No compartas tu contraseña con nadie</small>
                             </p>
                         </div>
